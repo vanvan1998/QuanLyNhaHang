@@ -1,0 +1,249 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+//using QuanLyNhaHang.Entity;
+
+namespace QuanLyNhaHang.EmptyTables
+{
+    /// <summary>
+    /// Interaction logic for UserControlStandardUsedTable.xaml
+    /// </summary>
+    public partial class EmptyStandardTablesUserControl : UserControl
+    {
+        //List<Phong> EmptyStandardSingleTables = new List<Phong>();
+        //List<Phong> EmptyStandardCoupleTables = new List<Phong>();
+        //List<Phong> EmptyStandardGroupTables = new List<Phong>();
+
+        //Phong phongHienTai = null;
+
+        public EmptyStandardTablesUserControl()
+        {
+            InitializeComponent();
+
+            //foreach (var table in DataProvider.Ins.DB.Phongs.ToList())
+            //{
+            //    if (table.tinhTrang == 0 && table.daXoa == 0)
+            //    {
+            //        if (table.loaiPhong == "Tiêu chuẩn - Đơn")
+            //        {
+            //            EmptyStandardSingleTables.Add(table);
+            //        }
+            //        else if (table.loaiPhong == "Tiêu chuẩn - Đôi")
+            //        {
+            //            EmptyStandardCoupleTables.Add(table);
+            //        }
+            //        else if (table.loaiPhong == "Tiêu chuẩn - Nhóm")
+            //        {
+            //            EmptyStandardGroupTables.Add(table);
+            //        }
+            //    }
+            //}
+
+            //ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
+            //ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
+            //ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Width = Application.Current.MainWindow.ActualWidth - 70;
+            this.Height = Application.Current.MainWindow.ActualHeight - 60;
+        }
+
+        private void ListViewEmptyStandardTable_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            //if (((ListView)sender).SelectedIndex == -1)
+            //{
+            //    return;
+            //}
+
+            //if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
+            //{
+            //    var bc = new BrushConverter();
+
+            //    for (int j = 0; j < EmptyStandardSingleTables.Count; j++)
+            //    {
+            //        ListViewItem lvi1 = ListViewEmptyStandardSingleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+            //        var dt1 = cp1.ContentTemplate as DataTemplate;
+            //        var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
+            //        var tb1 = (TextBlock)dt1.FindName("NumberTable", cp1);
+
+            //        rt1.Fill = Brushes.White;
+            //    }
+
+            //    for (int j = 0; j < EmptyStandardCoupleTables.Count; j++)
+            //    {
+            //        ListViewItem lvi2 = ListViewEmptyStandardCoupleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
+
+            //        var dt2 = cp2.ContentTemplate as DataTemplate;
+            //        var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
+            //        var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
+
+            //        rt2.Fill = Brushes.White;
+            //    }
+
+            //    for (int j = 0; j < EmptyStandardGroupTables.Count; j++)
+            //    {
+            //        ListViewItem lvi3 = ListViewEmptyStandardGroupTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
+
+            //        var dt3 = cp3.ContentTemplate as DataTemplate;
+            //        var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
+            //        var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
+
+            //        rt3.Fill = Brushes.White;
+            //    }
+
+            //    var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
+
+            //    var dt = cp.ContentTemplate as DataTemplate;
+            //    var rt = (Rectangle)dt.FindName("BackGround", cp);
+            //    var tb = (TextBlock)dt.FindName("NumberTable", cp);
+
+
+            //    foreach (var table in DataProvider.Ins.DB.Phongs.ToList())
+            //    {
+            //        if (tb.Text == table.soPhong)
+            //        {
+            //            phongHienTai = table;
+            //            NumberTable.Text = table.soPhong;
+            //            TypeTable.Text = table.loaiPhong;
+            //            break;
+            //        }
+            //    }
+
+            //    rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+            //}
+        }
+
+
+        private void BtnDatPhong(object sender, RoutedEventArgs e)
+        {
+
+            //if (NumberTable.Text == "")
+            //{
+            //    MessageBox.Show("Vui lòng chọn phòng trước!");
+            //    return;
+            //}
+
+            //if (CustomerNameTextBox.Text == "")
+            //{
+            //    MessageBox.Show("Chưa nhập tên khách hàng!");
+            //    return;
+            //}
+
+            //if (CustomerIDTextBox.Text == "")
+            //{
+            //    MessageBox.Show("Chưa nhập CMND khách hàng!");
+            //    return;
+            //}
+
+            //string maKH = "KH1";
+
+            //if (DataProvider.Ins.DB.KhachHangs.Count() > 0)
+            //{
+            //    maKH = "KH" + (DataProvider.Ins.DB.KhachHangs.Max(x => x.id) + 1).ToString();
+            //}
+
+            //KhachHang khachHang = new KhachHang
+            //{
+            //    hoTen = CustomerNameTextBox.Text,
+            //    cmnd = CustomerIDTextBox.Text,
+            //    maKhachHang = maKH
+            //};
+
+            ////thêm thông tin khách hàng vừa nhập
+            //DataProvider.Ins.DB.KhachHangs.Add(khachHang);
+            //DataProvider.Ins.DB.SaveChanges();
+
+            //// thêm thông tin vào phòng vừa chọn
+            //phongHienTai.maKhachHang = khachHang.maKhachHang;
+            //phongHienTai.tinhTrang = 1;
+            //if(NoteTextBox.Text == "")
+            //{
+            //    phongHienTai.ghiChu = null;
+            //}
+            //else
+            //{
+            //    phongHienTai.ghiChu = NoteTextBox.Text;
+            //}
+            //phongHienTai.thoiGianBatDau = DateTime.Now;
+
+            //foreach (var table in EmptyStandardSingleTables)
+            //{
+            //    if (table.soPhong == phongHienTai.soPhong)
+            //    {
+            //        EmptyStandardSingleTables.Remove(table);
+            //        break;
+            //    }
+            //}
+
+            //ListViewEmptyStandardSingleTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
+
+            //foreach (var table in EmptyStandardCoupleTables)
+            //{
+            //    if (table.soPhong == phongHienTai.soPhong)
+            //    {
+            //        EmptyStandardCoupleTables.Remove(table);
+            //        break;
+            //    }
+            //}
+
+            //ListViewEmptyStandardCoupleTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
+
+            //foreach (var table in EmptyStandardGroupTables)
+            //{
+            //    if (table.soPhong == phongHienTai.soPhong)
+            //    {
+            //        EmptyStandardGroupTables.Remove(table);
+            //        break;
+            //    }
+            //}
+
+            //ListViewEmptyStandardGroupTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
+
+            //DataProvider.Ins.DB.SaveChanges();
+            //MessageBox.Show("Đặt phòng thành công!");
+
+            //NumberTable.Text = "";
+            //TypeTable.Text = "";
+            //CustomerNameTextBox.Text = "";
+            //CustomerIDTextBox.Text = "";
+            //NoteTextBox.Text = "";
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            //var table = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 0 && x.daXoa == 0  ).SingleOrDefault();
+
+            //if (table != null)
+            //{
+            //    phongHienTai = table;
+            //    NumberTable.Text = table.soPhong;
+            //    TypeTable.Text = table.loaiPhong;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Số phòng không đúng!");
+            //}
+        }
+    }
+}
