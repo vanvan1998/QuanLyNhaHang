@@ -38,20 +38,20 @@ namespace QuanLyNhaHang.EmptyTables
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //int index = int.Parse(((Button)e.Source).Uid);
+            int index = int.Parse(((Button)e.Source).Uid);
 
-            //GridCursor.Margin = new Thickness(10 + (500 * index), 0, 0, 0);
-            //GridMain.Children.Clear();
+            GridCursor.Margin = new Thickness(10 + (500 * index), 0, 0, 0);
+            GridMain.Children.Clear();
 
-            //switch (index)
-            //{
-            //    case 0:
-            //        GridMain.Children.Add(new EmptyStandardTablesUserControl());
-            //        break;
-            //    case 1:
-            //        GridMain.Children.Add(new EmptyVIPTablesUserControl());
-            //        break;
-            //}
+            switch (index)
+            {
+                case 0:
+                    GridMain.Children.Add(new EmptyStandardTablesUserControl());
+                    break;
+                case 1:
+                    GridMain.Children.Add(new EmptyVIPTablesUserControl());
+                    break;
+            }
         }
     }
 }
