@@ -73,6 +73,10 @@
     <Compile Include="SearchUserControl.xaml.cs">
       <DependentUpon>SearchUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Setting\PriceListUserControl.xaml.cs" />
+    <Compile Include="Setting\SettingEmployeeUserControl.xaml.cs" />
+    <Compile Include="Setting\SettingTableUserControl.xaml.cs" />
+    <Compile Include="Setting\SettingUserControl.xaml.cs" />
     <Compile Include="StatisticalUserControl.xaml.cs">
       <DependentUpon>StatisticalUserControl.xaml</DependentUpon>
     </Compile>
@@ -123,6 +127,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SearchUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Setting\PriceListUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Setting\SettingEmployeeUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Setting\SettingTableUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Setting\SettingUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -189,5 +209,6 @@
   <ItemGroup>
     <Resource Include="Image\welcome.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

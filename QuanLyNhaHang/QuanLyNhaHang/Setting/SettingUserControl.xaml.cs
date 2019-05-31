@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagementApp.Setting
+namespace QuanLyNhaHang.Setting
 {
     /// <summary>
-    /// Interaction logic for UserControlUsingRoom.xaml
+    /// Interaction logic for UserControlUsingTable.xaml
     /// </summary>
 
     public partial class SettingUserControl : UserControl
@@ -26,7 +26,7 @@ namespace HotelManagementApp.Setting
         {
             InitializeComponent();
 
-            GridMain.Children.Add(new SettingRoomUserControl());
+            GridMain.Children.Add(new SettingTableUserControl());
 
         }
 
@@ -46,7 +46,7 @@ namespace HotelManagementApp.Setting
             switch (index)
             {
                 case 0:
-                    GridMain.Children.Add(new SettingRoomUserControl());
+                    GridMain.Children.Add(new SettingTableUserControl());
                     break;
                 case 1:
                     GridMain.Children.Add(new SettingEmployeeUserControl());

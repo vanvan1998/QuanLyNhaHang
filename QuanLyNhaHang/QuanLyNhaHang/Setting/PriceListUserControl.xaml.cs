@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace HotelManagementApp.Setting
+namespace QuanLyNhaHang.Setting
 {
     /// <summary>
     /// Interaction logic for PriceListUserControl.xaml

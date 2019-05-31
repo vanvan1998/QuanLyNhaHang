@@ -135,10 +135,10 @@ namespace QuanLyNhaHang
                     GridMain.Children.Add(new StatisticalUserControl());
                     Title.Content = "Thống Kê";
                     break;
-                //case 5:
-                //    GridMain.Children.Add(new Setting.SettingUserControl());
-                //    Title.Content = "Cài đặt";
-                //    break;
+                case 5:
+                    GridMain.Children.Add(new Setting.SettingUserControl());
+                    Title.Content = "Cài đặt";
+                    break;
                 default:
                     break;
             }
