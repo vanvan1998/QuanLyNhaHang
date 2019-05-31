@@ -62,7 +62,7 @@
                         </Rectangle>
                         <Grid>
                             <Label Content="Mật khẩu " FontSize="20" HorizontalAlignment="Left" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
-                            <TextBox x:Name="Pass" materialDesign:HintAssist.Hint="Mật khẩu" FontSize="20" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                            <PasswordBox x:Name="Pass"  materialDesign:HintAssist.Hint="Mật khẩu" FontSize="20" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                         </Grid>
                     </Grid>
 
@@ -74,7 +74,14 @@
                         </Rectangle>
                         <Grid>
                             <Label Content="Loại nhân viên " FontSize="20" HorizontalAlignment="Left" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
-                            <TextBox x:Name="Type" materialDesign:HintAssist.Hint="1 hoặc 2" FontSize="20" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                            <ComboBox x:Name="Type" SelectedIndex="1" FontSize="20" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Width="110" Margin="10" VerticalAlignment="Top" Foreground="Gray">
+                                <ComboBoxItem>
+                                    Quản lý
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    Nhân viên
+                                </ComboBoxItem>
+                            </ComboBox>
                         </Grid>
                     </Grid>
 

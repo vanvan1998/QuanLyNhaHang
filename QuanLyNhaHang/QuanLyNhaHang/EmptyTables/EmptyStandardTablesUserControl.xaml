@@ -239,8 +239,8 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="CMND " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="CustomerIDTextBox" materialDesign:HintAssist.Hint="Chứng minh nhân dân" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <Label Grid.Column="0" Content="Số điện thoại " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <TextBox x:Name="CustomerPhone" materialDesign:HintAssist.Hint="Số điện thoại" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
                 <Grid Grid.Row="6">
