@@ -25,7 +25,7 @@
                                 <TextBox x:Name="TbSearch"
                                     Grid.Column="0"
                                     Margin="8 0 0 0"
-                                    materialDesign:HintAssist.Hint="Nhập số phòng, tên khách hàng hoặc mã hóa đơn"
+                                    materialDesign:HintAssist.Hint="Nhập số bàn, tên khách hàng hoặc mã hóa đơn"
                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                     BorderThickness="0"
                                     MinWidth="400"
@@ -74,7 +74,7 @@
                                                         </Grid.Effect>
                                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                                     </Grid>
-                                                    <TextBlock Text="Số phòng" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="0 10 30 0" VerticalAlignment="Top" Foreground="Gray"/>
+                                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="0 10 30 0" VerticalAlignment="Top" Foreground="Gray"/>
                                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                                         <TextBlock x:Name="NumberRoom" Text="{Binding soPhong}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
                                                     </StackPanel>
@@ -163,7 +163,7 @@
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0" >
-                            <Label Content="Thông tin phòng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
+                            <Label Content="Thông tin bàn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
                         </Grid>
 
                         <Grid Grid.Row="1">
@@ -173,7 +173,7 @@
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" Content="Phòng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                            <Label Grid.Column="0" Content="Bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                             <TextBlock Grid.Column="1" x:Name="NumberRoom" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
                         </Grid>
 
@@ -182,7 +182,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Loại phòng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                            <Label Grid.Column="0" Content="Loại bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                             <TextBlock x:Name="TypeRoom" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
                         </Grid>
 
@@ -283,7 +283,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Phòng số " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                            <Label Grid.Column="0" Content="Bàn số " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                             <TextBlock Grid.Column="1" x:Name="NumberRoomBill" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap" ></TextBlock>
                         </Grid>
 

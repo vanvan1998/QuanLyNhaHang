@@ -32,7 +32,7 @@
         <StackPanel Margin="20,10,290,10">
             <Label Content="Đăng nhập" FontFamily="Segoe UI Black" FontSize="24" Margin="0,10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="#707070">
-                <Run Text="Phần mềm quản lý khách sạn Sài Gòn Hotel"/>
+                <Run Text="Phần mềm quản lý nhà hàng"/>
             </TextBlock>
             <StackPanel Orientation="Horizontal">
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="#707070"><Run Text="Bạn chưa có tài khoản? "/></TextBlock>
@@ -66,7 +66,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Margin="310,50,0,50">
-            <TextBlock Text="Sài Gòn Hotel" Foreground="White" HorizontalAlignment="Center" FontSize="42" FontFamily="Champagne &amp; Limousines" FontWeight="Bold"/>
+            <TextBlock Text="Nhà hàng " Foreground="White" HorizontalAlignment="Center" FontSize="42" FontFamily="Champagne &amp; Limousines" FontWeight="Bold"/>
             <TextBlock Text="&quot;Sự hài lòng của bạn là thành công của chúng tôi.&quot;" Foreground="White" HorizontalAlignment="Center" Width="280" FontSize="24" FontFamily="Champagne &amp; Limousines" TextWrapping="Wrap" TextAlignment="Left" Margin="0,50,0,0" FontStyle="Italic"/>
         </StackPanel>
     </Grid>

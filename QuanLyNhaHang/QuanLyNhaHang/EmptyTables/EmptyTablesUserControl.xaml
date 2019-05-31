@@ -13,8 +13,8 @@
             <StackPanel Background="#FFCFCFCF">
                 <Grid Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
-                        <Button Uid="0" Width="500" Content="Phòng tiêu chuẩn" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0069C0" Click="Button_Click"/>
-                        <Button Uid="1" Width="500" Content="Phòng VIP" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0069C0" Click="Button_Click"/>
+                        <Button Uid="0" Width="500" Content="Bàn tiêu chuẩn" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0069C0" Click="Button_Click"/>
+                        <Button Uid="1" Width="500" Content="Bàn VIP" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF0069C0" Click="Button_Click"/>
                     </StackPanel>
                     <Grid x:Name="GridCursor" Width="500" Height="5" Background="#FF0069C0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 </Grid>

@@ -98,7 +98,8 @@
                         <ListViewItem x:Name="ItemCreate" Height="60">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Pencil" Height="25" Width="25" Margin="10"/>
-                                <TextBlock Text="Đặt Phòng" VerticalAlignment="Center" Margin="20 10"/>
+                                <TextBlock Text="Đặt Bàn
+                                    " VerticalAlignment="Center" Margin="20 10"/>
                             </StackPanel>
                         </ListViewItem>
                         <ListViewItem Height="60">

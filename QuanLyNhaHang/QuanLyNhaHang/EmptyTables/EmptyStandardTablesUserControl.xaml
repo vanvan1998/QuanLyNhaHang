@@ -43,7 +43,7 @@
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                     </Grid>
-                                    <TextBlock Text="Số phòng" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                         <TextBlock x:Name="NumberTable" Text="{Binding soPhong}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
                                     </StackPanel>
@@ -87,7 +87,7 @@
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                     </Grid>
-                                    <TextBlock Text="Số phòng" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                         <TextBlock x:Name="NumberTable" Text="{Binding soPhong}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
                                     </StackPanel>
@@ -131,7 +131,7 @@
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                     </Grid>
-                                    <TextBlock  Text="Số phòng" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                    <TextBlock  Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                         <TextBlock x:Name="NumberTable" Text="{Binding soPhong}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
                                     </StackPanel>
@@ -187,7 +187,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox x:Name="TbSearch" Grid.Column="0" Margin="8 0 0 0" MinWidth="350" materialDesign:HintAssist.Hint="Nhập số phòng" materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                    <TextBox x:Name="TbSearch" Grid.Column="0" Margin="8 0 0 0" MinWidth="350" materialDesign:HintAssist.Hint="Nhập số bàn" materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                             BorderThickness="0"
                                             VerticalAlignment="Center" />
                                     <Button Grid.Column="1" Style="{DynamicResource MaterialDesignToolButton}" Click="Search_Click">
@@ -202,7 +202,7 @@
 
 
                 <Grid Grid.Row="1" >
-                    <Label Content="Đặt Phòng" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
+                    <Label Content="Đặt Bàn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -212,7 +212,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="Phòng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <Label Grid.Column="0" Content="Bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBlock x:Name="NumberTable" Grid.Column="1" Text="{Binding soPhong}" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
                 </Grid>
 
@@ -221,7 +221,7 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Loại phòng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <Label Grid.Column="0" Content="Loại bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBlock x:Name="TypeTable" Grid.Column="1" Text="{Binding loaiPhong}" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
                 </Grid>
 
@@ -257,7 +257,7 @@
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150"
                         ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
-                        Đặt phòng
+                        Đặt bàn
                     </Button>
                 </Grid>
 

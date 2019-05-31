@@ -121,7 +121,7 @@ namespace QuanLyNhaHang
                     break;
                 case 1:
                     GridMain.Children.Add(new EmptyTables.EmptyTablesUserControl());
-                    Title.Content = "Đặt Phòng";
+                    Title.Content = "Đặt Bàn";
                     break;
                 case 2:
                     GridMain.Children.Add(new UsingTables.UsingTablesUserControl());
