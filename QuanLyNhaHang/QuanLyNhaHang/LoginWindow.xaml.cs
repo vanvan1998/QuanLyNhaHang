@@ -118,8 +118,22 @@ namespace QuanLyNhaHang
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO kiểm tra username và password có trống không?
-            using (MD5 md5Hash = MD5.Create())
+            //TODO kiểm tra username và password có trống không? 
+            if ((Username.Text == "") && (Password.Password == ""))
+            {
+                tbMessageBox.Text = "username và password trống!!!";
+            }
+            else if (Username.Text == "")
+            {
+                tbMessageBox.Text = "username trống!!!";
+            }
+            else if (Password.Password == "")
+            {
+                tbMessageBox.Text = "password trống!!!";
+            }
+            else
+            { 
+                using (MD5 md5Hash = MD5.Create())
             {
                 //đăng nhập với password đã mã hóa
                 string result = loginRequest(Username.Text, GetMd5Hash(md5Hash, Password.Password));
@@ -138,9 +152,10 @@ namespace QuanLyNhaHang
                     this.Close();
                 }
             }
-            if (IsLoginSuccess == false)
+                if (IsLoginSuccess == false)
             {
-                MessageBox.Show("Tài khoản hoặc mật khẩu sai!");
+                tbMessageBox.Text="Tài khoản hoặc mật khẩu sai!";
+            }
             }
         }
     }

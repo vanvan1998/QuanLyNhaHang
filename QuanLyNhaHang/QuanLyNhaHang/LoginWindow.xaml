@@ -46,6 +46,7 @@
                 <materialDesign:PackIcon Kind="Key" VerticalAlignment="Center" Foreground="#707070"/>
                 <PasswordBox x:Name="Password" materialDesign:HintAssist.Hint="Password" Width="250" Margin="5"/>
             </StackPanel>
+            <TextBlock x:Name="tbMessageBox" FontSize="13" Margin="10,10,10,0" Foreground="Red"></TextBlock>
             <Grid>
                 <CheckBox Content="Duy trì đăng nhập" Margin="5,10" Foreground="#707070"/>
                 <Label Content="Quên mật khẩu?" Foreground="#FF2468AC" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
