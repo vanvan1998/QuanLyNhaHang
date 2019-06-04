@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using QuanLyNhaHang.Entity;
+using Newtonsoft.Json;
 
 namespace QuanLyNhaHang
 {
@@ -21,7 +23,8 @@ namespace QuanLyNhaHang
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public bool IsLoginSuccess = true;
+        const string SERVER = "http://localhost:3000/api";
+        public bool IsLoginSuccess = false;
         //public NhanVien nhanVienHienTai = null; // nhân viên
 
         public LoginWindow()
@@ -60,26 +63,74 @@ namespace QuanLyNhaHang
             return sBuilder.ToString();
         }
 
+        public string GET(string uri)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public string POST(string uri, string json)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.ContentType = "application/json";
+            request.Method = "POST";
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(json);
+                streamWriter.Write("\n");
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        private string loginRequest(string username, string password)
+        {
+            string json = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
+            string url = SERVER + "/login";
+
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO kiểm tra username và password có trống không?
             using (MD5 md5Hash = MD5.Create())
             {
                 //đăng nhập với password đã mã hóa
-                //foreach (var nv in DataProvider.Ins.DB.NhanViens.ToList())
-                //{
-                //    if (Username.Text == nv.maNhanVien && GetMd5Hash(md5Hash, Password.Password) == nv.matKhau)
-                //    {
-                //        IsLoginSuccess = true;
-                //        nhanVienHienTai = nv;
-                //        this.Close();
-                //        break;
-                //    }
-                //}
-                this.Close();
-                IsLoginSuccess = true;
+                string result = loginRequest(Username.Text, Password.Password);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+                IsLoginSuccess = stuff.code;
+                if (IsLoginSuccess)
+                {
+                    IsLoginSuccess = true;
+                    //nhanVienHienTai = nv;
+                    this.Close();
+                }
             }
-
-
             if (IsLoginSuccess == false)
             {
                 MessageBox.Show("Tài khoản hoặc mật khẩu sai!");
