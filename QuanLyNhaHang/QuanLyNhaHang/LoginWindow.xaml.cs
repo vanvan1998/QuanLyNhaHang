@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang
 {
@@ -25,7 +26,7 @@ namespace QuanLyNhaHang
     {
         const string SERVER = "http://localhost:3000/api";
         public bool IsLoginSuccess = false;
-        //public NhanVien nhanVienHienTai = null; // nhân viên
+        public Employee employee = new Employee(); // nhân viên
 
         public LoginWindow()
         {
@@ -121,13 +122,14 @@ namespace QuanLyNhaHang
             using (MD5 md5Hash = MD5.Create())
             {
                 //đăng nhập với password đã mã hóa
-                string result = loginRequest(Username.Text, Password.Password);
+                string result = loginRequest(Username.Text, GetMd5Hash(md5Hash, Password.Password));
                 dynamic stuff = JsonConvert.DeserializeObject(result);
                 IsLoginSuccess = stuff.code;
                 if (IsLoginSuccess)
                 {
                     IsLoginSuccess = true;
-                    //nhanVienHienTai = nv;
+                    employee.displayName = stuff.user.displayName;
+                    employee.role = stuff.user.role;
                     this.Close();
                 }
             }

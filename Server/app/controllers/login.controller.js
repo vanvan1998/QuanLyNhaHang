@@ -4,7 +4,7 @@ const User = require('../models/user.model.js');
 exports.login = (req, res) => {
     // Validate username
     if (!req.body.username) {trf
-        return res.status(400).send({
+        return res.send({
             message: "User user name can not be empty", 
             code : 0
         });
@@ -12,7 +12,7 @@ exports.login = (req, res) => {
 
     // Validate password
     if (!req.body.password) {
-        return res.status(400).send({
+        return res.send({
             message: "User password can not be empty",
             code : 0
         });
@@ -30,7 +30,7 @@ exports.login = (req, res) => {
             if (user.password == req.body.password) {
                 res.send({
                     message: "Login successful",
-                    role: user.role,
+                    user: user,
                     code: 1
                 })
             }
