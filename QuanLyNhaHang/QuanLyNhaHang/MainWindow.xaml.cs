@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang
 {
@@ -20,7 +21,7 @@ namespace QuanLyNhaHang
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public NhanVien nhanVienHienTai = null;
+        public Employee employee = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -28,23 +29,22 @@ namespace QuanLyNhaHang
 
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
-            //loginWindow.IsLoginSuccess = true;
 
             if (loginWindow.IsLoginSuccess == true)
             {
                 this.Show();
-                //nhanVienHienTai = loginWindow.nhanVienHienTai;
-                //EmployeeName.Content = nhanVienHienTai.hoTen;
-                //if (nhanVienHienTai.loaiNhanVien == 1) // quản lý
-                //{
-                //    Statistical.Visibility = Visibility.Visible;
-                //    Setting.Visibility = Visibility.Visible;
-                //}
-                //else if (nhanVienHienTai.loaiNhanVien == 2) // nhân viên
-                //{
-                //    Statistical.Visibility = Visibility.Hidden;
-                //    Setting.Visibility = Visibility.Hidden;
-                //}
+                employee = loginWindow.employee;
+                EmployeeName.Content = employee.displayName;
+                if (employee.role == "admin") // quản lý
+                {
+                    Statistical.Visibility = Visibility.Visible;
+                    Setting.Visibility = Visibility.Visible;
+                }
+                else if (employee.role == "employee") // nhân viên
+                {
+                    Statistical.Visibility = Visibility.Hidden;
+                    Setting.Visibility = Visibility.Hidden;
+                }
                 GridMain.Children.Add(new DashboardUserControl());
                 Title.Content = "Dashboard";
 
@@ -82,67 +82,67 @@ namespace QuanLyNhaHang
             int index = ListViewMenu.SelectedIndex;
             MoveCursorMenu(index);
             GridMain.Children.Clear();
-            //if (nhanVienHienTai == null)
-            //{
-            //    nhanVienHienTai = new NhanVien();
-            //    nhanVienHienTai.loaiNhanVien = 1;
-            //}
-            //if (nhanVienHienTai.loaiNhanVien == 2) // nhân viên
-            //{
-            //    switch (index)
-            //    {
-            //        case 0:
-            //            GridMain.Children.Add(new DashboardUserControl());
-            //            Title.Content = "Dashboard";
-            //            break;
-            //        case 1:
-            //            GridMain.Children.Add(new EmptyTables.EmptyTablesUserControl());
-            //            Title.Content = "Đặt Phòng";
-            //            break;
-            //        case 2:
-            //            GridMain.Children.Add(new UsingTables.UsingTablesUserControl());
-            //            Title.Content = "Thanh Toán";
-            //            break;
-            //        case 3:
-            //            GridMain.Children.Add(new SearchUserControl());
-            //            Title.Content = "Tìm Kiếm";
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
-            //else if (nhanVienHienTai.loaiNhanVien == 1) // quản lý
-            //{
-            switch (index)
+            if (employee == null)
             {
-                case 0:
-                    GridMain.Children.Add(new DashboardUserControl());
-                    Title.Content = "Dashboard";
-                    break;
-                case 1:
-                    GridMain.Children.Add(new EmptyTables.EmptyTablesUserControl());
-                    Title.Content = "Đặt Bàn";
-                    break;
-                case 2:
-                    GridMain.Children.Add(new UsingTables.UsingTablesUserControl());
-                    Title.Content = "Thanh Toán";
-                    break;
-                case 3:
-                    GridMain.Children.Add(new SearchUserControl());
-                    Title.Content = "Tìm Kiếm";
-                    break;
-                case 4:
-                    GridMain.Children.Add(new StatisticalUserControl());
-                    Title.Content = "Thống Kê";
-                    break;
-                case 5:
-                    GridMain.Children.Add(new Setting.SettingUserControl());
-                    Title.Content = "Cài đặt";
-                    break;
-                default:
-                    break;
+                employee = new Employee();
+                employee.role = "admin";
             }
-            //}
+            if (employee.role == "employee") // nhân viên
+            {
+                switch (index)
+                {
+                    case 0:
+                        GridMain.Children.Add(new DashboardUserControl());
+                        Title.Content = "Dashboard";
+                        break;
+                    case 1:
+                        GridMain.Children.Add(new EmptyTables.EmptyTablesUserControl());
+                        Title.Content = "Đặt Phòng";
+                        break;
+                    case 2:
+                        GridMain.Children.Add(new UsingTables.UsingTablesUserControl());
+                        Title.Content = "Thanh Toán";
+                        break;
+                    case 3:
+                        GridMain.Children.Add(new SearchUserControl());
+                        Title.Content = "Tìm Kiếm";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (employee.role == "admin") // quản lý
+            {
+                switch (index)
+                {
+                    case 0:
+                        GridMain.Children.Add(new DashboardUserControl());
+                        Title.Content = "Dashboard";
+                        break;
+                    case 1:
+                        GridMain.Children.Add(new EmptyTables.EmptyTablesUserControl());
+                        Title.Content = "Đặt Bàn";
+                        break;
+                    case 2:
+                        GridMain.Children.Add(new UsingTables.UsingTablesUserControl());
+                        Title.Content = "Thanh Toán";
+                        break;
+                    case 3:
+                        GridMain.Children.Add(new SearchUserControl());
+                        Title.Content = "Tìm Kiếm";
+                        break;
+                    case 4:
+                        GridMain.Children.Add(new StatisticalUserControl());
+                        Title.Content = "Thống Kê";
+                        break;
+                    case 5:
+                        GridMain.Children.Add(new Setting.SettingUserControl());
+                        Title.Content = "Cài đặt";
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -166,29 +166,29 @@ namespace QuanLyNhaHang
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
 
-            //if (loginWindow.IsLoginSuccess == true)
-            //{
-            //    this.Show();
-            //    nhanVienHienTai = loginWindow.nhanVienHienTai;
-            //    EmployeeName.Content = nhanVienHienTai.hoTen;
-            //    if (nhanVienHienTai.loaiNhanVien == 1) // quản lý
-            //    {
-            //        Statistical.Visibility = Visibility.Visible;
-            //        Setting.Visibility = Visibility.Visible;
-            //    }
-            //    else if (nhanVienHienTai.loaiNhanVien == 2) // nhân viên
-            //    {
-            //        Statistical.Visibility = Visibility.Hidden;
-            //        Setting.Visibility = Visibility.Hidden;
-            //    }
-            //    GridMain.Children.Add(new DashboardUserControl());
-            //    Title.Content = "Dashboard";
+            if (loginWindow.IsLoginSuccess == true)
+            {
+                this.Show();
+                employee = loginWindow.employee;
+                EmployeeName.Content = employee.displayName;
+                if (employee.role == "admin") // quản lý
+                {
+                    Statistical.Visibility = Visibility.Visible;
+                    Setting.Visibility = Visibility.Visible;
+                }
+                else if (employee.role == "employee") // nhân viên
+                {
+                    Statistical.Visibility = Visibility.Hidden;
+                    Setting.Visibility = Visibility.Hidden;
+                }
+                GridMain.Children.Add(new DashboardUserControl());
+                Title.Content = "Dashboard";
 
-            //}
-            //else
-            //{
-            //    Application.Current.Shutdown();
-            //}
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }

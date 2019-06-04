@@ -26,7 +26,7 @@ namespace QuanLyNhaHang
     {
         const string SERVER = "http://localhost:3000/api";
         public bool IsLoginSuccess = false;
-        public Employee employee = new Employee(); // nhân viên
+        public Employee employee = null; // nhân viên
 
         public LoginWindow()
         {
@@ -128,8 +128,13 @@ namespace QuanLyNhaHang
                 if (IsLoginSuccess)
                 {
                     IsLoginSuccess = true;
-                    employee.displayName = stuff.user.displayName;
-                    employee.role = stuff.user.role;
+                    employee = new Employee()
+                    {
+                        username = stuff.user.username,
+                        password = stuff.user.password,
+                        displayName = stuff.user.displayName,
+                        role = stuff.user.role
+                    };
                     this.Close();
                 }
             }
