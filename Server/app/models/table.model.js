@@ -2,13 +2,10 @@ const mongoose = require('mongoose');
 
 const TableSchema = mongoose.Schema({
     number: Number,
-    info: String,
+    note: String,
     status: String,
-    customer: {
-        fullName: String,
-        phone: String,
-        timeOder: Date
-    }
+    numberOfSeat: Number,
+    type: String
 }, {
     timestamps: true
 });

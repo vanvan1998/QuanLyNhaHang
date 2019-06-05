@@ -24,7 +24,6 @@ namespace QuanLyNhaHang
     /// </summary>
     public partial class LoginWindow : Window
     {
-        const string SERVER = "http://localhost:3000/api";
         public bool IsLoginSuccess = false;
         public Employee employee = null; // nhân viên
 
@@ -64,58 +63,6 @@ namespace QuanLyNhaHang
             return sBuilder.ToString();
         }
 
-        public string GET(string uri)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public string POST(string uri, string json)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.ContentType = "application/json";
-            request.Method = "POST";
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-                streamWriter.Write(json);
-                streamWriter.Write("\n");
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        private string loginRequest(string username, string password)
-        {
-            string json = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\"}";
-            string url = SERVER + "/login";
-
-            try
-            {
-                return POST(url, json);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (Username.Text == "")
@@ -132,7 +79,7 @@ namespace QuanLyNhaHang
             using (MD5 md5Hash = MD5.Create())
             {
                 //đăng nhập với password đã mã hóa
-                string result = loginRequest(Username.Text, GetMd5Hash(md5Hash, Password.Password));
+                string result = API.login(Username.Text, GetMd5Hash(md5Hash, Password.Password));
 
                 if (result!= "")
                 {

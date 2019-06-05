@@ -29,8 +29,7 @@ namespace QuanLyNhaHang.EmptyTables
         List<Model.Table> EmptyStandardCoupleTables = new List<Model.Table>();
         List<Model.Table> EmptyStandardGroupTables = new List<Model.Table>();
 
-        private Model.Table tableCurrent = null;
-        const string SERVER = "http://localhost:3000/api";
+        private Model.Table tableSelected = null;
 
         public EmptyStandardTablesUserControl()
         {
@@ -39,7 +38,7 @@ namespace QuanLyNhaHang.EmptyTables
             //TODO: phải làm 1 stask mới ở đây
 
             //Ví dụ về lấy danh sách bàn
-            string result = GET(SERVER + "/Tables");
+            string result = API.getAllTableWithStatusAndType("booked", "VIP");
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             foreach (var item in stuff)
@@ -49,11 +48,11 @@ namespace QuanLyNhaHang.EmptyTables
                     number = item.number,
                     info = item.info,
                     status = item.status,
-                    customer = new Customer() {
-                        fullName = item.fullName,
-                        phone = item.phone,
-                        timeOrder = item.timeOrder
-                    },
+                    //customer = new Customer() {
+                    //    fullName = item.customer.fullName,
+                    //    phone = item.customer.phone,
+                    //    timeOrder = item.customer.timeOrder
+                    //},
                 });
             }
 
@@ -249,42 +248,6 @@ namespace QuanLyNhaHang.EmptyTables
             //{
             //    MessageBox.Show("Số phòng không đúng!");
             //}
-        }
-
-        public string GET(string uri)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public string POST(string uri, string json)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.ContentType = "application/json";
-            request.Method = "POST";
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-                streamWriter.Write(json);
-                streamWriter.Write("\n");
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
         }
     }
 }

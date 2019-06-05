@@ -5,7 +5,7 @@ module.exports = (app) => {
     app.post('/api/tables', table.create);
 
     // Retrieve all Tables
-    app.get('/api/tables', table.findAll);
+    app.get('/api/tables/:status/:type', table.findAll);
 
     // Retrieve a single Table with tableId
     app.get('/api/tables/:tableId', table.findOne);

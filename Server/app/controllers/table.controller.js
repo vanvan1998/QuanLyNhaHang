@@ -32,9 +32,12 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve and return all tables from the database.
+// Retrieve and return all tables with status and type from the database.
 exports.findAll = (req, res) => {
-    Table.find()
+    var status = req.params.status;
+    const type = req.params.type;
+
+    Table.find({ "status": status, "type": type })
         .then(tables => {
             res.send(tables);
         }).catch(err => {
