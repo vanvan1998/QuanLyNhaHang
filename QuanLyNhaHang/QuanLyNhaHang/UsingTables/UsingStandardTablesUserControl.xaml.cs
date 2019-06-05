@@ -25,9 +25,9 @@ namespace QuanLyNhaHang.UsingTables
 
     public partial class UsingStandardTablesUserControl : UserControl
     {
-        ObservableCollection<Model.Table> UsingStandardSingleTables = new ObservableCollection<Model.Table>();
-        ObservableCollection<Model.Table> UsingStandardCoupleTables = new ObservableCollection<Model.Table>();
-        ObservableCollection<Model.Table> UsingStandardGroupTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingStandard4PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingStandard8PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingStandard12PersonTables = new ObservableCollection<Model.Table>();
 
         //ListView lvHienTai = null;
         //ListViewItem lviHienTai = null;
@@ -44,7 +44,7 @@ namespace QuanLyNhaHang.UsingTables
             {
                 if (item.numberOfSeat == 4)
                 {
-                    UsingStandardSingleTables.Add(new Model.Table()
+                    UsingStandard4PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -53,7 +53,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else if (item.numberOfSeat == 8)
                 {
-                    UsingStandardCoupleTables.Add(new Model.Table()
+                    UsingStandard8PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -62,7 +62,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else
                 {
-                    UsingStandardGroupTables.Add(new Model.Table()
+                    UsingStandard12PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -71,9 +71,9 @@ namespace QuanLyNhaHang.UsingTables
                 };
             }
 
-            ListViewUsingStandardSingleTable.ItemsSource = UsingStandardSingleTables;
-            ListViewUsingStandardCoupleTable.ItemsSource = UsingStandardCoupleTables;
-            ListViewUsingStandardGroupTable.ItemsSource = UsingStandardGroupTables;
+            ListViewUsingStandard4PersonTable.ItemsSource = UsingStandard4PersonTables;
+            ListViewUsingStandard8PersonTable.ItemsSource = UsingStandard8PersonTables;
+            ListViewUsingStandard12PersonTable.ItemsSource = UsingStandard12PersonTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -96,9 +96,9 @@ namespace QuanLyNhaHang.UsingTables
 
             //    var bc = new BrushConverter();
 
-            //    for (int j = 0; j < UsingStandardSingleTables.Count; j++)
+            //    for (int j = 0; j < UsingStandard4PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi1 = ListViewUsingStandardSingleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi1 = ListViewUsingStandard4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
             //        var dt1 = cp1.ContentTemplate as DataTemplate;
@@ -108,9 +108,9 @@ namespace QuanLyNhaHang.UsingTables
             //        rt1.Fill = Brushes.White;
             //    }
 
-            //    for (int j = 0; j < UsingStandardCoupleTables.Count; j++)
+            //    for (int j = 0; j < UsingStandard8PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi2 = ListViewUsingStandardCoupleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi2 = ListViewUsingStandard8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
 
             //        var dt2 = cp2.ContentTemplate as DataTemplate;
@@ -120,9 +120,9 @@ namespace QuanLyNhaHang.UsingTables
             //        rt2.Fill = Brushes.White;
             //    }
 
-            //    for (int j = 0; j < UsingStandardGroupTables.Count; j++)
+            //    for (int j = 0; j < UsingStandard12PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi3 = ListViewUsingStandardGroupTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi3 = ListViewUsingStandard12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
 
             //        var dt3 = cp3.ContentTemplate as DataTemplate;
@@ -168,7 +168,7 @@ namespace QuanLyNhaHang.UsingTables
             //    return;
             //}
 
-            //var re1 = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == NumberTable.Text).SingleOrDefault();
+            //var re1 = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == NumberTable.Text).4PersonOrDefault();
 
             //string maHD = "HD1";
             //string maKM = null;
@@ -180,7 +180,7 @@ namespace QuanLyNhaHang.UsingTables
 
             //if (DiscountCodeTextBox.Text != "")
             //{
-            //    var DSMKM = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).SingleOrDefault();
+            //    var DSMKM = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
 
             //    if (DSMKM == null)
             //    {
@@ -207,41 +207,41 @@ namespace QuanLyNhaHang.UsingTables
             //DataProvider.Ins.DB.HoaDons.Add(hoaDon);
             //DataProvider.Ins.DB.SaveChanges();
 
-            //foreach (var table in UsingStandardSingleTables)
+            //foreach (var table in UsingStandard4PersonTables)
             //{
             //    if (table.soPhong == phongHienTai.soPhong)
             //    {
-            //        UsingStandardSingleTables.Remove(table);
+            //        UsingStandard4PersonTables.Remove(table);
             //        break;
             //    }
             //}
 
-            //ListViewUsingStandardSingleTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingStandardSingleTable.ItemsSource = UsingStandardSingleTables;
+            //ListViewUsingStandard4PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewUsingStandard4PersonTable.ItemsSource = UsingStandard4PersonTables;
 
-            //foreach (var table in UsingStandardCoupleTables)
+            //foreach (var table in UsingStandard8PersonTables)
             //{
             //    if (table.soPhong == phongHienTai.soPhong)
             //    {
-            //        UsingStandardCoupleTables.Remove(table);
+            //        UsingStandard8PersonTables.Remove(table);
             //        break;
             //    }
             //}
 
-            //ListViewUsingStandardCoupleTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingStandardCoupleTable.ItemsSource = UsingStandardCoupleTables;
+            //ListViewUsingStandard8PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewUsingStandard8PersonTable.ItemsSource = UsingStandard8PersonTables;
 
-            //foreach (var table in UsingStandardGroupTables)
+            //foreach (var table in UsingStandard12PersonTables)
             //{
             //    if (table.soPhong == phongHienTai.soPhong)
             //    {
-            //        UsingStandardGroupTables.Remove(table);
+            //        UsingStandard12PersonTables.Remove(table);
             //        break;
             //    }
             //}
 
-            //ListViewUsingStandardGroupTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingStandardGroupTable.ItemsSource = UsingStandardGroupTables;
+            //ListViewUsingStandard12PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewUsingStandard12PersonTable.ItemsSource = UsingStandard12PersonTables;
 
             //phongHienTai.tinhTrang = 0;
             //phongHienTai.thoiGianBatDau = null;
@@ -265,7 +265,7 @@ namespace QuanLyNhaHang.UsingTables
         {
             //if (DiscountCodeTextBox.Text != "")
             //{
-            //    var re = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).SingleOrDefault();
+            //    var re = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
 
             //    if (re == null)
             //    {
@@ -280,7 +280,7 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //var table = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 1 && x.daXoa == 0).SingleOrDefault();
+            //var table = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 1 && x.daXoa == 0).4PersonOrDefault();
 
             //if (table != null)
             //{
