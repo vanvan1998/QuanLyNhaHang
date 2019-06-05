@@ -4,21 +4,21 @@ const User = require('../models/user.model.js');
 exports.create = (req, res) => {
     // Validate username
     if (!req.body.username) {
-        return res.status(400).send({
+        return res.send({
             message: "User user name can not be empty"
         });
     }
 
     // Validate password
     if (!req.body.password) {
-        return res.status(400).send({
+        return res.send({
             message: "User password can not be empty"
         });
     }
 
     // Validate role
     if (!req.body.role) {
-        return res.status(400).send({
+        return res.send({
             message: "User role can not be empty"
         });
     }
@@ -36,7 +36,7 @@ exports.create = (req, res) => {
             res.send(data);
             console.log("Send data!!");
         }).catch(err => {
-            res.status(500).send({
+            res.send({
                 message: err.message || "Some error occurred while creating the User."
             });
         });
@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
         .then(users => {
             res.send(users);
         }).catch(err => {
-            res.status(500).send({
+            res.send({
                 message: err.message || "Some error occurred while retrieving users."
             });
         });
@@ -59,18 +59,18 @@ exports.findOne = (req, res) => {
     User.findById(req.params.userId)
         .then(user => {
             if (!user) {
-                return res.status(404).send({
+                return res.send({
                     message: "User not found with id " + req.params.userId
                 });
             }
             res.send(user);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.send({
                     message: "User not found with id " + req.params.userId
                 });
             }
-            return res.status(500).send({
+            return res.send({
                 message: "Error retrieving user with id " + req.params.userId
             });
         });
@@ -80,31 +80,37 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     // Validate Request
     if (!req.body.password) {
-        return res.status(400).send({
+        return res.send({
             message: "User password can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.role) {
+        return res.send({
+            message: "User role can not be empty"
         });
     }
 
     // Find user and update it with the request body
     User.findByIdAndUpdate(req.params.userId, {
-        username: req.body.username,
         password: req.body.password,
         role: req.body.role
     }, { new: true })
         .then(user => {
             if (!user) {
-                return res.status(404).send({
+                return res.send({
                     message: "User not found with id " + req.params.userId
                 });
             }
             res.send(user);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.send({
                     message: "User not found with id " + req.params.userId
                 });
             }
-            return res.status(500).send({
+            return res.send({
                 message: "Error updating user with id " + req.params.userId
             });
         });
@@ -115,18 +121,18 @@ exports.delete = (req, res) => {
     User.findByIdAndRemove(req.params.userId)
         .then(user => {
             if (!user) {
-                return res.status(404).send({
+                return res.send({
                     message: "User not found with id " + req.params.userId
                 });
             }
             res.send({ message: "User deleted successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId' || err.name === 'NotFound') {
-                return res.status(404).send({
+                return res.send({
                     message: "User not found with id " + req.params.userId
                 });
             }
-            return res.status(500).send({
+            return res.send({
                 message: "Could not delete user with id " + req.params.userId
             });
         });

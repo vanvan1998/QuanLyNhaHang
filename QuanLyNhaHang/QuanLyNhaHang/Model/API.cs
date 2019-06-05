@@ -29,6 +29,54 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        #region User API
+
+        public static string createNewUser(string username, string password, string role)
+        {
+            string url = SERVER + "/users";
+            string json = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\", \"role\": \"" + role +"\"}";
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string updateUser(string ID, string password, string role)
+        {
+            string url = SERVER + "/users/" + ID;
+            string json = "{\"password\": \"" + password + "\", \"role\": \"" + role + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string deleteUser(string ID)
+        {
+            string url = SERVER + "/users/" + ID;
+            try
+            {
+                return DELETE(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        #endregion
+
         #region Table API
 
         public static string getAllTableWithStatusAndType(string status, string type)
