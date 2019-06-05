@@ -44,6 +44,21 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string getCustomer(string ID)
+        {
+            string url = SERVER + "/customers/" + ID;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         private static string GET(string uri)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);

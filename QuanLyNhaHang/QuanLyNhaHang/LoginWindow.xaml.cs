@@ -25,6 +25,7 @@ namespace QuanLyNhaHang
     public partial class LoginWindow : Window
     {
         public bool IsLoginSuccess = false;
+
         public Employee employee = null; // nhân viên
 
         public LoginWindow()
