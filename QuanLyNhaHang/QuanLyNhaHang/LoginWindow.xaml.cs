@@ -31,6 +31,7 @@ namespace QuanLyNhaHang
         public LoginWindow()
         {
             InitializeComponent();
+            API.updateCustomer("5cf630ca1c9d440000f94e08", "Tuấn Đẹp Trai", "0123456789");
         }
 
         private void ExitLoginButton_Click(object sender, RoutedEventArgs e)

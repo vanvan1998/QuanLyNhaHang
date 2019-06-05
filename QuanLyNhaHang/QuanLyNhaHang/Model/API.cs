@@ -29,6 +29,8 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        #region Table API
+
         public static string getAllTableWithStatusAndType(string status, string type)
         {
             string url = SERVER + "/tables/" + status + "/" + type;
@@ -44,6 +46,11 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+
+        #endregion
+
+        #region Customer API
+
         public static string getCustomer(string ID)
         {
             string url = SERVER + "/customers/" + ID;
@@ -58,6 +65,40 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
+
+        public static string createNewCustomer(string fullName, string phone)
+        {
+            string url = SERVER + "/customers";
+            string json = "{\"fullName\": \"" + fullName + "\", \"phone\": \"" + phone + "\"}";
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string updateCustomer(string ID, string fullName, string phone)
+        {
+            string url = SERVER + "/customers/" + ID;
+            string json = "{\"fullName\": \"" + fullName + "\", \"phone\": \"" + phone + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        #endregion
+
+        #region Http method
 
         private static string GET(string uri)
         {
@@ -95,5 +136,29 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        private static string PUT(string uri, string json)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.ContentType = "application/json";
+            request.Method = "PUT";
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(json);
+                streamWriter.Write("\n");
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        #endregion  
     }
 }

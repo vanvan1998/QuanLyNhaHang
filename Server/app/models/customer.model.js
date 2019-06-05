@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const CustomerSchema = mongoose.Schema({
     ID: Number,
-    name: String,
+    fullName: String,
     phone: String,
 }, {
         timestamps: true
