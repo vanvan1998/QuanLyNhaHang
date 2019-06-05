@@ -14,7 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using QuanLyNhaHang.Entity;
+using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.UsingTables
 {
@@ -23,9 +24,9 @@ namespace QuanLyNhaHang.UsingTables
     /// </summary>
     public partial class UsingVIPTablesUserControl : UserControl
     {
-        //ObservableCollection<Phong> UsingVIPSingleTables = new ObservableCollection<Phong>();
-        //ObservableCollection<Phong> UsingVIPCoupleTables = new ObservableCollection<Phong>();
-        //ObservableCollection<Phong> UsingVIPGroupTables = new ObservableCollection<Phong>();
+        ObservableCollection<Model.Table> UsingVIPSingleTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingVIPCoupleTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingVIPGroupTables = new ObservableCollection<Model.Table>();
 
         //ListView lvHienTai = null;
         //ListViewItem lviHienTai = null;
@@ -35,28 +36,43 @@ namespace QuanLyNhaHang.UsingTables
         {
             InitializeComponent();
 
-            //foreach (var room in DataProvider.Ins.DB.Phongs.ToList())
-            //{
-            //    if (room.tinhTrang == 1 && room.daXoa == 0)
-            //    {
-            //        if (room.loaiPhong == "VIP - Đơn")
-            //        {
-            //            UsingVIPSingleTables.Add(room);
-            //        }
-            //        else if (room.loaiPhong == "VIP - Đôi")
-            //        {
-            //            UsingVIPCoupleTables.Add(room);
-            //        }
-            //        else if (room.loaiPhong == "VIP - Nhóm")
-            //        {
-            //            UsingVIPGroupTables.Add(room);
-            //        }
-            //    }
-            //}
+            string result = API.getAllTableWithStatusAndType("booked", "VIP");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //ListViewUsingVIPSingleTable.ItemsSource = UsingVIPSingleTables;
-            //ListViewUsingVIPCoupleTable.ItemsSource = UsingVIPCoupleTables;
-            //ListViewUsingVIPGroupTable.ItemsSource = UsingVIPGroupTables;
+            foreach (var item in stuff)
+            {
+                if (item.numberOfSeat == 4)
+                {
+                    UsingVIPSingleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else if (item.numberOfSeat == 8)
+                {
+                    UsingVIPCoupleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else
+                {
+                    UsingVIPGroupTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                };
+            }
+
+            ListViewUsingVIPSingleTable.ItemsSource = UsingVIPSingleTables;
+            ListViewUsingVIPCoupleTable.ItemsSource = UsingVIPCoupleTables;
+            ListViewUsingVIPGroupTable.ItemsSource = UsingVIPGroupTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
