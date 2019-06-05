@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using QuanLyNhaHang.Entity;
+using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.EmptyTables
 {
@@ -22,38 +23,51 @@ namespace QuanLyNhaHang.EmptyTables
     /// </summary>
     public partial class EmptyVIPTablesUserControl : UserControl
     {
-        //List<Phong> EmptyVIPSingleTables = new List<Phong>();
-        //List<Phong> EmptyVIPCoupleTables = new List<Phong>();
-        //List<Phong> EmptyVIPGroupTables = new List<Phong>();
-
-        //Phong phongHienTai = null;
+        List<Model.Table> EmptyVIPSingleTables = new List<Model.Table>();
+        List<Model.Table> EmptyVIPCoupleTables = new List<Model.Table>();
+        List<Model.Table> EmptyVIPGroupTables = new List<Model.Table>();
 
         public EmptyVIPTablesUserControl()
         {
             InitializeComponent();
 
-            //foreach (var room in DataProvider.Ins.DB.Phongs.ToList())
-            //{
-            //    if (room.tinhTrang == 0 && room.daXoa == 0)
-            //    {
-            //        if (room.loaiPhong == "VIP - Đơn")
-            //        {
-            //            EmptyVIPSingleTables.Add(room);
-            //        }
-            //        else if (room.loaiPhong == "VIP - Đôi")
-            //        {
-            //            EmptyVIPCoupleTables.Add(room);
-            //        }
-            //        else if (room.loaiPhong == "VIP - Nhóm")
-            //        {
-            //            EmptyVIPGroupTables.Add(room);
-            //        }
-            //    }
-            //}
+            string result = API.getAllTableWithStatusAndType("empty", "VIP");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //ListViewEmptyVIPSingleTable.ItemsSource = EmptyVIPSingleTables;
-            //ListViewEmptyVIPCoupleTable.ItemsSource = EmptyVIPCoupleTables;
-            //ListViewEmptyVIPGroupTable.ItemsSource = EmptyVIPGroupTables;
+            foreach (var item in stuff)
+            {
+                if (item.numberOfSeat == 4)
+                {
+                    EmptyVIPSingleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else if (item.numberOfSeat == 8)
+                {
+                    EmptyVIPCoupleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else
+                {
+                    EmptyVIPGroupTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                };
+            }
+
+            ListViewEmptyVIPSingleTable.ItemsSource = EmptyVIPSingleTables;
+            ListViewEmptyVIPCoupleTable.ItemsSource = EmptyVIPCoupleTables;
+            ListViewEmptyVIPGroupTable.ItemsSource = EmptyVIPGroupTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
