@@ -14,7 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using QuanLyNhaHang.Entity;
+using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.UsingTables
 {
@@ -24,9 +25,9 @@ namespace QuanLyNhaHang.UsingTables
 
     public partial class UsingStandardTablesUserControl : UserControl
     {
-        //ObservableCollection<Phong> UsingStandardSingleTables = new ObservableCollection<Phong>();
-        //ObservableCollection<Phong> UsingStandardCoupleTables = new ObservableCollection<Phong>();
-        //ObservableCollection<Phong> UsingStandardGroupTables = new ObservableCollection<Phong>();
+        ObservableCollection<Model.Table> UsingStandardSingleTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingStandardCoupleTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingStandardGroupTables = new ObservableCollection<Model.Table>();
 
         //ListView lvHienTai = null;
         //ListViewItem lviHienTai = null;
@@ -36,28 +37,43 @@ namespace QuanLyNhaHang.UsingTables
         {
             InitializeComponent();
 
-            //foreach (var table in DataProvider.Ins.DB.Phongs.ToList())
-            //{
-            //    if (table.tinhTrang == 1 && table.daXoa == 0)
-            //    {
-            //        if (table.loaiPhong == "Tiêu chuẩn - Đơn")
-            //        {
-            //            UsingStandardSingleTables.Add(table);
-            //        }
-            //        else if (table.loaiPhong == "Tiêu chuẩn - Đôi")
-            //        {
-            //            UsingStandardCoupleTables.Add(table);
-            //        }
-            //        else if (table.loaiPhong == "Tiêu chuẩn - Nhóm")
-            //        {
-            //            UsingStandardGroupTables.Add(table);
-            //        }
-            //    }
-            //}
+            string result = API.getAllTableWithStatusAndType("booked", "standard");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //ListViewUsingStandardSingleTable.ItemsSource = UsingStandardSingleTables;
-            //ListViewUsingStandardCoupleTable.ItemsSource = UsingStandardCoupleTables;
-            //ListViewUsingStandardGroupTable.ItemsSource = UsingStandardGroupTables;
+            foreach (var item in stuff)
+            {
+                if (item.numberOfSeat == 4)
+                {
+                    UsingStandardSingleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else if (item.numberOfSeat == 8)
+                {
+                    UsingStandardCoupleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else
+                {
+                    UsingStandardGroupTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                };
+            }
+
+            ListViewUsingStandardSingleTable.ItemsSource = UsingStandardSingleTables;
+            ListViewUsingStandardCoupleTable.ItemsSource = UsingStandardCoupleTables;
+            ListViewUsingStandardGroupTable.ItemsSource = UsingStandardGroupTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
