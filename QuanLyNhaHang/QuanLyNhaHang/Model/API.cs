@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.Model
 {
@@ -31,7 +32,7 @@ namespace QuanLyNhaHang.Model
 
         #region User API
 
-        public static string createNewUser(string username, string password, string role)
+        public static string CreateNewUser(string username, string password, string role)
         {
             string url = SERVER + "/users";
             string json = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\", \"role\": \"" + role +"\"}";
@@ -46,7 +47,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string updateUser(string ID, string password, string role)
+        public static string UpdateUser(string ID, string password, string role)
         {
             string url = SERVER + "/users/" + ID;
             string json = "{\"password\": \"" + password + "\", \"role\": \"" + role + "\"}";
@@ -61,7 +62,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string deleteUser(string ID)
+        public static string DeleteUser(string ID)
         {
             string url = SERVER + "/users/" + ID;
             try
@@ -79,7 +80,7 @@ namespace QuanLyNhaHang.Model
 
         #region Table API
 
-        public static string getAllTableWithStatusAndType(string status, string type)
+        public static string GetAllTableWithStatusAndType(string status, string type)
         {
             string url = SERVER + "/tables/" + status + "/" + type;
 
@@ -94,12 +95,69 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string CreateTable(Model.Table table)
+        {
+            string url = SERVER + "/tables";
+            string json = "{\"number\": \"" + table.number +
+                            "\", \"note\": \"" + table.note +
+                            "\", \"numberOfSeat\": \"" + table.numberOfSeat +
+                            "\", \"status\": \"" + table.status +
+                            "\", \"type\": \"" + table.type +
+                            "\", \"IDCustomer\": \"" + table.IDCustomer +
+                            "\", \"time\": \"" + table.time + "\"}";
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string UpdateTable(string ID, Model.Table table)
+        {
+            string url = SERVER + "/tables/" + ID;
+            string json = "{\"number\": \"" + table.number + 
+                            "\", \"note\": \"" + table.note + 
+                            "\", \"numberOfSeat\": \"" + table.numberOfSeat + 
+                            "\", \"status\": \"" + table.status +
+                            "\", \"type\": \"" + table.type +
+                            "\", \"IDCustomer\": \"" + table.IDCustomer +
+                            "\", \"time\": \"" + table.time + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string DeleteTable(string ID)
+        {
+            string url = SERVER + "/tables/" + ID;
+
+            try
+            {
+                return DELETE(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
 
         #endregion
 
         #region Customer API
 
-        public static string getCustomer(string ID)
+        public static string GetCustomer(string ID)
         {
             string url = SERVER + "/customers/" + ID;
 
@@ -114,7 +172,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string createNewCustomer(string fullName, string phone)
+        public static string CreateNewCustomer(string fullName, string phone)
         {
             string url = SERVER + "/customers";
             string json = "{\"fullName\": \"" + fullName + "\", \"phone\": \"" + phone + "\"}";
@@ -129,7 +187,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string updateCustomer(string ID, string fullName, string phone)
+        public static string UpdateCustomer(string ID, string fullName, string phone)
         {
             string url = SERVER + "/customers/" + ID;
             string json = "{\"fullName\": \"" + fullName + "\", \"phone\": \"" + phone + "\"}";
@@ -144,7 +202,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string deleteCustomer(string ID)
+        public static string DeleteCustomer(string ID)
         {
             string url = SERVER + "/customers/" + ID;
             

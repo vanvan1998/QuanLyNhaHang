@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaHang.Model
 {
-    class Table
+    public class Table
     {
         public string number { get; set; }
         public string type { get; set; }
         public int numberOfSeat { get; set; }
         public string status { get; set; }
         public string note { get; set; }
+        public string IDCustomer { get; set; }
+        public DateTime time { get; set; }
     }
 }

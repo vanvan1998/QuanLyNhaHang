@@ -3,22 +3,42 @@ const Table = require('../models/table.model.js');
 // Create and Save a new Table
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.info) {
+    if (!req.body.number) {
         return res.send({
-            message: "Table info can not be empty"
+            message: "Table's number can not be empty"
+        });
+    }
+
+    // Validate request
+    if (!req.body.status) {
+        return res.send({
+            message: "Table's status can not be empty"
+        });
+    }
+
+    // Validate request
+    if (!req.body.numberOfSeat) {
+        return res.send({
+            message: "Table's numberOfSeat can not be empty"
+        });
+    }
+
+    // Validate request
+    if (!req.body.type) {
+        return res.send({
+            message: "Table's type can not be empty"
         });
     }
 
     // Create a Table
     const table = new Table({
         number: req.body.number,
-        info: req.body.info,
-        status: req.body.info,
-        customer: {
-            fullName: req.body.customer.fullName,
-            phone: req.body.customer.phone,
-            timeOder: req.body.customer.timeOder
-        }
+        note: req.body.note,
+        numberOfSeat : req.body.numberOfSeat,
+        status: req.body.status,
+        type: req.body.type,
+        IDCustomer : req.bode.IDCustomer,
+        time : req.body.time
     });
 
     // Save Table in the database
@@ -72,16 +92,63 @@ exports.findOne = (req, res) => {
 // Update a table identified by the tableId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if (!req.body.info) {
-        return res.status(400).send({
-            message: "Table info can not be empty"
+    if (!req.body.number) {
+        return res.send({
+            message: "Table number can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.note) {
+        return res.send({
+            message: "Table note can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.numberOfSeat) {
+        return res.send({
+            message: "Table numberOfSeat can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.status) {
+        return res.send({
+            message: "Table status can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.type) {
+        return res.send({
+            message: "Table type can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.IDCustomer) {
+        return res.send({
+            message: "Table IDCustomer can not be empty"
+        });
+    }
+
+    // Validate Request
+    if (!req.body.time) {
+        return res.send({
+            message: "Table time can not be empty"
         });
     }
 
     // Find table and update it with the request body
     Table.findByIdAndUpdate(req.params.tableId, {
         number: req.body.number,
-        info: req.body.info
+        note: req.body.note,
+        numberOfSeat : req.body.numberOfSeat,
+        status: req.body.status,
+        type: req.body.type,
+        IDCustomer : req.bode.IDCustomer,
+        time : req.body.time
     }, { new: true })
         .then(table => {
             if (!table) {
