@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,7 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using QuanLyNhaHang.Entity;
+using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.EmptyTables
 {
@@ -22,36 +25,39 @@ namespace QuanLyNhaHang.EmptyTables
     /// </summary>
     public partial class EmptyStandardTablesUserControl : UserControl
     {
-        //List<Phong> EmptyStandardSingleTables = new List<Phong>();
-        //List<Phong> EmptyStandardCoupleTables = new List<Phong>();
-        //List<Phong> EmptyStandardGroupTables = new List<Phong>();
+        List<Model.Table> EmptyStandardSingleTables = new List<Model.Table>();
+        List<Model.Table> EmptyStandardCoupleTables = new List<Model.Table>();
+        List<Model.Table> EmptyStandardGroupTables = new List<Model.Table>();
 
-        //Phong phongHienTai = null;
+        private Model.Table tableCurrent = null;
+        const string SERVER = "http://localhost:3000/api";
 
         public EmptyStandardTablesUserControl()
         {
             InitializeComponent();
 
-            //foreach (var table in DataProvider.Ins.DB.Phongs.ToList())
-            //{
-            //    if (table.tinhTrang == 0 && table.daXoa == 0)
-            //    {
-            //        if (table.loaiPhong == "Tiêu chuẩn - Đơn")
-            //        {
-            //            EmptyStandardSingleTables.Add(table);
-            //        }
-            //        else if (table.loaiPhong == "Tiêu chuẩn - Đôi")
-            //        {
-            //            EmptyStandardCoupleTables.Add(table);
-            //        }
-            //        else if (table.loaiPhong == "Tiêu chuẩn - Nhóm")
-            //        {
-            //            EmptyStandardGroupTables.Add(table);
-            //        }
-            //    }
-            //}
+            //TODO: phải làm 1 stask mới ở đây
 
-            //ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
+            //Ví dụ về lấy danh sách bàn
+            string result = GET(SERVER + "/Tables");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            foreach (var item in stuff)
+            {
+                EmptyStandardSingleTables.Add(new Model.Table()
+                {
+                    number = item.number,
+                    info = item.info,
+                    status = item.status,
+                    customer = new Customer() {
+                        fullName = item.fullName,
+                        phone = item.phone,
+                        timeOrder = item.timeOrder
+                    },
+                });
+            }
+
+            ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
             //ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
             //ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
         }
@@ -130,7 +136,6 @@ namespace QuanLyNhaHang.EmptyTables
             //    rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             //}
         }
-
 
         private void BtnDatPhong(object sender, RoutedEventArgs e)
         {
@@ -244,6 +249,42 @@ namespace QuanLyNhaHang.EmptyTables
             //{
             //    MessageBox.Show("Số phòng không đúng!");
             //}
+        }
+
+        public string GET(string uri)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public string POST(string uri, string json)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.ContentType = "application/json";
+            request.Method = "POST";
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(json);
+                streamWriter.Write("\n");
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }

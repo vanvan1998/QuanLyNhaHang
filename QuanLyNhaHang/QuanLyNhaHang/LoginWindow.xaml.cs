@@ -118,44 +118,48 @@ namespace QuanLyNhaHang
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            //TODO kiểm tra username và password có trống không? 
-            if ((Username.Text == "") && (Password.Password == ""))
+            if (Username.Text == "")
             {
-                tbMessageBox.Text = "username và password trống!!!";
+                tbMessageBox.Text = "Username trống!!!";
+                return;
             }
-            else if (Username.Text == "")
+            if (Password.Password == "")
             {
-                tbMessageBox.Text = "username trống!!!";
+                tbMessageBox.Text = "Password trống!!!";
+                return;
             }
-            else if (Password.Password == "")
-            {
-                tbMessageBox.Text = "password trống!!!";
-            }
-            else
-            { 
-                using (MD5 md5Hash = MD5.Create())
+
+            using (MD5 md5Hash = MD5.Create())
             {
                 //đăng nhập với password đã mã hóa
                 string result = loginRequest(Username.Text, GetMd5Hash(md5Hash, Password.Password));
-                dynamic stuff = JsonConvert.DeserializeObject(result);
-                IsLoginSuccess = stuff.code;
-                if (IsLoginSuccess)
+
+                if (result!= "")
                 {
-                    IsLoginSuccess = true;
-                    employee = new Employee()
+                    dynamic stuff = JsonConvert.DeserializeObject(result);
+                    IsLoginSuccess = stuff.code;
+                    if (IsLoginSuccess)
                     {
-                        username = stuff.user.username,
-                        password = stuff.user.password,
-                        displayName = stuff.user.displayName,
-                        role = stuff.user.role
-                    };
-                    this.Close();
+                        IsLoginSuccess = true;
+                        employee = new Employee()
+                        {
+                            username = stuff.user.username,
+                            password = stuff.user.password,
+                            displayName = stuff.user.displayName,
+                            role = stuff.user.role
+                        };
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    return;
                 }
             }
-                if (IsLoginSuccess == false)
+            if (IsLoginSuccess == false)
             {
-                tbMessageBox.Text="Tài khoản hoặc mật khẩu sai!";
-            }
+                tbMessageBox.Text = "Tài khoản hoặc mật khẩu sai!";
+
             }
         }
     }

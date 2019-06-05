@@ -73,7 +73,9 @@
     <Compile Include="EmptyTables\EmptyTablesUserControl.xaml.cs" />
     <Compile Include="EmptyTables\EmptyStandardTablesUserControl.xaml.cs" />
     <Compile Include="EmptyTables\EmptyVIPTablesUserControl.xaml.cs" />
+    <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Table.cs" />
     <Compile Include="SearchUserControl.xaml.cs">
       <DependentUpon>SearchUserControl.xaml</DependentUpon>
     </Compile>
