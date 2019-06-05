@@ -96,6 +96,21 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string deleteCustomer(string ID)
+        {
+            string url = SERVER + "/customers/" + ID;
+            
+            try
+            {
+                return DELETE(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         #endregion
 
         #region Http method
@@ -150,6 +165,21 @@ namespace QuanLyNhaHang.Model
                 streamWriter.Flush();
                 streamWriter.Close();
             }
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        private static string DELETE(string uri)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.ContentType = "application/json";
+            request.Method = "DELETE";
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())

@@ -3,7 +3,7 @@ const Customer = require('../models/customer.model.js');
 // Create and Save a new Customer
 exports.create = (req, res) => {
     // Validate customername
-    if (!req.body.fullNname) {
+    if (!req.body.fullName) {
         return res.send({
             message: "Customer customer's name can not be empty"
         });
@@ -86,7 +86,7 @@ exports.update = (req, res) => {
     // Find customer and update it with the request body
     Customer.findByIdAndUpdate(req.params.customerId, {
         fullName: req.body.fullName,
-        password: req.body.password,
+        phone: req.body.phone
     }, { new: true })
         .then(customer => {
             if (!customer) {
