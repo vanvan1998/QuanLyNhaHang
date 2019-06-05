@@ -38,27 +38,42 @@ namespace QuanLyNhaHang.EmptyTables
             //TODO: phải làm 1 stask mới ở đây
 
             //Ví dụ về lấy danh sách bàn
-            string result = API.getAllTableWithStatusAndType("booked", "VIP");
+            string result = API.getAllTableWithStatusAndType("empty", "standard");
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             foreach (var item in stuff)
             {
+                if (item.numberOfSeat == 4) { 
                 EmptyStandardSingleTables.Add(new Model.Table()
                 {
                     number = item.number,
-                    info = item.info,
+                    numberOfSeat = item.numberOfSeat,
                     status = item.status,
-                    //customer = new Customer() {
-                    //    fullName = item.customer.fullName,
-                    //    phone = item.customer.phone,
-                    //    timeOrder = item.customer.timeOrder
-                    //},
                 });
+                }
+                else if(item.numberOfSeat == 8)
+                {
+                    EmptyStandardCoupleTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                }
+                else
+                {
+                    EmptyStandardGroupTables.Add(new Model.Table()
+                    {
+                        number = item.number,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                    });
+                };
             }
 
             ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
-            //ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
-            //ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
+            ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
+            ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -9,8 +9,9 @@ namespace QuanLyNhaHang.Model
     class Table
     {
         public string number { get; set; }
-        public string info { get; set; }
+        public string type { get; set; }
+        public int numberOfSeat { get; set; }
         public string status { get; set; }
-        public Customer customer { get; set; }
+        public string note { get; set; }
     }
 }
