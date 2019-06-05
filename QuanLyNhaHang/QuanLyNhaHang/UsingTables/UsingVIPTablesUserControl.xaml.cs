@@ -24,9 +24,9 @@ namespace QuanLyNhaHang.UsingTables
     /// </summary>
     public partial class UsingVIPTablesUserControl : UserControl
     {
-        ObservableCollection<Model.Table> UsingVIPSingleTables = new ObservableCollection<Model.Table>();
-        ObservableCollection<Model.Table> UsingVIPCoupleTables = new ObservableCollection<Model.Table>();
-        ObservableCollection<Model.Table> UsingVIPGroupTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingVIP4PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingVIP8PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> UsingVIP12PersonTables = new ObservableCollection<Model.Table>();
 
         //ListView lvHienTai = null;
         //ListViewItem lviHienTai = null;
@@ -43,7 +43,7 @@ namespace QuanLyNhaHang.UsingTables
             {
                 if (item.numberOfSeat == 4)
                 {
-                    UsingVIPSingleTables.Add(new Model.Table()
+                    UsingVIP4PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -52,7 +52,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else if (item.numberOfSeat == 8)
                 {
-                    UsingVIPCoupleTables.Add(new Model.Table()
+                    UsingVIP8PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -61,7 +61,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else
                 {
-                    UsingVIPGroupTables.Add(new Model.Table()
+                    UsingVIP12PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -70,9 +70,9 @@ namespace QuanLyNhaHang.UsingTables
                 };
             }
 
-            ListViewUsingVIPSingleTable.ItemsSource = UsingVIPSingleTables;
-            ListViewUsingVIPCoupleTable.ItemsSource = UsingVIPCoupleTables;
-            ListViewUsingVIPGroupTable.ItemsSource = UsingVIPGroupTables;
+            ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
+            ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
+            ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -95,9 +95,9 @@ namespace QuanLyNhaHang.UsingTables
 
             //    var bc = new BrushConverter();
 
-            //    for (int j = 0; j < UsingVIPSingleTables.Count; j++)
+            //    for (int j = 0; j < UsingVIP4PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi1 = ListViewUsingVIPSingleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi1 = ListViewUsingVIP4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
             //        var dt1 = cp1.ContentTemplate as DataTemplate;
@@ -107,9 +107,9 @@ namespace QuanLyNhaHang.UsingTables
             //        rt1.Fill = Brushes.White;
             //    }
 
-            //    for (int j = 0; j < UsingVIPCoupleTables.Count; j++)
+            //    for (int j = 0; j < UsingVIP8PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi2 = ListViewUsingVIPCoupleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi2 = ListViewUsingVIP8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
 
             //        var dt2 = cp2.ContentTemplate as DataTemplate;
@@ -119,9 +119,9 @@ namespace QuanLyNhaHang.UsingTables
             //        rt2.Fill = Brushes.White;
             //    }
 
-            //    for (int j = 0; j < UsingVIPGroupTables.Count; j++)
+            //    for (int j = 0; j < UsingVIP12PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi3 = ListViewUsingVIPGroupTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi3 = ListViewUsingVIP12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
 
             //        var dt3 = cp3.ContentTemplate as DataTemplate;
@@ -167,7 +167,7 @@ namespace QuanLyNhaHang.UsingTables
             //    return;
             //}
 
-            //var re1 = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == NumberTable.Text).SingleOrDefault();
+            //var re1 = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == NumberTable.Text).4PersonOrDefault();
 
             //string maHD = "HD1";
             //string maKM = null;
@@ -179,7 +179,7 @@ namespace QuanLyNhaHang.UsingTables
 
             //if (DiscountCodeTextBox.Text != "")
             //{
-            //    var DSMKM = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).SingleOrDefault();
+            //    var DSMKM = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
 
             //    if (DSMKM == null)
             //    {
@@ -206,41 +206,41 @@ namespace QuanLyNhaHang.UsingTables
             //DataProvider.Ins.DB.HoaDons.Add(hoaDon);
             //DataProvider.Ins.DB.SaveChanges();
 
-            //foreach (var room in UsingVIPSingleTables)
+            //foreach (var room in UsingVIP4PersonTables)
             //{
             //    if (room.soPhong == phongHienTai.soPhong)
             //    {
-            //        UsingVIPSingleTables.Remove(room);
+            //        UsingVIP4PersonTables.Remove(room);
             //        break;
             //    }
             //}
 
-            //ListViewUsingVIPSingleTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingVIPSingleTable.ItemsSource = UsingVIPSingleTables;
+            //ListViewUsingVIP4PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
 
-            //foreach (var room in UsingVIPCoupleTables)
+            //foreach (var room in UsingVIP8PersonTables)
             //{
             //    if (room.soPhong == phongHienTai.soPhong)
             //    {
-            //        UsingVIPCoupleTables.Remove(room);
+            //        UsingVIP8PersonTables.Remove(room);
             //        break;
             //    }
             //}
 
-            //ListViewUsingVIPCoupleTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingVIPCoupleTable.ItemsSource = UsingVIPCoupleTables;
+            //ListViewUsingVIP8PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
 
-            //foreach (var room in UsingVIPGroupTables)
+            //foreach (var room in UsingVIP12PersonTables)
             //{
             //    if (room.soPhong == phongHienTai.soPhong)
             //    {
-            //        UsingVIPGroupTables.Remove(room);
+            //        UsingVIP12PersonTables.Remove(room);
             //        break;
             //    }
             //}
 
-            //ListViewUsingVIPGroupTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingVIPGroupTable.ItemsSource = UsingVIPGroupTables;
+            //ListViewUsingVIP12PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
 
             //phongHienTai.tinhTrang = 0;
             //phongHienTai.thoiGianBatDau = null;
@@ -264,7 +264,7 @@ namespace QuanLyNhaHang.UsingTables
         {
             //if (DiscountCodeTextBox.Text != "")
             //{
-            //    var re = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).SingleOrDefault();
+            //    var re = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
 
             //    if (re == null)
             //    {
@@ -279,7 +279,7 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //var room = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 1 && x.daXoa == 0).SingleOrDefault();
+            //var room = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 1 && x.daXoa == 0).4PersonOrDefault();
 
             //if (room != null)
             //{

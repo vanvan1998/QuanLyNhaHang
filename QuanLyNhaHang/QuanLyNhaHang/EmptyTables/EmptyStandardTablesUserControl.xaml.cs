@@ -25,9 +25,9 @@ namespace QuanLyNhaHang.EmptyTables
     /// </summary>
     public partial class EmptyStandardTablesUserControl : UserControl
     {
-        List<Model.Table> EmptyStandardSingleTables = new List<Model.Table>();
-        List<Model.Table> EmptyStandardCoupleTables = new List<Model.Table>();
-        List<Model.Table> EmptyStandardGroupTables = new List<Model.Table>();
+        List<Model.Table> EmptyStandard4PersonTables = new List<Model.Table>();
+        List<Model.Table> EmptyStandard8PersonTables = new List<Model.Table>();
+        List<Model.Table> EmptyStandard12PersonTables = new List<Model.Table>();
 
         private Model.Table tableSelected = null;
 
@@ -43,7 +43,7 @@ namespace QuanLyNhaHang.EmptyTables
             foreach (var item in stuff)
             {
                 if (item.numberOfSeat == 4) { 
-                EmptyStandardSingleTables.Add(new Model.Table()
+                EmptyStandard4PersonTables.Add(new Model.Table()
                 {
                     number = item.number,
                     numberOfSeat = item.numberOfSeat,
@@ -52,7 +52,7 @@ namespace QuanLyNhaHang.EmptyTables
                 }
                 else if(item.numberOfSeat == 8)
                 {
-                    EmptyStandardCoupleTables.Add(new Model.Table()
+                    EmptyStandard8PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -61,7 +61,7 @@ namespace QuanLyNhaHang.EmptyTables
                 }
                 else
                 {
-                    EmptyStandardGroupTables.Add(new Model.Table()
+                    EmptyStandard12PersonTables.Add(new Model.Table()
                     {
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
@@ -70,9 +70,9 @@ namespace QuanLyNhaHang.EmptyTables
                 };
             }
 
-            ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
-            ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
-            ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
+            ListViewEmptyStandard4PersonTable.ItemsSource = EmptyStandard4PersonTables;
+            ListViewEmptyStandard8PersonTable.ItemsSource = EmptyStandard8PersonTables;
+            ListViewEmptyStandard12PersonTable.ItemsSource = EmptyStandard12PersonTables;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -92,9 +92,9 @@ namespace QuanLyNhaHang.EmptyTables
             //{
             //    var bc = new BrushConverter();
 
-            //    for (int j = 0; j < EmptyStandardSingleTables.Count; j++)
+            //    for (int j = 0; j < EmptyStandard4PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi1 = ListViewEmptyStandardSingleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi1 = ListViewEmptyStandard4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
             //        var dt1 = cp1.ContentTemplate as DataTemplate;
@@ -104,9 +104,9 @@ namespace QuanLyNhaHang.EmptyTables
             //        rt1.Fill = Brushes.White;
             //    }
 
-            //    for (int j = 0; j < EmptyStandardCoupleTables.Count; j++)
+            //    for (int j = 0; j < EmptyStandard8PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi2 = ListViewEmptyStandardCoupleTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi2 = ListViewEmptyStandard8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
 
             //        var dt2 = cp2.ContentTemplate as DataTemplate;
@@ -116,9 +116,9 @@ namespace QuanLyNhaHang.EmptyTables
             //        rt2.Fill = Brushes.White;
             //    }
 
-            //    for (int j = 0; j < EmptyStandardGroupTables.Count; j++)
+            //    for (int j = 0; j < EmptyStandard12PersonTables.Count; j++)
             //    {
-            //        ListViewItem lvi3 = ListViewEmptyStandardGroupTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+            //        ListViewItem lvi3 = ListViewEmptyStandard12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
             //        var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
 
             //        var dt3 = cp3.ContentTemplate as DataTemplate;
@@ -202,41 +202,41 @@ namespace QuanLyNhaHang.EmptyTables
             //}
             //phongHienTai.thoiGianBatDau = DateTime.Now;
 
-            //foreach (var table in EmptyStandardSingleTables)
+            //foreach (var table in EmptyStandard4PersonTables)
             //{
             //    if (table.soPhong == phongHienTai.soPhong)
             //    {
-            //        EmptyStandardSingleTables.Remove(table);
+            //        EmptyStandard4PersonTables.Remove(table);
             //        break;
             //    }
             //}
 
-            //ListViewEmptyStandardSingleTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyStandardSingleTable.ItemsSource = EmptyStandardSingleTables;
+            //ListViewEmptyStandard4PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewEmptyStandard4PersonTable.ItemsSource = EmptyStandard4PersonTables;
 
-            //foreach (var table in EmptyStandardCoupleTables)
+            //foreach (var table in EmptyStandard8PersonTables)
             //{
             //    if (table.soPhong == phongHienTai.soPhong)
             //    {
-            //        EmptyStandardCoupleTables.Remove(table);
+            //        EmptyStandard8PersonTables.Remove(table);
             //        break;
             //    }
             //}
 
-            //ListViewEmptyStandardCoupleTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyStandardCoupleTable.ItemsSource = EmptyStandardCoupleTables;
+            //ListViewEmptyStandard8PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewEmptyStandard8PersonTable.ItemsSource = EmptyStandard8PersonTables;
 
-            //foreach (var table in EmptyStandardGroupTables)
+            //foreach (var table in EmptyStandard12PersonTables)
             //{
             //    if (table.soPhong == phongHienTai.soPhong)
             //    {
-            //        EmptyStandardGroupTables.Remove(table);
+            //        EmptyStandard12PersonTables.Remove(table);
             //        break;
             //    }
             //}
 
-            //ListViewEmptyStandardGroupTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyStandardGroupTable.ItemsSource = EmptyStandardGroupTables;
+            //ListViewEmptyStandard12PersonTable.ClearValue(ListView.ItemsSourceProperty);
+            //ListViewEmptyStandard12PersonTable.ItemsSource = EmptyStandard12PersonTables;
 
             //DataProvider.Ins.DB.SaveChanges();
             //MessageBox.Show("Đặt phòng thành công!");
@@ -250,7 +250,7 @@ namespace QuanLyNhaHang.EmptyTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //var table = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 0 && x.daXoa == 0  ).SingleOrDefault();
+            //var table = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 0 && x.daXoa == 0  ).4PersonOrDefault();
 
             //if (table != null)
             //{
