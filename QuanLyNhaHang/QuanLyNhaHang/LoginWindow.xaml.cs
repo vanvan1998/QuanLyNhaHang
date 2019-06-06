@@ -20,9 +20,6 @@ namespace QuanLyNhaHang
         public LoginWindow()
         {
             InitializeComponent();
-
-            Model.Table chotuan = new Model.Table() { number = "1", type = "fsfsd", numberOfSeat = 4, status = "đấ", note = "ádad", customer = new Customer() { fullName = "daadsa", phone = "fsdsdsd" }, time = new DateTime().Date };
-            API.CreateTable(chotuan);
         }
 
         private void ExitLoginButton_Click(object sender, RoutedEventArgs e)
