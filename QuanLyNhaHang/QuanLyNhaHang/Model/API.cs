@@ -95,6 +95,21 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string FindOneTable(string type, string number)
+        {
+            string url = SERVER + "/tables/" + type + "/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         public static string CreateTable(Model.Table table)
         {
             string url = SERVER + "/tables";
@@ -103,8 +118,9 @@ namespace QuanLyNhaHang.Model
                             "\", \"numberOfSeat\": \"" + table.numberOfSeat +
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
-                            "\", \"IDCustomer\": \"" + table.IDCustomer +
-                            "\", \"time\": \"" + table.time + "\"}";
+                            "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}"+
+                            ", \"time\": \"" + table.time + "\"}";
             try
             {
                 return POST(url, json);
@@ -124,7 +140,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"numberOfSeat\": \"" + table.numberOfSeat + 
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
-                            "\", \"IDCustomer\": \"" + table.IDCustomer +
+                            "\", \"customer\": \"" + table.customer +
                             "\", \"time\": \"" + table.time + "\"}";
             try
             {

@@ -36,7 +36,7 @@ namespace QuanLyNhaHang.UsingTables
         {
             InitializeComponent();
 
-            string result = API.getAllTableWithStatusAndType("booked", "VIP");
+            string result = API.GetAllTableWithStatusAndType("booked", "VIP");
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             foreach (var item in stuff)

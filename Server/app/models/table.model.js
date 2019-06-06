@@ -6,7 +6,7 @@ const TableSchema = mongoose.Schema({
     status: String,
     numberOfSeat: Number,
     type: String,
-    IDCustomer : Schema.Types.ObjectId,
+    IDCustomer : mongoose.SchemaTypes.ObjectId,
     time : Date
 }, {
     timestamps: true

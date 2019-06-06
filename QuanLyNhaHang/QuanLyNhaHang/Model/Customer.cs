@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaHang.Model
 {
-    class Customer
+    public class Customer
     {
-        public int ID { get; set; }
         public string fullName { get; set; }
         public string phone { get; set; }
     }
