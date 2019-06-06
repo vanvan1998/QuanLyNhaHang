@@ -6,7 +6,10 @@ const TableSchema = mongoose.Schema({
     status: String,
     numberOfSeat: Number,
     type: String,
-    IDCustomer : Schema.Types.ObjectId,
+    customer: {
+        fullName : String,
+        phone:  String
+    },
     time : Date
 }, {
     timestamps: true

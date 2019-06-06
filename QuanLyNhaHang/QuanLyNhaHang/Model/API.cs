@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.Model
 {
