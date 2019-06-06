@@ -31,7 +31,7 @@ namespace QuanLyNhaHang.EmptyTables
         {
             InitializeComponent();
 
-            string result = API.getAllTableWithStatusAndType("empty", "VIP");
+            string result = API.GetAllTableWithStatusAndType("empty", "VIP");
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             foreach (var item in stuff)

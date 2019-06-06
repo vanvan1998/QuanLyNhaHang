@@ -37,7 +37,7 @@ namespace QuanLyNhaHang.EmptyTables
 
             //TODO: phải làm 1 stask mới ở đây
 
-            string result = API.getAllTableWithStatusAndType("empty", "standard");
+            string result = API.GetAllTableWithStatusAndType("empty", "standard");
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             foreach (var item in stuff)

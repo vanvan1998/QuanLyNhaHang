@@ -97,8 +97,9 @@ namespace QuanLyNhaHang.Model
                             "\", \"numberOfSeat\": \"" + table.numberOfSeat +
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
-                            "\", \"IDCustomer\": \"" + table.IDCustomer +
-                            "\", \"time\": \"" + table.time + "\"}";
+                            "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
+                            ", \"time\": \"" + table.time + "\"}";
             try
             {
                 return POST(url, json);
@@ -113,13 +114,14 @@ namespace QuanLyNhaHang.Model
         public static string UpdateTable(string ID, Model.Table table)
         {
             string url = SERVER + "/tables/" + ID;
-            string json = "{\"number\": \"" + table.number + 
-                            "\", \"note\": \"" + table.note + 
-                            "\", \"numberOfSeat\": \"" + table.numberOfSeat + 
+            string json = "{\"number\": \"" + table.number +
+                            "\", \"note\": \"" + table.note +
+                            "\", \"numberOfSeat\": \"" + table.numberOfSeat +
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
-                            "\", \"IDCustomer\": \"" + table.IDCustomer +
-                            "\", \"time\": \"" + table.time + "\"}";
+                            "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
+                            ", \"time\": \"" + table.time + "\"}";
             try
             {
                 return PUT(url, json);
