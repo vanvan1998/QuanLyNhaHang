@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Newtonsoft.Json;
 using QuanLyNhaHang.Model;
 
@@ -31,8 +20,6 @@ namespace QuanLyNhaHang
         public LoginWindow()
         {
             InitializeComponent();
-            Model.Table chotuan = new Model.Table() { number = "1", type = "fsfsd", numberOfSeat = 4, status = "đấ", note = "ádad", customer = new Customer() { fullName = "daadsa", phone = "fsdsdsd" }, time = new DateTime().Date };
-            Model.API.CreateTable(chotuan);
         }
 
         

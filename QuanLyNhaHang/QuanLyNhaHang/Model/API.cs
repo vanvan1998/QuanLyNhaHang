@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.Model
 {
@@ -135,13 +129,14 @@ namespace QuanLyNhaHang.Model
         public static string UpdateTable(string ID, Model.Table table)
         {
             string url = SERVER + "/tables/" + ID;
-            string json = "{\"number\": \"" + table.number + 
-                            "\", \"note\": \"" + table.note + 
-                            "\", \"numberOfSeat\": \"" + table.numberOfSeat + 
+            string json = "{\"number\": \"" + table.number +
+                            "\", \"note\": \"" + table.note +
+                            "\", \"numberOfSeat\": \"" + table.numberOfSeat +
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
-                            "\", \"customer\": \"" + table.customer +
-                            "\", \"time\": \"" + table.time + "\"}";
+                            "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
+                            ", \"time\": \"" + table.time + "\"}";
             try
             {
                 return PUT(url, json);

@@ -34,11 +34,14 @@ exports.create = (req, res) => {
     const table = new Table({
         number: req.body.number,
         note: req.body.note,
-        numberOfSeat : req.body.numberOfSeat,
+        numberOfSeat: req.body.numberOfSeat,
         status: req.body.status,
         type: req.body.type,
-        IDCustomer : req.bode.IDCustomer,
-        time : req.body.time
+        customer: {
+            fullName: req.body.customer.fullName,
+            phone: req.body.customer.phone
+        },
+        time: req.body.time
     });
 
     // Save Table in the database
@@ -144,11 +147,11 @@ exports.update = (req, res) => {
     Table.findByIdAndUpdate(req.params.tableId, {
         number: req.body.number,
         note: req.body.note,
-        numberOfSeat : req.body.numberOfSeat,
+        numberOfSeat: req.body.numberOfSeat,
         status: req.body.status,
         type: req.body.type,
-        IDCustomer : req.bode.IDCustomer,
-        time : req.body.time
+        IDCustomer: req.bode.IDCustomer,
+        time: req.body.time
     }, { new: true })
         .then(table => {
             if (!table) {
