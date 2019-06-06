@@ -3,7 +3,7 @@ using System.Net;
 using System.Windows;
 
 namespace QuanLyNhaHang.Model
-{
+{ 
     public class API
     {
         public static string SERVER = "http://localhost:3000/api";
