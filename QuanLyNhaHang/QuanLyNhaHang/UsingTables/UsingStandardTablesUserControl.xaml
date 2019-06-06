@@ -50,7 +50,7 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -94,7 +94,7 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -138,7 +138,7 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>

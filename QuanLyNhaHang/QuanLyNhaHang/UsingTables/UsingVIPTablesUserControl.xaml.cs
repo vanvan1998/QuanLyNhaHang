@@ -48,6 +48,7 @@ namespace QuanLyNhaHang.UsingTables
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
                         status = item.status,
+                        customer=new Customer() { fullName=item.customer.fullName,phone=item.customer.phone}
                     });
                 }
                 else if (item.numberOfSeat == 8)
@@ -57,6 +58,7 @@ namespace QuanLyNhaHang.UsingTables
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
                         status = item.status,
+                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                     });
                 }
                 else
@@ -66,6 +68,7 @@ namespace QuanLyNhaHang.UsingTables
                         number = item.number,
                         numberOfSeat = item.numberOfSeat,
                         status = item.status,
+                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                     });
                 };
             }
