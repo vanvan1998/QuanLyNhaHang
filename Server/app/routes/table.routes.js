@@ -7,8 +7,8 @@ module.exports = (app) => {
     // Retrieve all Tables
     app.get('/api/tables/:status/:type', table.findAll);
 
-    // Retrieve a single Table with tableId
-    app.get('/api/tables/:tableId', table.findOne);
+    // Retrieve a single Table with tableNumber
+    app.get('/api/tables/:tableNumber', table.findOne);
 
     // Update a Table with tableId
     app.put('/api/tables/:tableId', table.update);
