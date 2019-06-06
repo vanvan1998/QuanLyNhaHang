@@ -22,6 +22,8 @@ namespace QuanLyNhaHang
             InitializeComponent();
         }
 
+        
+
         private void ExitLoginButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

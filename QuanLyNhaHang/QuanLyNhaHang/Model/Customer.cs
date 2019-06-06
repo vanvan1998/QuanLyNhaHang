@@ -8,7 +8,6 @@ namespace QuanLyNhaHang.Model
 {
     public class Customer
     {
-        public int ID { get; set; }
         public string fullName { get; set; }
         public string phone { get; set; }
     }

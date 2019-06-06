@@ -3,7 +3,7 @@ using System.Net;
 using System.Windows;
 
 namespace QuanLyNhaHang.Model
-{
+{ 
     public class API
     {
         public static string SERVER = "http://localhost:3000/api";
@@ -89,6 +89,21 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string FindOneTable(string type, string number)
+        {
+            string url = SERVER + "/tables/" + type + "/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         public static string CreateTable(Model.Table table)
         {
             string url = SERVER + "/tables";
@@ -98,7 +113,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}"+
                             ", \"time\": \"" + table.time + "\"}";
             try
             {

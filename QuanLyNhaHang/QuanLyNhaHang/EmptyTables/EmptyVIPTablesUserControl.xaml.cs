@@ -78,70 +78,76 @@ namespace QuanLyNhaHang.EmptyTables
 
         private void ListViewEmptyVIPTable_MouseUp(object sender, MouseButtonEventArgs e)
         {
-        //    if (((ListView)sender).SelectedIndex == -1)
-        //    {
-        //        return;
-        //    }
+            if (((ListView)sender).SelectedIndex == -1)
+            {
+                return;
+            }
 
-        //    if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
-        //    {
-        //        var bc = new BrushConverter();
+            if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
+            {
+                var bc = new BrushConverter();
 
-        //        for (int j = 0; j < EmptyVIP4PersonTables.Count; j++)
-        //        {
-        //            ListViewItem lvi1 = ListViewEmptyVIP4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
-        //            var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+                for (int j = 0; j < EmptyVIP4PersonTables.Count; j++)
+                {
+                    ListViewItem lvi1 = ListViewEmptyVIP4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
-        //            var dt1 = cp1.ContentTemplate as DataTemplate;
-        //            var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
-        //            var tb1 = (TextBlock)dt1.FindName("NumberTable", cp1);
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("NumberTable", cp1);
+                    var tbtype1 = (TextBlock)dt1.FindName("TypeTable", cp1);
 
-        //            rt1.Fill = Brushes.White;
-        //        }
+                    rt1.Fill = Brushes.White;
+                }
 
-        //        for (int j = 0; j < EmptyVIP8PersonTables.Count; j++)
-        //        {
-        //            ListViewItem lvi2 = ListViewEmptyVIP8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
-        //            var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
+                for (int j = 0; j < EmptyVIP8PersonTables.Count; j++)
+                {
+                    ListViewItem lvi2 = ListViewEmptyVIP8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
 
-        //            var dt2 = cp2.ContentTemplate as DataTemplate;
-        //            var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
-        //            var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
+                    var dt2 = cp2.ContentTemplate as DataTemplate;
+                    var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
+                    var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
+                    var tbtype2 = (TextBlock)dt2.FindName("TypeTable", cp2);
 
-        //            rt2.Fill = Brushes.White;
-        //        }
+                    rt2.Fill = Brushes.White;
+                }
 
-        //        for (int j = 0; j < EmptyVIP12PersonTables.Count; j++)
-        //        {
-        //            ListViewItem lvi3 = ListViewEmptyVIP12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
-        //            var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
+                for (int j = 0; j < EmptyVIP12PersonTables.Count; j++)
+                {
+                    ListViewItem lvi3 = ListViewEmptyVIP12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
 
-        //            var dt3 = cp3.ContentTemplate as DataTemplate;
-        //            var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
-        //            var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
+                    var dt3 = cp3.ContentTemplate as DataTemplate;
+                    var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
+                    var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
+                    var tbtype3 = (TextBlock)dt3.FindName("TypeTable", cp3);
 
-        //            rt3.Fill = Brushes.White;
-        //        }
+                    rt3.Fill = Brushes.White;
+                }
 
-        //        var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
+                var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
 
-        //        var dt = cp.ContentTemplate as DataTemplate;
-        //        var rt = (Rectangle)dt.FindName("BackGround", cp);
-        //        var tb = (TextBlock)dt.FindName("NumberTable", cp);
+                var dt = cp.ContentTemplate as DataTemplate;
+                var rt = (Rectangle)dt.FindName("BackGround", cp);
+                var tb = (TextBlock)dt.FindName("NumberTable", cp);
+                var tbtype = (TextBlock)dt.FindName("TypeTable", cp);
 
-        //        foreach (var room in DataProvider.Ins.DB.Phongs.ToList())
-        //        {
-        //            if (tb.Text == room.soPhong)
-        //            {
-        //                phongHienTai = room;
-        //                NumberTable.Text = room.soPhong;
-        //                TypeTable.Text = room.loaiPhong;
-        //                break;
-        //            }
-        //        }
+                //foreach (var room in DataProvider.Ins.DB.Phongs.ToList())
+                //{
+                //    if (tb.Text == room.soPhong)
+                //    {
+                //        phongHienTai = room;
+                //        NumberTable.Text = room.soPhong;
+                //        TypeTable.Text = room.loaiPhong;
+                //        break;
+                //    }
+                //}
+                NumberTable.Text = tb.Text;
+                TypeTable.Text = "Bàn " + tbtype.Text + " người";
 
-        //        rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
-        //    }
+                rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+            }
 
         }
 
@@ -245,18 +251,18 @@ namespace QuanLyNhaHang.EmptyTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-        //    var room = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 0 && x.daXoa == 0).4PersonOrDefault();
+            //    var room = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 0 && x.daXoa == 0).4PersonOrDefault();
 
-        //    if (room != null)
-        //    {
-        //        phongHienTai = room;
-        //        NumberTable.Text = room.soPhong;
-        //        TypeTable.Text = room.loaiPhong;
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Số phòng không đúng!");
-        //    }
+            //    if (room != null)
+            //    {
+            //        phongHienTai = room;
+            //        NumberTable.Text = room.soPhong;
+            //        TypeTable.Text = room.loaiPhong;
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Số phòng không đúng!");
+            //    }
         }
     }
 }
