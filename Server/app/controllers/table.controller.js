@@ -72,25 +72,25 @@ exports.findAll = (req, res) => {
 
 // Find a single table with a tableId
 exports.findOne = (req, res) => {
-    Table.find({"number":req.params.tableId})
+    Table.findOne({ "number": req.params.tableNumber })
         .then(table => {
             if (!table) {
                 return res.send({
                     message: "Table not found with id " + req.params.tableId,
-                    code : 0
+                    code: 0
                 });
             }
-            res.send({table, code: 1});
+            res.send({table, code :1});
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.send({
                     message: "Table not found with id " + req.params.tableId,
-                    code:0
+                    code: 0
                 });
             }
             return res.send({
                 message: "Error retrieving table with id " + req.params.tableId,
-                code:0
+                code: 0
             });
         });
 };
