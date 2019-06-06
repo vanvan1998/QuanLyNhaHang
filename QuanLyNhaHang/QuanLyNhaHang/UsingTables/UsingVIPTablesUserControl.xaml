@@ -50,7 +50,8 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -94,7 +95,8 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -138,7 +140,8 @@
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="TimeGetTable" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -232,7 +235,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="Customername" Grid.Column="1" Text="" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                    <TextBlock x:Name="CustomerName" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="5">

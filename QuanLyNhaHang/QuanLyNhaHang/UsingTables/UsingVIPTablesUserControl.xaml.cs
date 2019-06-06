@@ -28,8 +28,8 @@ namespace QuanLyNhaHang.UsingTables
         ObservableCollection<Model.Table> UsingVIP8PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> UsingVIP12PersonTables = new ObservableCollection<Model.Table>();
 
-        //ListView lvHienTai = null;
-        //ListViewItem lviHienTai = null;
+        ListView lvHienTai = null;
+        ListViewItem lviHienTai = null;
         //Phong phongHienTai = null;
 
         public UsingVIPTablesUserControl()
@@ -86,80 +86,71 @@ namespace QuanLyNhaHang.UsingTables
 
         private void ListViewUsingVIPTable_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            //if (((ListView)sender).SelectedIndex == -1)
-            //{
-            //    return;
-            //}
+            if (((ListView)sender).SelectedIndex == -1)
+            {
+                return;
+            }
 
-            //if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
-            //{
-            //    lvHienTai = (ListView)sender;
-            //    lviHienTai = lvi;
+            if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
+            {
+                lvHienTai = (ListView)sender;
+                lviHienTai = lvi;
 
-            //    var bc = new BrushConverter();
+                var bc = new BrushConverter();
 
-            //    for (int j = 0; j < UsingVIP4PersonTables.Count; j++)
-            //    {
-            //        ListViewItem lvi1 = ListViewUsingVIP4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
-            //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+                for (int j = 0; j < UsingVIP4PersonTables.Count; j++)
+                {
+                    ListViewItem lvi1 = ListViewUsingVIP4PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
-            //        var dt1 = cp1.ContentTemplate as DataTemplate;
-            //        var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
-            //        var tb1 = (TextBlock)dt1.FindName("NumberTable", cp1);
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("NumberTable", cp1);
+                    var tbtype1 = (TextBlock)dt1.FindName("TypeTable", cp1);
+                    var tbcustomer1 = (TextBlock)dt1.FindName("CustomerName", cp1);
+                    rt1.Fill = Brushes.White;
+                }
 
-            //        rt1.Fill = Brushes.White;
-            //    }
+                for (int j = 0; j < UsingVIP8PersonTables.Count; j++)
+                {
+                    ListViewItem lvi2 = ListViewUsingVIP8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
 
-            //    for (int j = 0; j < UsingVIP8PersonTables.Count; j++)
-            //    {
-            //        ListViewItem lvi2 = ListViewUsingVIP8PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
-            //        var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
+                    var dt2 = cp2.ContentTemplate as DataTemplate;
+                    var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
+                    var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
+                    var tbtype2 = (TextBlock)dt2.FindName("TypeTable", cp2);
+                    var tbcustomer2 = (TextBlock)dt2.FindName("CustomerName", cp2);
+                    rt2.Fill = Brushes.White;
+                }
 
-            //        var dt2 = cp2.ContentTemplate as DataTemplate;
-            //        var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
-            //        var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
+                for (int j = 0; j < UsingVIP12PersonTables.Count; j++)
+                {
+                    ListViewItem lvi3 = ListViewUsingVIP12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
 
-            //        rt2.Fill = Brushes.White;
-            //    }
+                    var dt3 = cp3.ContentTemplate as DataTemplate;
+                    var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
+                    var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
+                    var tbtype3 = (TextBlock)dt3.FindName("TypeTable", cp3);
+                    var tbcustomer3 = (TextBlock)dt3.FindName("CustomerName", cp3);
+                    rt3.Fill = Brushes.White;
+                }
 
-            //    for (int j = 0; j < UsingVIP12PersonTables.Count; j++)
-            //    {
-            //        ListViewItem lvi3 = ListViewUsingVIP12PersonTable.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
-            //        var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
+                var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
 
-            //        var dt3 = cp3.ContentTemplate as DataTemplate;
-            //        var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
-            //        var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
+                var dt = cp.ContentTemplate as DataTemplate;
+                var rt = (Rectangle)dt.FindName("BackGround", cp);
+                var tb = (TextBlock)dt.FindName("NumberTable", cp);
+                var tbtype = (TextBlock)dt.FindName("TypeTable", cp);
+                var tbcustomer = (TextBlock)dt.FindName("CustomerName", cp);
 
-            //        rt3.Fill = Brushes.White;
-            //    }
+                NumberTable.Text = tb.Text;
+                TypeTable.Text = "Bàn " + tbtype.Text + " người";
+                CustomerName.Text = tbcustomer.Text;
 
-            //    var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
-
-            //    var dt = cp.ContentTemplate as DataTemplate;
-            //    var rt = (Rectangle)dt.FindName("BackGround", cp);
-            //    var tb = (TextBlock)dt.FindName("NumberTable", cp);
-
-            //    foreach (var room in DataProvider.Ins.DB.Phongs.ToList())
-            //    {
-            //        if (tb.Text == room.soPhong)
-            //        {
-            //            phongHienTai = room;
-
-            //            NumberTable.Text = room.soPhong;
-            //            TypeTable.Text = room.loaiPhong;
-            //            Customername.Text = room.KhachHang.hoTen;
-            //            CustomerID.Text = room.KhachHang.cmnd;
-            //            NoteTextBlock.Text = room.ghiChu;
-            //            Time.Text = ((DateTime.Now - room.thoiGianBatDau).Value.Days).ToString() + " ngày " + ((DateTime.Now - room.thoiGianBatDau).Value).ToString(@"hh\:mm\:ss");
-            //            Total.Text = Math.Round((((DateTime.Now - room.thoiGianBatDau).Value.Hours + ((DateTime.Now - room.thoiGianBatDau).Value.Days) * 24) * phongHienTai.DanhSachBangGia.cacGioSau + phongHienTai.DanhSachBangGia.gioDau), 0).ToString();
-
-            //            break;
-            //        }
-            //    }
-
-            //    rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
-            //}
+                rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+            }
         }
 
         private void BtnThanhToan(object sender, RoutedEventArgs e)
