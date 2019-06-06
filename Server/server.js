@@ -30,6 +30,7 @@ require('./app/routes/table.routes.js')(app);
 require('./app/routes/employee.routes.js')(app);
 require('./app/routes/login.routes.js')(app);
 require('./app/routes/customer.routes.js')(app);
+require('./app/routes/bill.routes.js')(app);
 
 // listen for requests
 app.listen(3000, () => {
