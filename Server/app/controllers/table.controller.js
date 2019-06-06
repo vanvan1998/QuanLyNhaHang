@@ -56,11 +56,23 @@ exports.create = (req, res) => {
 };
 
 // Retrieve and return all tables with status and type from the database.
-exports.findAll = (req, res) => {
+exports.findAllWithStatusAndType = (req, res) => {
     var status = req.params.status;
     const type = req.params.type;
 
     Table.find({ "status": status, "type": type })
+        .then(tables => {
+            res.send(tables);
+        }).catch(err => {
+            res.send({
+                message: err.message || "Some error occurred while retrieving tables."
+            });
+        });
+};
+
+exports.findAll = (req, res) => {
+
+    Table.find({})
         .then(tables => {
             res.send(tables);
         }).catch(err => {
@@ -158,14 +170,14 @@ exports.update = (req, res) => {
     }, { new: true })
         .then(table => {
             if (!table) {
-                return res.status(404).send({
+                return res.send({
                     message: "Table not found with id " + req.params.tableId
                 });
             }
             res.send(table);
         }).catch(err => {
             if (err.kind === 'ObjectId') {
-                return res.status(404).send({
+                return res.send({
                     message: "Table not found with id " + req.params.tableId
                 });
             }
