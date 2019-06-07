@@ -6,7 +6,7 @@ namespace QuanLyNhaHang.Model
 { 
     public class API
     {
-        public static string SERVER = "http://localhost:3000/api";
+        private static string SERVER = "http://localhost:3000/api";
 
         public static string login(string username, string password)
         {
@@ -73,6 +73,20 @@ namespace QuanLyNhaHang.Model
         #endregion
 
         #region Table API
+        public static string GetAllTable()
+        {
+            string url = SERVER + "/tables";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
 
         public static string GetAllTableWithStatusAndType(string status, string type)
         {
@@ -89,9 +103,9 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string FindOneTable(string type, string number)
+        public static string FindOneTable(string number)
         {
-            string url = SERVER + "/tables/" + type + "/" + number;
+            string url = SERVER + "/tables/" + number;
 
             try
             {
