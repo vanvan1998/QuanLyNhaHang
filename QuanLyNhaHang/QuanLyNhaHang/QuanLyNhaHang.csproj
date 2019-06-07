@@ -76,6 +76,7 @@
     <Compile Include="Model\API.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Food.cs" />
     <Compile Include="Model\Table.cs" />
     <Compile Include="SearchUserControl.xaml.cs">
       <DependentUpon>SearchUserControl.xaml</DependentUpon>

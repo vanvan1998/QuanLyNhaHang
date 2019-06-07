@@ -22,6 +22,4 @@
             </StackPanel>
         </materialDesign:TransitioningContent>
     </Grid>
-
-
 </UserControl>

@@ -349,5 +349,77 @@ namespace QuanLyNhaHang.Model
         }
 
         #endregion  
+
+        #region Food API
+        public static string GetAllFood()
+        {
+            string url = SERVER + "/foods";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+        //todo server
+        public static string CreateFood(Food foodNew)
+        {
+            string url = SERVER + "/foods/new";
+            string json = "{\"ID\": \"" + foodNew.ID + "\", \"name\": \""
+                + foodNew.name + "\", \"price\": \""
+                + foodNew.price + "\", \"ingredients\": \""
+                + foodNew.ingredients + "\", \"type\": \""
+                + foodNew.type + "\", \"note\": \""
+                + foodNew.note + "\"}";
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+        //todo server
+        public static string UpdateFood(string ID, Food foodNew)
+        {
+            string url = SERVER + "/foods/" + ID;
+            string json = "{\"ID\": \"" + foodNew.ID + "\", \"name\": \""
+                + foodNew.name + "\", \"price\": \""
+                + foodNew.price + "\", \"ingredients\": \""
+                + foodNew.ingredients + "\", \"type\": \""
+                + foodNew.type + "\", \"note\": \""
+                + foodNew.note + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string DeleteFood(string ID)
+        {
+            string url = SERVER + "/foods/" + ID;
+            try
+            {
+                return DELETE(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        #endregion
     }
 }

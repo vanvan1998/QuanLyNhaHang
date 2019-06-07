@@ -29,7 +29,6 @@ namespace QuanLyNhaHang.EmptyTables
         List<Model.Table> EmptyStandard8PersonTables = new List<Model.Table>();
         List<Model.Table> EmptyStandard12PersonTables = new List<Model.Table>();
 
-        private Model.Table tableSelected = null;
 
         public EmptyStandardTablesUserControl()
         {

@@ -98,7 +98,6 @@ namespace QuanLyNhaHang.Setting
                     var dt1 = cp1.ContentTemplate as DataTemplate;
                     var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
                     var tb1 = (TextBlock)dt1.FindName("ID", cp1);
-                    var tbNumberOfSeat1 = (TextBlock)dt1.FindName("Name", cp1);
                     rt1.Fill = Brushes.White;
                 }
 
@@ -107,7 +106,6 @@ namespace QuanLyNhaHang.Setting
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
                 var tb = (TextBlock)dt.FindName("ID", cp);
-                var tbNumberOfSeat = (TextBlock)dt.FindName("Name", cp);
                 Model.Employee employeeSelected = new Model.Employee();
 
                 foreach (var item in Employees)
