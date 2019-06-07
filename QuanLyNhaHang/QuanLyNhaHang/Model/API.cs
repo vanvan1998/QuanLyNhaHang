@@ -3,7 +3,7 @@ using System.Net;
 using System.Windows;
 
 namespace QuanLyNhaHang.Model
-{ 
+{
     public class API
     {
         private static string SERVER = "http://localhost:3000/api";
@@ -24,12 +24,33 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        #region User API
-
-        public static string CreateNewUser(string username, string password, string role)
+        #region Employee API
+        public static string GetAllEmployee()
         {
-            string url = SERVER + "/users";
-            string json = "{\"username\": \"" + username + "\", \"password\": \"" + password + "\", \"role\": \"" + role +"\"}";
+            string url = SERVER + "/employees";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+        //todo server
+        public static string CreateEmployee(Employee employeeNew)
+        {
+            string url = SERVER + "/employees/new";
+            string json = "{\"ID\": \"" + employeeNew.ID + "\", \"username\": \"" 
+                + employeeNew.username + "\", \"password\": \""
+                + employeeNew.password + "\", \"displayName\": \""
+                + employeeNew.displayName + "\", \"role\": \""
+                + employeeNew.role + "\", \"dateOfBirth\": \""
+                + employeeNew.dateOfBirth.ToLongDateString() + "\", \"identityNumber\": \""
+                + employeeNew.identityNumber + "\", \"phone\": \""
+                + employeeNew.phone + "\"}";
             try
             {
                 return POST(url, json);
@@ -40,11 +61,18 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
-
-        public static string UpdateUser(string ID, string password, string role)
+        //todo server
+        public static string UpdateEmployee(string ID,Employee employeeNew)
         {
-            string url = SERVER + "/users/" + ID;
-            string json = "{\"password\": \"" + password + "\", \"role\": \"" + role + "\"}";
+            string url = SERVER + "/employees/" + ID;
+            string json = "{\"ID\": \"" + employeeNew.ID + "\", \"username\": \""
+                            + employeeNew.username + "\", \"password\": \""
+                            + employeeNew.password + "\", \"displayName\": \""
+                            + employeeNew.displayName + "\", \"role\": \""
+                            + employeeNew.role + "\", \"dateOfBirth\": \""
+                            + employeeNew.dateOfBirth.ToLongDateString() + "\", \"identityNumber\": \""
+                            + employeeNew.identityNumber + "\", \"phone\": \""
+                            + employeeNew.phone + "\"}";
             try
             {
                 return PUT(url, json);
@@ -56,9 +84,9 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string DeleteUser(string ID)
+        public static string DeleteEmployee(string ID)
         {
-            string url = SERVER + "/users/" + ID;
+            string url = SERVER + "/employees/" + ID;
             try
             {
                 return DELETE(url);
@@ -127,7 +155,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}"+
+                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
                             ", \"time\": \"" + table.time + "\"}";
             try
             {
@@ -230,7 +258,7 @@ namespace QuanLyNhaHang.Model
         public static string DeleteCustomer(string ID)
         {
             string url = SERVER + "/customers/" + ID;
-            
+
             try
             {
                 return DELETE(url);

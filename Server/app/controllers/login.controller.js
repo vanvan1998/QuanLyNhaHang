@@ -3,7 +3,7 @@ const User = require('../models/employee.model.js');
 // Create and Save a new User
 exports.login = (req, res) => {
     // Validate username
-    if (!req.body.username) {trf
+    if (!req.body.username) {
         return res.send({
             message: "User user name can not be empty", 
             code : 0

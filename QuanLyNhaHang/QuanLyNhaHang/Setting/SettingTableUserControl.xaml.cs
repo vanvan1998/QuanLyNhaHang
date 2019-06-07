@@ -23,8 +23,6 @@ namespace QuanLyNhaHang.Setting
     public partial class SettingTableUserControl : UserControl
     {
         ObservableCollection<Model.Table> Tables = new ObservableCollection<Model.Table>();
-        ListView lvHienTai = null;
-        ListViewItem lviHienTai = null;
 
         public SettingTableUserControl()
         {
@@ -303,7 +301,7 @@ namespace QuanLyNhaHang.Setting
             }
             foreach (var item in Tables)
             {
-                if (item.number == NumberTable.Text)
+                if (item.number == NumberTable.Text && item.ID != ID.Text)
                 {
                     MessageBox.Show("Số bàn đã có!!!\n Bạn vui lòng chọn số bàn khác!");
                     return;
