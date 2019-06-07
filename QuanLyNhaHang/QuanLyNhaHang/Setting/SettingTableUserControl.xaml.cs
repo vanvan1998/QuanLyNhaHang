@@ -35,9 +35,10 @@ namespace QuanLyNhaHang.Setting
             {
                 Tables.Add(new Model.Table()
                 {
+                    ID = item._id,
                     number = item.number,
                     numberOfSeat = item.numberOfSeat,
-                    type=item.type,
+                    type = item.type,
                     status = item.status,
                     customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                 });
@@ -45,18 +46,18 @@ namespace QuanLyNhaHang.Setting
 
             ListViewTable.ItemsSource = Tables;
 
-            for (int i = 0; i < Tables.Count; i++)
-            {
-                if (Tables[i].type == "VIP")
-                {
-                    ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+            //for (int i = 0; i < Tables.Count; i++)
+            //{
+            //    if (Tables[i].type == "VIP")
+            //    {
+            //        ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+            //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
-                    var dt1 = cp1.ContentTemplate as DataTemplate;
-                    var rt1 = (Rectangle)dt1.FindName("TicketType", cp1);
-                    rt1.Fill = Brushes.White;
-                }
-            };
+            //        var dt1 = cp1.ContentTemplate as DataTemplate;
+            //        var rt1 = (Rectangle)dt1.FindName("TicketType", cp1);
+            //        rt1.Fill = Brushes.White;
+            //    }
+            //};
             //Task t = new Task(() =>
             //{
             //    string result = API.GetAllTable();
@@ -128,10 +129,40 @@ namespace QuanLyNhaHang.Setting
                 };
 
                 NumberTable.Text = tableSelected.number;
-                TypeTable.Text = tableSelected.type;
-                NumberOfSeat.Text = "Bàn " + tableSelected.numberOfSeat + " người";
                 CustomerName.Text = tableSelected.customer.fullName;
                 Phone.Text = tableSelected.customer.phone;
+                if (tableSelected.type == "standard")
+                {
+                    TypeTable.SelectedIndex = 0;
+                }
+                else
+                {
+                    TypeTable.SelectedIndex = 1;
+                }
+
+                if (tableSelected.numberOfSeat == 4)
+                {
+                    NumberOfSeat.SelectedIndex = 0;
+                }
+                else if (tableSelected.numberOfSeat == 8)
+                {
+                    NumberOfSeat.SelectedIndex = 1;
+                }
+                else
+                {
+                    NumberOfSeat.SelectedIndex = 2;
+                }
+
+                if (tableSelected.status == "empty")
+                {
+                    Status.SelectedIndex = 0;
+                }
+                else
+                {
+                    Status.SelectedIndex = 1;
+                }
+
+                ID.Text = tableSelected.ID;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
@@ -139,17 +170,159 @@ namespace QuanLyNhaHang.Setting
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
+            Model.Table tableNew = new Model.Table();
+            tableNew.number = NumberTable.Text;
+            if (TypeTable.SelectedIndex == 0)
+            {
+                tableNew.type = "standard";
+            }
+            else
+            {
+                tableNew.type = "VIP";
+            }
+
+            if (NumberOfSeat.SelectedIndex == 0)
+            {
+                tableNew.numberOfSeat = 4;
+            }
+            else if (NumberOfSeat.SelectedIndex == 1)
+            {
+                tableNew.numberOfSeat = 8;
+            }
+            else
+            {
+                tableNew.numberOfSeat = 12;
+            }
+
+            if (Status.SelectedIndex == 0)
+            {
+                tableNew.status = "empty";
+                tableNew.customer = new Customer() { fullName = "", phone = "" };
+            }
+            else
+            {
+                tableNew.status= "booked";
+                if (CustomerName.Text == "" || Phone.Text=="")
+                {
+                    MessageBox.Show("Thông tin khách hàng không được để trống!!!");
+                    return;
+                }
+                tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
+            }
+            foreach (var item in Tables)
+            {
+                if (item.number == NumberTable.Text)
+                {
+                    MessageBox.Show("Số bàn đã có!!!\n Bạn vui lòng chọn số bàn khác!");
+                    return;
+                }
+            };            
+
+            string result = API.CreateTable(tableNew);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            if(stuff.message== "create successful")
+            {
+                MessageBox.Show("Tạo bàn thành công!!!");
+            }
+            else
+            {
+                MessageBox.Show("Có lỗi sảy ra trong quá trình tạo bàn, vui lòng thử lại!!!");
+            }
+
+            //todo load table
 
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (ID.Text == "")
+            {
+                MessageBox.Show("Vui lòng chọn bàn trước khi xóa!!!");
+                return;
+            }
+            string result = API.DeleteTable(ID.Text);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            if (stuff.message == "Table deleted successfully!")
+            {
+                MessageBox.Show("Xóa bàn thành công!!!");
+            }
+            else
+            {
+                MessageBox.Show("Có lỗi sảy ra trong quá trình xóa, vui lòng thử lại!!!");
+            }
+            //todo load
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
         {
 
+            Model.Table tableNew = new Model.Table();
+            if(ID.Text=="")
+            {
+                MessageBox.Show("Vui lòng chọn bàn trước khi cập nhật!!!");
+                return;
+            }
+            tableNew.ID = ID.Text;
+            tableNew.number = NumberTable.Text;
+            if (TypeTable.SelectedIndex == 0)
+            {
+                tableNew.type = "standard";
+            }
+            else
+            {
+                tableNew.type = "VIP";
+            }
+
+            if (NumberOfSeat.SelectedIndex == 0)
+            {
+                tableNew.numberOfSeat = 4;
+            }
+            else if (NumberOfSeat.SelectedIndex == 1)
+            {
+                tableNew.numberOfSeat = 8;
+            }
+            else
+            {
+                tableNew.numberOfSeat = 12;
+            }
+
+            if (Status.SelectedIndex == 0)
+            {
+                tableNew.status = "empty";
+                tableNew.customer = new Customer() { fullName = "", phone = "" };
+            }
+            else
+            {
+                tableNew.status = "booked";
+                if (CustomerName.Text == "" || Phone.Text == "")
+                {
+                    MessageBox.Show("Thông tin khách hàng không được để trống!!!");
+                    return;
+                }
+                tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
+            }
+            foreach (var item in Tables)
+            {
+                if (item.number == NumberTable.Text)
+                {
+                    MessageBox.Show("Số bàn đã có!!!\n Bạn vui lòng chọn số bàn khác!");
+                    return;
+                }
+            };
+
+            string result = API.UpdateTable(ID.Text,tableNew);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            //todo message
+            if (stuff.message == "Table update successfully!")
+            {
+                MessageBox.Show("Cập nhật thông tin bàn thành công!!!");
+            }
+            else
+            {
+                MessageBox.Show("Có lỗi sảy ra trong quá trình cập nhật, vui lòng thử lại!!!");
+            }
+
+            //todo load table
         }
     }
 }

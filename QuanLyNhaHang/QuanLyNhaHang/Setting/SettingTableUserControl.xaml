@@ -8,14 +8,28 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Loaded="UserControl_Loaded">
     <Grid>
-        <StackPanel Height="530" Width="400" Margin="0,15,550,30">
+        <StackPanel Height="600" Width="400" Margin="0,15,550,30">
+            
             <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Thông tin bàn</TextBlock>
             <TextBlock Margin="0,20,0,0" Foreground="#DD892121">Số bàn:</TextBlock>
-            <TextBox x:Name="NumberTable" IsEnabled="False" Width="300" Margin="50,3,20,20"></TextBox>
+            <TextBox x:Name="NumberTable" Width="300" Margin="50,3,20,20"></TextBox>
+            <TextBox x:Name="ID" Width="0" Height="0"></TextBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Loại bàn:</TextBlock>
-            <TextBox x:Name="TypeTable" Width="300" Margin="50,3,20,20"></TextBox>
+            <ComboBox x:Name="TypeTable" Width="300" Margin="50,3,20,20">
+                <ComboBoxItem>Tiêu chuẩn</ComboBoxItem>
+                <ComboBoxItem>VIP</ComboBoxItem>
+            </ComboBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Kích thước bàn:</TextBlock>
-            <TextBox x:Name="NumberOfSeat" Width="300" Margin="50,3,20,20"></TextBox>
+            <ComboBox x:Name="NumberOfSeat" Width="300" Margin="50,3,20,20">
+                <ComboBoxItem>Bàn 4 người</ComboBoxItem>
+                <ComboBoxItem>Bàn 8 người</ComboBoxItem>
+                <ComboBoxItem>Bàn 12 người</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Trạng thái bàn:</TextBlock>
+            <ComboBox x:Name="Status" Width="300" Margin="50,3,20,20">
+                <ComboBoxItem>Bàn trống</ComboBoxItem>
+                <ComboBoxItem>Bàn đã đặt</ComboBoxItem>
+            </ComboBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Họ và tên khách hàng:</TextBlock>
             <TextBox x:Name="CustomerName" Width="300" Margin="50,3,20,20"></TextBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Số điện thoại:</TextBlock>
@@ -51,14 +65,12 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Background="#FFF3F311">
-                                                <Rectangle x:Name="TicketType" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                                    <Rectangle.Effect >
+                                                <Grid Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                    <Grid.Effect >
                                                         <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                                    </Rectangle.Effect>
-                                                </Rectangle>
+                                                    </Grid.Effect>
                                                 <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
-                                            </Grid>
+                                                </Grid>
                                             <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                                 <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>

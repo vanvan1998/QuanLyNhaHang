@@ -8,6 +8,7 @@ namespace QuanLyNhaHang.Model
 {
     public class Table
     {
+        public string ID { get; set; }
         public string number { get; set; }
         public string type { get; set; }
         public int numberOfSeat { get; set; }

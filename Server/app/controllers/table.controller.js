@@ -117,13 +117,6 @@ exports.update = (req, res) => {
     }
 
     // Validate Request
-    if (!req.body.note) {
-        return res.send({
-            message: "Table note can not be empty"
-        });
-    }
-
-    // Validate Request
     if (!req.body.numberOfSeat) {
         return res.send({
             message: "Table numberOfSeat can not be empty"
@@ -144,20 +137,6 @@ exports.update = (req, res) => {
         });
     }
 
-    // Validate Request
-    if (!req.body.IDCustomer) {
-        return res.send({
-            message: "Table IDCustomer can not be empty"
-        });
-    }
-
-    // Validate Request
-    if (!req.body.time) {
-        return res.send({
-            message: "Table time can not be empty"
-        });
-    }
-
     // Find table and update it with the request body
     Table.findByIdAndUpdate(req.params.tableId, {
         number: req.body.number,
@@ -165,7 +144,7 @@ exports.update = (req, res) => {
         numberOfSeat: req.body.numberOfSeat,
         status: req.body.status,
         type: req.body.type,
-        IDCustomer: req.bode.IDCustomer,
+        IDCustomer: req.body.IDCustomer,
         time: req.body.time
     }, { new: true })
         .then(table => {
