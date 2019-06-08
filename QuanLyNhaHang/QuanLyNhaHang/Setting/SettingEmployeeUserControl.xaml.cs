@@ -132,11 +132,11 @@ namespace QuanLyNhaHang.Setting
                 Phone.Text = employeeSelected.phone;
                 if (employeeSelected.role == "admin")
                 {
-                    TypeEmployee.SelectedIndex = 0;
+                    TypeEmployee.SelectedIndex = 1;
                 }
                 else
                 {
-                    TypeEmployee.SelectedIndex = 1;
+                    TypeEmployee.SelectedIndex = 0;
                 }
 
                 id.Text = employeeSelected.id;
@@ -163,7 +163,7 @@ namespace QuanLyNhaHang.Setting
                 employeeNew.password = GetMd5Hash(md5Hash, Password.Password);
 
             }
-            if (TypeEmployee.SelectedIndex == 0)
+            if (TypeEmployee.SelectedIndex == 1)
             {
                 employeeNew.role = "admin";
             }
@@ -233,7 +233,7 @@ namespace QuanLyNhaHang.Setting
             employeeNew.phone = Phone.Text;
 
 
-            if (TypeEmployee.SelectedIndex == 0)
+            if (TypeEmployee.SelectedIndex == 1)
             {
                 employeeNew.role = "admin";
             }
@@ -266,7 +266,7 @@ namespace QuanLyNhaHang.Setting
             }
             dynamic stuff = JsonConvert.DeserializeObject(result);
             //todo message
-            if (stuff.message == "Employee update successfully!")
+            if (stuff.message == "Employee updated successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin nhân viên thành công!!!");
             }

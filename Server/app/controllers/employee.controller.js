@@ -53,19 +53,19 @@ exports.create = (req, res) => {
 
     // Create a Employee
     const employee = new Employee({
-        username: String,
-        password: String,
-        displayName: String,
-        role: String,
-        dateOfBirth: String,
-        identityNumber: String,
-        phone: String
+        username: req.body.username,
+        password: req.body.password,
+        displayName: req.body.displayName,
+        role: req.body.role,
+        dateOfBirth: req.body.dateOfBirth,
+        identityNumber: req.body.identityNumber,
+        phone: req.body.phone
     });
 
     // Save Employee in the database
     employee.save()
         .then(data => {
-            res.send(data);
+            res.send({message:"create successful"});
             console.log("Send data!!");
         }).catch(err => {
             res.send({
@@ -117,13 +117,6 @@ exports.update = (req, res) => {
         });
     }
 
-    // Validate password
-    if (!req.body.password) {
-        return res.send({
-            message: "Employee password can not be empty"
-        });
-    }
-
     // Validate displayName
     if (!req.body.displayName) {
         return res.send({
@@ -162,7 +155,6 @@ exports.update = (req, res) => {
     // Find employee and update it with the request body
     Employee.findByIdAndUpdate(req.params.employeeId, {
         username: req.body.username,
-        password: req.body.password,
         displayName: req.body.displayName,
         role: req.body.role,
         dateOfBirth: req.body.dateOfBirth,
