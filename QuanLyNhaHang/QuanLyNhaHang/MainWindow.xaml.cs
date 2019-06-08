@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang
@@ -162,6 +164,13 @@ namespace QuanLyNhaHang
         {
             InitializeComponent();
             this.Hide();
+
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            XDocument objDoc = XDocument.Load(path + "/Config/Rememberme.xml");
+
+            objDoc.Root.Elements().ElementAt(0).Value = "False";
+
+            objDoc.Save(path + "/Config/Rememberme.xml");
 
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.ShowDialog();
