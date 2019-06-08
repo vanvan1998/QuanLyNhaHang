@@ -119,7 +119,7 @@ exports.update = (req, res) => {
         name: req.body.name,
         price: req.body.price,
         ingredients: req.body.ingredients,
-        type: req.body.status,
+        type: req.body.type,
         note: req.body.note
     }, { new: true })
         .then(food => {

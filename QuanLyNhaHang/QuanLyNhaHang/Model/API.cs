@@ -217,9 +217,7 @@ namespace QuanLyNhaHang.Model
             string url = SERVER + "/tables/Book"+table.number;
             string json = "{\"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
-                            "\", \"numberOfSeat\": \"" + table.numberOfSeat +
                             "\", \"status\": \"" + table.status +
-                            "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
                             "\", \"phone\": \"" + table.customer.phone + "\"}" +
                             ", \"time\": \"" + table.time + "\"}";
@@ -412,8 +410,8 @@ namespace QuanLyNhaHang.Model
         //todo server
         public static string CreateFood(Food foodNew)
         {
-            string url = SERVER + "/foods/new";
-            string json = "{\"ID\": \"" + foodNew.ID + "\", \"name\": \""
+            string url = SERVER + "/foods";
+            string json = "{\"name\": \""
                 + foodNew.name + "\", \"price\": \""
                 + foodNew.price + "\", \"ingredients\": \""
                 + foodNew.ingredients + "\", \"type\": \""
@@ -433,7 +431,7 @@ namespace QuanLyNhaHang.Model
         public static string UpdateFood(string ID, Food foodNew)
         {
             string url = SERVER + "/foods/" + ID;
-            string json = "{\"ID\": \"" + foodNew.ID + "\", \"name\": \""
+            string json = "{\"name\": \""
                 + foodNew.name + "\", \"price\": \""
                 + foodNew.price + "\", \"ingredients\": \""
                 + foodNew.ingredients + "\", \"type\": \""

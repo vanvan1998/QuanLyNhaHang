@@ -35,7 +35,6 @@ namespace QuanLyNhaHang.Setting
                 Foods.Add(new Model.Food()
                 {
                     id = item._id,
-                    ID = item.ID,
                     name = item.name,
                     type = item.type,
                     ingredients = item.ingredients,
@@ -53,7 +52,7 @@ namespace QuanLyNhaHang.Setting
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
             for (int i = 0; i < Foods.Count; i++)
             {
-                if (Foods[i].type == "dessert")
+                if (Foods[i].type == "desserts")
                 {
                     ListViewItem lvi1 = ListViewFood.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
                     var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
@@ -95,7 +94,7 @@ namespace QuanLyNhaHang.Setting
 
                     var dt1 = cp1.ContentTemplate as DataTemplate;
                     var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
-                    var tb1 = (TextBlock)dt1.FindName("ID", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("NameFood", cp1);
                     rt1.Fill = Brushes.White;
                 }
 
@@ -103,16 +102,15 @@ namespace QuanLyNhaHang.Setting
 
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
-                var tb = (TextBlock)dt.FindName("ID", cp);
+                var tb = (TextBlock)dt.FindName("NameFood", cp);
                 Model.Food foodSelected = new Model.Food();
 
                 foreach (var item in Foods)
                 {
-                    if (item.ID == tb.Text)
+                    if (item.name == tb.Text)
                         foodSelected = item;
                 };
 
-                NumberFood.Text = foodSelected.ID;
                 NameFood.Text = foodSelected.name;
                 Price.Text = foodSelected.price;
                 Ingredients.Text = foodSelected.ingredients;
@@ -140,7 +138,6 @@ namespace QuanLyNhaHang.Setting
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             Model.Food foodNew = new Model.Food();
-            foodNew.ID = NumberFood.Text;
             foodNew.name = NameFood.Text;
             foodNew.price =Price.Text;
             foodNew.ingredients = Ingredients.Text;
@@ -152,18 +149,18 @@ namespace QuanLyNhaHang.Setting
             }
             else if(TypeFood.SelectedIndex == 1)
             {
-                foodNew.type = "desserts";
+                foodNew.type = "dish";
             }
             else
             {
-                foodNew.type = "dish";
+                foodNew.type = "desserts";
             }
 
             foreach (var item in Foods)
             {
-                if (item.ID == NumberFood.Text)
+                if (item.name == NameFood.Text)
                 {
-                    MessageBox.Show("Mã món ăn đã có!!!\n Bạn vui lòng chọn mã khác!");
+                    MessageBox.Show("Tên món ăn đã có!!!\n Bạn vui lòng chọn tên khác!");
                     return;
                 }
             };
@@ -213,7 +210,6 @@ namespace QuanLyNhaHang.Setting
                 return;
             }
             foodNew.id = id.Text;
-            foodNew.ID = NumberFood.Text;
             foodNew.name = NameFood.Text;
             foodNew.price = Price.Text;
             foodNew.ingredients = Ingredients.Text;
@@ -225,7 +221,7 @@ namespace QuanLyNhaHang.Setting
             }
             else if (TypeFood.SelectedIndex == 1)
             {
-                foodNew.type = "desserts";
+                foodNew.type = "dish";
             }
             else
             {
@@ -233,9 +229,9 @@ namespace QuanLyNhaHang.Setting
             }
             foreach (var item in Foods)
             {
-                if (item.ID == NumberFood.Text && item.id != id.Text)
+                if (item.name == NameFood.Text && item.id != id.Text)
                 {
-                    MessageBox.Show("Mã món ăn đã có!!!\n Bạn vui lòng chọn mã khác!");
+                    MessageBox.Show("Tên món ăn đã có!!!\n Bạn vui lòng chọn tên khác!");
                     return;
                 }
             };
@@ -243,7 +239,7 @@ namespace QuanLyNhaHang.Setting
             string result = API.UpdateFood(id.Text, foodNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
             //todo message
-            if (stuff.message == "Food update successfully!")
+            if (stuff.message == "Food updated successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin món ăn thành công!!!");
             }
