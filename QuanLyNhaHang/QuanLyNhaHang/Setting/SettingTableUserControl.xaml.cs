@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace QuanLyNhaHang.Setting
             InitializeComponent();
             string result = API.GetAllTable();
             dynamic stuff = JsonConvert.DeserializeObject(result);
+            CultureInfo provider = CultureInfo.InvariantCulture;
             foreach (var item in stuff)
             {
                 Tables.Add(new Model.Table()
@@ -38,24 +40,15 @@ namespace QuanLyNhaHang.Setting
                     numberOfSeat = item.numberOfSeat,
                     type = item.type,
                     status = item.status,
+                    note = item.note,
+                    time =item.time,
                     customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                 });
             };
 
             ListViewTable.ItemsSource = Tables;
 
-            //for (int i = 0; i < Tables.Count; i++)
-            //{
-            //    if (Tables[i].type == "VIP")
-            //    {
-            //        ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-            //        var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
-
-            //        var dt1 = cp1.ContentTemplate as DataTemplate;
-            //        var rt1 = (Rectangle)dt1.FindName("TicketType", cp1);
-            //        rt1.Fill = Brushes.White;
-            //    }
-            //};
+            
             //Task t = new Task(() =>
             //{
             //    string result = API.GetAllTable();
@@ -80,7 +73,19 @@ namespace QuanLyNhaHang.Setting
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
-            this.Height = Application.Current.MainWindow.ActualHeight - 80;
+            this.Height = Application.Current.MainWindow.ActualHeight - 50;
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                if (Tables[i].type == "standard")
+                {
+                    ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                    rt1.Background = Brushes.Blue;
+                }
+            };
         }
 
         private void ListViewTable_MouseUp(object sender, MouseButtonEventArgs e)
@@ -153,7 +158,8 @@ namespace QuanLyNhaHang.Setting
                 {
                     Status.SelectedIndex = 1;
                 }
-
+                Note.Text = tableSelected.note;
+                Time.Text = tableSelected.time;
                 ID.Text = tableSelected.ID;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
@@ -200,6 +206,8 @@ namespace QuanLyNhaHang.Setting
                     return;
                 }
                 tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
+                tableNew.time =Time.Text;
+                tableNew.note= Note.Text;
             }
             foreach (var item in Tables)
             {
@@ -292,6 +300,8 @@ namespace QuanLyNhaHang.Setting
                     return;
                 }
                 tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
+                tableNew.time = Time.Text;
+                tableNew.note = Note.Text;
             }
             foreach (var item in Tables)
             {
@@ -304,7 +314,6 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.UpdateTable(ID.Text,tableNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            //todo message
             if (stuff.message == "Table update successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin bàn thành công!!!");

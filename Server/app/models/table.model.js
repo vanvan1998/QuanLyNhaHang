@@ -10,7 +10,7 @@ const TableSchema = mongoose.Schema({
         fullName : String,
         phone:  String
     },
-    time : Date
+    time : String
 }, {
     timestamps: true
 });

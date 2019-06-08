@@ -15,6 +15,6 @@ namespace QuanLyNhaHang.Model
         public string status { get; set; }
         public string note { get; set; }
         public Customer customer { get; set; }
-        public DateTime time { get; set; }
+        public string time { get; set; }
     }
 }

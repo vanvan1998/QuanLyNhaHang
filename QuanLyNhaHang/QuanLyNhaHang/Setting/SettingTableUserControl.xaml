@@ -8,32 +8,36 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Loaded="UserControl_Loaded">
     <Grid>
-        <StackPanel Height="600" Width="400" Margin="0,15,550,30">
-            
+        <StackPanel Height="700" Width="400" Margin="0,15,550,30">
+
             <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Thông tin bàn</TextBlock>
-            <TextBlock Margin="0,20,0,0" Foreground="#DD892121">Số bàn:</TextBlock>
-            <TextBox x:Name="NumberTable" Width="300" Margin="50,3,20,20"></TextBox>
+            <TextBlock Margin="0,10,0,0" Foreground="#DD892121">Số bàn:</TextBlock>
+            <TextBox x:Name="NumberTable" Width="300" Margin="50,0,20,15"></TextBox>
             <TextBox x:Name="ID" Width="0" Height="0"></TextBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Loại bàn:</TextBlock>
-            <ComboBox x:Name="TypeTable" Width="300" Margin="50,3,20,20">
+            <ComboBox x:Name="TypeTable" Width="300" Margin="50,0,20,15">
                 <ComboBoxItem>Tiêu chuẩn</ComboBoxItem>
                 <ComboBoxItem>VIP</ComboBoxItem>
             </ComboBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Kích thước bàn:</TextBlock>
-            <ComboBox x:Name="NumberOfSeat" Width="300" Margin="50,3,20,20">
+            <ComboBox x:Name="NumberOfSeat" Width="300" Margin="50,0,20,15">
                 <ComboBoxItem>Bàn 4 người</ComboBoxItem>
                 <ComboBoxItem>Bàn 8 người</ComboBoxItem>
                 <ComboBoxItem>Bàn 12 người</ComboBoxItem>
             </ComboBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Trạng thái bàn:</TextBlock>
-            <ComboBox x:Name="Status" Width="300" Margin="50,3,20,20">
+            <ComboBox x:Name="Status" Width="300" Margin="50,0,20,15">
                 <ComboBoxItem>Bàn trống</ComboBoxItem>
                 <ComboBoxItem>Bàn đã đặt</ComboBoxItem>
             </ComboBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Họ và tên khách hàng:</TextBlock>
-            <TextBox x:Name="CustomerName" Width="300" Margin="50,3,20,20"></TextBox>
+            <TextBox x:Name="CustomerName" Width="300" Margin="50,0,20,15"></TextBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Số điện thoại:</TextBlock>
-            <TextBox x:Name="Phone" Width="300" Margin="50,3,20,50"></TextBox>
+            <TextBox x:Name="Phone" Width="300" Margin="50,0,20,15"></TextBox>
+            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Thời gian đặt:</TextBlock>
+            <TextBox x:Name="Time" Width="300" Margin="50,0,20,15"></TextBox>
+            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Ghi chú:</TextBlock>
+            <TextBox x:Name="Note" Width="300" Margin="50,0,20,20"></TextBox>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="btnUpdate" Click="BtnUpdate_Click" Margin="10,0,30,0"  HorizontalAlignment="Center"  Content="Cập Nhật" BorderBrush="#ffffff" Background="#DD892121" ></Button>
                 <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="40,0,30,0" HorizontalAlignment="Center" Content="Xóa" BorderBrush="#ffffff" Background="#DD892121"></Button>
@@ -65,12 +69,12 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                                <Grid Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                                    <Grid.Effect >
-                                                        <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                                    </Grid.Effect>
+                                            <Grid x:Name="TicketType" Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                <Grid.Effect >
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
                                                 <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
-                                                </Grid>
+                                            </Grid>
                                             <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                                 <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
