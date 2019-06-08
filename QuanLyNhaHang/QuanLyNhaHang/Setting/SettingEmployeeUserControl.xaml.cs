@@ -43,7 +43,7 @@ namespace QuanLyNhaHang.Setting
                     role = item.role,
                     identityNumber=item.identityNumber,
                     phone=item.phone,
-                    dateOfBirth=DateTime.Parse(item.dateOfBirth)
+                    dateOfBirth=item.dateOfBirth
                 });
             };
 
@@ -53,7 +53,19 @@ namespace QuanLyNhaHang.Setting
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
-            this.Height = Application.Current.MainWindow.ActualHeight - 80;
+            this.Height = Application.Current.MainWindow.ActualHeight - 50;
+            for (int i = 0; i < Employees.Count; i++)
+            {
+                if (Employees[i].role == "employee")
+                {
+                    ListViewItem lvi1 = ListViewEmployee.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                    rt1.Background = Brushes.Blue;
+                }
+            };
         }
 
         static string GetMd5Hash(MD5 md5Hash, string input)
@@ -116,7 +128,7 @@ namespace QuanLyNhaHang.Setting
 
                 NumberEmployee.Text = employeeSelected.ID;
                 NameEmployee.Text = employeeSelected.displayName;
-                DateOfBirth.Text = employeeSelected.dateOfBirth.ToLongDateString();
+                DateOfBirth.Text = employeeSelected.dateOfBirth;
                 IdentityNumber.Text = employeeSelected.identityNumber;
                 Phone.Text = employeeSelected.phone;
                 using (MD5 md5Hash = MD5.Create())
@@ -144,7 +156,7 @@ namespace QuanLyNhaHang.Setting
             Model.Employee employeeNew = new Model.Employee();
             employeeNew.ID=NumberEmployee.Text ;
             employeeNew.displayName=NameEmployee.Text;
-            employeeNew.dateOfBirth=DateTime.Parse( DateOfBirth.Text);
+            employeeNew.dateOfBirth=DateOfBirth.Text;
             employeeNew.identityNumber=IdentityNumber.Text ;
             employeeNew.phone=Phone.Text;
             using (MD5 md5Hash = MD5.Create())
@@ -217,7 +229,7 @@ namespace QuanLyNhaHang.Setting
             employeeNew.id = id.Text;
             employeeNew.ID = NumberEmployee.Text;
             employeeNew.displayName = NameEmployee.Text;
-            employeeNew.dateOfBirth = DateTime.Parse(DateOfBirth.Text);
+            employeeNew.dateOfBirth = DateOfBirth.Text;
             employeeNew.identityNumber = IdentityNumber.Text;
             employeeNew.phone = Phone.Text;
             using (MD5 md5Hash = MD5.Create())

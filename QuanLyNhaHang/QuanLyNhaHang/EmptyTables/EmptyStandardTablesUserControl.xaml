@@ -206,7 +206,6 @@
                     </materialDesign:ColorZone>
                 </StackPanel>
 
-
                 <Grid Grid.Row="1" >
                     <Label Content="Đặt Bàn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
                 </Grid>
@@ -254,11 +253,22 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Thời gian đặt " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <TextBox x:Name="TimeTextBox" materialDesign:HintAssist.Hint="Thời gian đặt" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                </Grid>
+                
+                <Grid Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBox x:Name="NoteTextBox" materialDesign:HintAssist.Hint="Ghi chú" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
-                <Grid Grid.Row="7">
+                
+
+                <Grid Grid.Row="8">
                     <Button Click="BtnDatPhong" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150"

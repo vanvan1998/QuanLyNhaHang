@@ -59,7 +59,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid x:Name="TicketType" Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect >
                                                     <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>

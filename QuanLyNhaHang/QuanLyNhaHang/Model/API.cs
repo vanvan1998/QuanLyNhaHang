@@ -189,6 +189,28 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
+        //todo server
+        public static string BookTable(Model.Table table)
+        {
+            string url = SERVER + "/tables/Book"+table.number;
+            string json = "{\"number\": \"" + table.number +
+                            "\", \"note\": \"" + table.note +
+                            "\", \"numberOfSeat\": \"" + table.numberOfSeat +
+                            "\", \"status\": \"" + table.status +
+                            "\", \"type\": \"" + table.type +
+                            "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
+                            ", \"time\": \"" + table.time + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
 
         public static string DeleteTable(string ID)
         {

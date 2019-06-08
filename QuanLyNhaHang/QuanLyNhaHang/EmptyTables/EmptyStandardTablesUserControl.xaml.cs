@@ -158,12 +158,12 @@ namespace QuanLyNhaHang.EmptyTables
             }
         }
 
-        private void BtnDatPhong(object sender, RoutedEventArgs e)
+        private void BtnDatBan(object sender, RoutedEventArgs e)
         {
 
             if (NumberTable.Text == "")
             {
-                MessageBox.Show("Vui lòng chọn phòng trước!");
+                MessageBox.Show("Vui lòng chọn bàn trước!");
                 return;
             }
 
@@ -179,81 +179,11 @@ namespace QuanLyNhaHang.EmptyTables
                 return;
             }
 
-            //string maKH = "KH1";
-
-            //if (DataProvider.Ins.DB.KhachHangs.Count() > 0)
-            //{
-            //    maKH = "KH" + (DataProvider.Ins.DB.KhachHangs.Max(x => x.id) + 1).ToString();
-            //}
-
-            //KhachHang khachHang = new KhachHang
-            //{
-            //    hoTen = CustomerNameTextBox.Text,
-            //    cmnd = CustomerIDTextBox.Text,
-            //    maKhachHang = maKH
-            //};
-
-            ////thêm thông tin khách hàng vừa nhập
-            //DataProvider.Ins.DB.KhachHangs.Add(khachHang);
-            //DataProvider.Ins.DB.SaveChanges();
-
-            //// thêm thông tin vào phòng vừa chọn
-            //phongHienTai.maKhachHang = khachHang.maKhachHang;
-            //phongHienTai.tinhTrang = 1;
-            //if (NoteTextBox.Text == "")
-            //{
-            //    phongHienTai.ghiChu = null;
-            //}
-            //else
-            //{
-            //    phongHienTai.ghiChu = NoteTextBox.Text;
-            //}
-            //phongHienTai.thoiGianBatDau = DateTime.Now;
-
-            //foreach (var table in EmptyStandard4PersonTables)
-            //{
-            //    if (table.soPhong == phongHienTai.soPhong)
-            //    {
-            //        EmptyStandard4PersonTables.Remove(table);
-            //        break;
-            //    }
-            //}
-
-            //ListViewEmptyStandard4PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyStandard4PersonTable.ItemsSource = EmptyStandard4PersonTables;
-
-            //foreach (var table in EmptyStandard8PersonTables)
-            //{
-            //    if (table.soPhong == phongHienTai.soPhong)
-            //    {
-            //        EmptyStandard8PersonTables.Remove(table);
-            //        break;
-            //    }
-            //}
-
-            //ListViewEmptyStandard8PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyStandard8PersonTable.ItemsSource = EmptyStandard8PersonTables;
-
-            //foreach (var table in EmptyStandard12PersonTables)
-            //{
-            //    if (table.soPhong == phongHienTai.soPhong)
-            //    {
-            //        EmptyStandard12PersonTables.Remove(table);
-            //        break;
-            //    }
-            //}
-
-            //ListViewEmptyStandard12PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyStandard12PersonTable.ItemsSource = EmptyStandard12PersonTables;
-
-            //DataProvider.Ins.DB.SaveChanges();
-            //MessageBox.Show("Đặt phòng thành công!");
-
-            //NumberTable.Text = "";
-            //TypeTable.Text = "";
-            //CustomerNameTextBox.Text = "";
-            //CustomerIDTextBox.Text = "";
-            //NoteTextBox.Text = "";
+            Model.Table tableBook = new Model.Table();
+            tableBook.number = NumberTable.Text;
+            tableBook.note = NoteTextBox.Text;
+            tableBook.status = "booked";
+            tableBook.time = TimeTextBox.Text;
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
@@ -268,7 +198,7 @@ namespace QuanLyNhaHang.EmptyTables
             //}
             //else
             //{
-            //    MessageBox.Show("Số phòng không đúng!");
+            //    MessageBox.Show("Số bàn không đúng!");
             //}
         }
     }
