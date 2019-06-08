@@ -42,7 +42,7 @@ namespace QuanLyNhaHang.Model
         //todo server
         public static string CreateEmployee(Employee employeeNew)
         {
-            string url = SERVER + "/employees/new";
+            string url = SERVER + "/employees";
             string json = "{\"\"username\": \"" 
                 + employeeNew.username + "\", \"password\": \""
                 + employeeNew.password + "\", \"displayName\": \""
@@ -86,7 +86,7 @@ namespace QuanLyNhaHang.Model
 
         public static string UpdatePassword(Employee employee)
         {
-            string url = SERVER + "/employees/password" + employee.id;
+            string url = SERVER + "/employees/password/" + employee.id;
             string json = "{\"username\": \""
                             + employee.username + "\", \"password\": \""
                             + employee.password + "\", \"displayName\": \""
