@@ -153,7 +153,7 @@ exports.update = (req, res) => {
                     message: "Table not found with id " + req.params.tableId
                 });
             }
-            res.send(table);
+            res.send({message: "Table update successfully!"});
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.send({

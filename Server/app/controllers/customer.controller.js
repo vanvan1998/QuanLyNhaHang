@@ -94,7 +94,7 @@ exports.update = (req, res) => {
                     message: "Customer not found with id " + req.params.customerId
                 });
             }
-            res.send(customer);
+            res.send({ message: "Customer updated successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.send({
