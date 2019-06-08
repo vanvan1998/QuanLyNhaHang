@@ -39,7 +39,7 @@ exports.create = (req, res) => {
     // Save Bill in the database
     bill.save()
         .then(data => {
-            res.send({ message: "create successful" });
+            res.send({ message: "successful" });
         }).catch(err => {
             res.send({
                 message: err.message || "Some error occurred while creating the Bill."
