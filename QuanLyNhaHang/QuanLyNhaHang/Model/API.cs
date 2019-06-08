@@ -43,7 +43,7 @@ namespace QuanLyNhaHang.Model
         public static string CreateEmployee(Employee employeeNew)
         {
             string url = SERVER + "/employees/new";
-            string json = "{\"ID\": \"" + employeeNew.ID + "\", \"username\": \"" 
+            string json = "{\"ID\": \"" + employeeNew.ID + "\"\"username\": \"" 
                 + employeeNew.username + "\", \"password\": \""
                 + employeeNew.password + "\", \"displayName\": \""
                 + employeeNew.displayName + "\", \"role\": \""

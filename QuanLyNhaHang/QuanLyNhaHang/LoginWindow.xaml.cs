@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 using QuanLyNhaHang.Model;
 
@@ -14,15 +17,12 @@ namespace QuanLyNhaHang
     public partial class LoginWindow : Window
     {
         public bool IsLoginSuccess = false;
-
         public Employee employee = null; // nhân viên
 
         public LoginWindow()
         {
             InitializeComponent();
         }
-
-        
 
         private void ExitLoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -57,6 +57,9 @@ namespace QuanLyNhaHang
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            XDocument objDoc = XDocument.Load(path + "/Rememberme.xml");
+
             if (Username.Text == "")
             {
                 tbMessageBox.Text = "Username trống!!!";
@@ -68,12 +71,40 @@ namespace QuanLyNhaHang
                 return;
             }
 
+            if (RememberMe.IsChecked == true)
+            {
+                objDoc.Root.Elements().ElementAt(0).Value = "True";
+            }
+            else
+            {
+                objDoc.Root.Elements().ElementAt(0).Value = "False";
+            }
+
+            DoLogin(Username.Text, Password.Password);
+        }
+
+        private void checkRememberMe()
+        {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            XDocument objDoc = XDocument.Load(path + "/Rememberme.xml");
+
+            if (objDoc.Root.Elements().ElementAt(0).Value == "True")
+            {
+                string username = objDoc.Root.Elements().ElementAt(1).Value;
+                string password = objDoc.Root.Elements().ElementAt(2).Value;
+
+                DoLogin(username, password);
+            }
+        }
+
+        private void DoLogin(string username, string password)
+        {
             using (MD5 md5Hash = MD5.Create())
             {
                 //đăng nhập với password đã mã hóa
-                string result = API.login(Username.Text, GetMd5Hash(md5Hash, Password.Password));
+                string result = API.login(username, GetMd5Hash(md5Hash, password));
 
-                if (result!= "")
+                if (result != "")
                 {
                     dynamic stuff = JsonConvert.DeserializeObject(result);
                     IsLoginSuccess = stuff.code;

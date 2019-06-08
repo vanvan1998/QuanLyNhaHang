@@ -217,6 +217,8 @@
   <ItemGroup>
     <Resource Include="Image\welcome.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Config\RememberMe.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
