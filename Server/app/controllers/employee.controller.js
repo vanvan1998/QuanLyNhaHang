@@ -17,9 +17,37 @@ exports.create = (req, res) => {
     }
 
     // Validate role
+    if (!req.body.displayName) {
+        return res.send({
+            message: "Employee displayName can not be empty"
+        });
+    }
+
+    // Validate role
     if (!req.body.role) {
         return res.send({
             message: "Employee role can not be empty"
+        });
+    }
+
+    // Validate role
+    if (!req.body.dateOfBirth) {
+        return res.send({
+            message: "Employee dateOfBirth can not be empty"
+        });
+    }
+
+    // Validate role
+    if (!req.body.identityNumber) {
+        return res.send({
+            message: "Employee identityNumber can not be empty"
+        });
+    }
+
+    // Validate role
+    if (!req.body.phone) {
+        return res.send({
+            message: "Employee phone can not be empty"
         });
     }
 
@@ -29,7 +57,7 @@ exports.create = (req, res) => {
         password: String,
         displayName: String,
         role: String,
-        dateOfBirth: Date,
+        dateOfBirth: String,
         identityNumber: String,
         phone: String
     });
@@ -82,24 +110,64 @@ exports.findOne = (req, res) => {
 
 // Update a employee identified by the employeeId in the request
 exports.update = (req, res) => {
-    // Validate Request
+    // Validate username
+    if (!req.body.username) {
+        return res.send({
+            message: "Employee employee name can not be empty"
+        });
+    }
+
+    // Validate password
     if (!req.body.password) {
         return res.send({
             message: "Employee password can not be empty"
         });
     }
 
-    // Validate Request
+    // Validate role
+    if (!req.body.displayName) {
+        return res.send({
+            message: "Employee displayName can not be empty"
+        });
+    }
+
+    // Validate role
     if (!req.body.role) {
         return res.send({
             message: "Employee role can not be empty"
         });
     }
 
+    // Validate role
+    if (!req.body.dateOfBirth) {
+        return res.send({
+            message: "Employee dateOfBirth can not be empty"
+        });
+    }
+
+    // Validate role
+    if (!req.body.identityNumber) {
+        return res.send({
+            message: "Employee identityNumber can not be empty"
+        });
+    }
+
+    // Validate role
+    if (!req.body.phone) {
+        return res.send({
+            message: "Employee phone can not be empty"
+        });
+    }
+
     // Find employee and update it with the request body
     Employee.findByIdAndUpdate(req.params.employeeId, {
+        username: req.body.username,
         password: req.body.password,
-        role: req.body.role
+        displayName: req.body.displayName,
+        role: req.body.role,
+        dateOfBirth: req.body.dateOfBirth,
+        identityNumber: req.body.identityNumber,
+        phone: req.body.phone,
     }, { new: true })
         .then(employee => {
             if (!employee) {
