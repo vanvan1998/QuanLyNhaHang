@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,49 +31,58 @@ namespace QuanLyNhaHang.EmptyTables
         ObservableCollection<Model.Table> EmptyStandard8PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> EmptyStandard12PersonTables = new ObservableCollection<Model.Table>();
 
-
         public EmptyStandardTablesUserControl()
         {
             InitializeComponent();
 
-            //TODO: phải làm 1 stask mới ở đây
-
-            string result = API.GetAllTableWithStatusAndType("empty", "standard");
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-
-            foreach (var item in stuff)
-            {
-                if (item.numberOfSeat == 4) { 
-                EmptyStandard4PersonTables.Add(new Model.Table()
-                {
-                    number = item.number,
-                    numberOfSeat = item.numberOfSeat,
-                    status = item.status,
-                });
-                }
-                else if(item.numberOfSeat == 8)
-                {
-                    EmptyStandard8PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                    });
-                }
-                else
-                {
-                    EmptyStandard12PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                    });
-                };
-            }
-
             ListViewEmptyStandard4PersonTable.ItemsSource = EmptyStandard4PersonTables;
             ListViewEmptyStandard8PersonTable.ItemsSource = EmptyStandard8PersonTables;
             ListViewEmptyStandard12PersonTable.ItemsSource = EmptyStandard12PersonTables;
+
+            LoadData();
+        }
+
+        private async void LoadData()
+        {
+            string result = API.GetAllTableWithStatusAndType("empty", "standard");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            await Task.Run(() => {
+                Thread.Sleep(5000);
+                this.Dispatcher.Invoke(() => {
+                    foreach (var item in stuff)
+                    {
+                        if (item.numberOfSeat == 4)
+                        {
+                            EmptyStandard4PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                            });
+                        }
+                        else if (item.numberOfSeat == 8)
+                        {
+                            EmptyStandard8PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                            });
+                        }
+                        else
+                        {
+                            EmptyStandard12PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                            });
+                        };
+                    }
+                });
+                
+            });       
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
