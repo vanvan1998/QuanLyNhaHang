@@ -72,7 +72,7 @@ exports.findAllWithStatusAndType = (req, res) => {
 
 exports.findAll = (req, res) => {
 
-    Table.find({})
+    Table.find()
         .then(tables => {
             res.send(tables);
         }).catch(err => {
@@ -144,7 +144,10 @@ exports.update = (req, res) => {
         numberOfSeat: req.body.numberOfSeat,
         status: req.body.status,
         type: req.body.type,
-        IDCustomer: req.body.IDCustomer,
+        customer: {
+            fullName: req.body.customer.fullName,
+            phone: req.body.customer.phone
+        },
         time: req.body.time
     }, { new: true })
         .then(table => {

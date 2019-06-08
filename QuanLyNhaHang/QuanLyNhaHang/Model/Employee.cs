@@ -14,7 +14,7 @@ namespace QuanLyNhaHang.Model
         public string password { get; set; }
         public string displayName { get; set; }
         public string role { get; set; }
-        public DateTime dateOfBirth { get; set; }
+        public string dateOfBirth { get; set; }
         public string identityNumber { get; set; }
         public string phone { get; set; }
     }
