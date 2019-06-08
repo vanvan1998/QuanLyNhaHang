@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,9 @@ namespace QuanLyNhaHang.EmptyTables
     /// </summary>
     public partial class EmptyVIPTablesUserControl : UserControl
     {
-        List<Model.Table> EmptyVIP4PersonTables = new List<Model.Table>();
-        List<Model.Table> EmptyVIP8PersonTables = new List<Model.Table>();
-        List<Model.Table> EmptyVIP12PersonTables = new List<Model.Table>();
+        ObservableCollection<Model.Table> EmptyVIP4PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> EmptyVIP8PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> EmptyVIP12PersonTables = new ObservableCollection<Model.Table>();
 
         public EmptyVIPTablesUserControl()
         {

@@ -9,7 +9,6 @@ namespace QuanLyNhaHang.Model
     public partial class Employee
     {
         public string id { get; set; }
-        public string ID { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string displayName { get; set; }

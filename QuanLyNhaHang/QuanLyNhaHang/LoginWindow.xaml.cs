@@ -58,7 +58,7 @@ namespace QuanLyNhaHang
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            XDocument objDoc = XDocument.Load(path + "/Rememberme.xml");
+            XDocument objDoc = XDocument.Load(path + "/Config/Rememberme.xml");
 
             if (Username.Text == "")
             {
@@ -74,6 +74,12 @@ namespace QuanLyNhaHang
             if (RememberMe.IsChecked == true)
             {
                 objDoc.Root.Elements().ElementAt(0).Value = "True";
+                objDoc.Root.Elements().ElementAt(1).Value = Username.Text;
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    objDoc.Root.Elements().ElementAt(2).Value = GetMd5Hash(md5Hash, Password.Password);
+                }
+                objDoc.Save(path + "/Config/Rememberme.xml");
             }
             else
             {
@@ -86,23 +92,32 @@ namespace QuanLyNhaHang
         private void checkRememberMe()
         {
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            XDocument objDoc = XDocument.Load(path + "/Rememberme.xml");
+            XDocument objDoc = XDocument.Load(path + "/Config/Rememberme.xml");
 
             if (objDoc.Root.Elements().ElementAt(0).Value == "True")
             {
                 string username = objDoc.Root.Elements().ElementAt(1).Value;
                 string password = objDoc.Root.Elements().ElementAt(2).Value;
 
-                DoLogin(username, password);
+                DoLogin(username, password, false);
             }
         }
 
-        private void DoLogin(string username, string password)
+        private void DoLogin(string username, string password, bool hash = true)
         {
             using (MD5 md5Hash = MD5.Create())
             {
-                //đăng nhập với password đã mã hóa
-                string result = API.login(username, GetMd5Hash(md5Hash, password));
+                string result;
+                if (hash == true)
+                {
+                    //đăng nhập với password chưa mã hóa
+                    result = API.login(username, GetMd5Hash(md5Hash, password));
+                }
+                else
+                {
+                    //đăng nhập với password đã mã hóa
+                    result = API.login(username, password);
+                }
 
                 if (result != "")
                 {
@@ -129,8 +144,12 @@ namespace QuanLyNhaHang
             if (IsLoginSuccess == false)
             {
                 tbMessageBox.Text = "Tài khoản hoặc mật khẩu sai!";
-
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            checkRememberMe();
         }
     }
 }

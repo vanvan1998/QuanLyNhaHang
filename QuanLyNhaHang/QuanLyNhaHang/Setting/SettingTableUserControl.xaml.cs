@@ -30,7 +30,6 @@ namespace QuanLyNhaHang.Setting
             InitializeComponent();
             string result = API.GetAllTable();
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            CultureInfo provider = CultureInfo.InvariantCulture;
             foreach (var item in stuff)
             {
                 Tables.Add(new Model.Table()
@@ -312,7 +311,7 @@ namespace QuanLyNhaHang.Setting
                 }
             };
 
-            string result = API.UpdateTable(ID.Text,tableNew);
+            string result = API.UpdateTable(tableNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
             if (stuff.message == "Table update successfully!")
             {

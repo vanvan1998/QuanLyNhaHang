@@ -35,15 +35,14 @@ namespace QuanLyNhaHang.Setting
             {
                 Employees.Add(new Model.Employee()
                 {
-                    id=item._id,
-                    ID = item.ID,
+                    id = item._id,
                     username = item.username,
                     password = item.password,
                     displayName = item.displayName,
                     role = item.role,
-                    identityNumber=item.identityNumber,
-                    phone=item.phone,
-                    dateOfBirth=item.dateOfBirth
+                    identityNumber = item.identityNumber,
+                    phone = item.phone,
+                    dateOfBirth = item.dateOfBirth
                 });
             };
 
@@ -109,7 +108,7 @@ namespace QuanLyNhaHang.Setting
 
                     var dt1 = cp1.ContentTemplate as DataTemplate;
                     var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
-                    var tb1 = (TextBlock)dt1.FindName("ID", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("Username", cp1);
                     rt1.Fill = Brushes.White;
                 }
 
@@ -117,25 +116,20 @@ namespace QuanLyNhaHang.Setting
 
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
-                var tb = (TextBlock)dt.FindName("ID", cp);
+                var tb = (TextBlock)dt.FindName("Username", cp);
                 Model.Employee employeeSelected = new Model.Employee();
 
                 foreach (var item in Employees)
                 {
-                    if (item.ID == tb.Text)
+                    if (item.username == tb.Text)
                         employeeSelected = item;
                 };
 
-                NumberEmployee.Text = employeeSelected.ID;
+                Username.Text = employeeSelected.username;
                 NameEmployee.Text = employeeSelected.displayName;
                 DateOfBirth.Text = employeeSelected.dateOfBirth;
                 IdentityNumber.Text = employeeSelected.identityNumber;
                 Phone.Text = employeeSelected.phone;
-                using (MD5 md5Hash = MD5.Create())
-                {
-                    Password.Password=GetMd5Hash(md5Hash, employeeSelected.password);
-                    
-                }
                 if (employeeSelected.role == "admin")
                 {
                     TypeEmployee.SelectedIndex = 0;
@@ -144,7 +138,7 @@ namespace QuanLyNhaHang.Setting
                 {
                     TypeEmployee.SelectedIndex = 1;
                 }
-                
+
                 id.Text = employeeSelected.id;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
@@ -154,14 +148,19 @@ namespace QuanLyNhaHang.Setting
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             Model.Employee employeeNew = new Model.Employee();
-            employeeNew.ID=NumberEmployee.Text ;
-            employeeNew.displayName=NameEmployee.Text;
-            employeeNew.dateOfBirth=DateOfBirth.Text;
-            employeeNew.identityNumber=IdentityNumber.Text ;
-            employeeNew.phone=Phone.Text;
+            employeeNew.username = Username.Text;
+            employeeNew.displayName = NameEmployee.Text;
+            employeeNew.dateOfBirth = DateOfBirth.Text;
+            employeeNew.identityNumber = IdentityNumber.Text;
+            employeeNew.phone = Phone.Text;
+            if (Password.Password == "")
+            {
+                MessageBox.Show("Password trống!!!");
+                return;
+            }
             using (MD5 md5Hash = MD5.Create())
             {
-                employeeNew.password = GetMd5Hash(md5Hash, Password.Password );
+                employeeNew.password = GetMd5Hash(md5Hash, Password.Password);
 
             }
             if (TypeEmployee.SelectedIndex == 0)
@@ -175,9 +174,9 @@ namespace QuanLyNhaHang.Setting
 
             foreach (var item in Employees)
             {
-                if (item.ID == NumberEmployee.Text)
+                if (item.username == Username.Text)
                 {
-                    MessageBox.Show("Mã nhân viên đã có!!!\n Bạn vui lòng chọn mã khác!");
+                    MessageBox.Show("Username đã có!!!\n Bạn vui lòng chọn username khác!");
                     return;
                 }
             };
@@ -227,16 +226,13 @@ namespace QuanLyNhaHang.Setting
                 return;
             }
             employeeNew.id = id.Text;
-            employeeNew.ID = NumberEmployee.Text;
+            employeeNew.username = Username.Text;
             employeeNew.displayName = NameEmployee.Text;
             employeeNew.dateOfBirth = DateOfBirth.Text;
             employeeNew.identityNumber = IdentityNumber.Text;
             employeeNew.phone = Phone.Text;
-            using (MD5 md5Hash = MD5.Create())
-            {
-                employeeNew.password = GetMd5Hash(md5Hash, Password.Password);
 
-            }
+
             if (TypeEmployee.SelectedIndex == 0)
             {
                 employeeNew.role = "admin";
@@ -247,14 +243,27 @@ namespace QuanLyNhaHang.Setting
             }
             foreach (var item in Employees)
             {
-                if (item.ID == NumberEmployee.Text && item.id != id.Text)
+                if (item.username == Username.Text && item.id != id.Text)
                 {
-                    MessageBox.Show("Mã nhân viên đã có!!!\n Bạn vui lòng chọn mã khác!");
+                    MessageBox.Show("Username đã có!!!\n Bạn vui lòng chọn username khác!");
                     return;
                 }
             };
+            string result="";
+            if (Password.Password == "")
+            {
+                result = API.UpdateEmployee(employeeNew);
 
-            string result = API.UpdateEmployee(id.Text, employeeNew);
+            }
+            else
+            {
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    employeeNew.password = GetMd5Hash(md5Hash, Password.Password);
+
+                }
+                result = API.UpdatePassword(employeeNew);
+            }
             dynamic stuff = JsonConvert.DeserializeObject(result);
             //todo message
             if (stuff.message == "Employee update successfully!")
