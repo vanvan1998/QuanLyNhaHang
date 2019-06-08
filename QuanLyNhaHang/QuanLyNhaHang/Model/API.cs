@@ -42,13 +42,13 @@ namespace QuanLyNhaHang.Model
         //todo server
         public static string CreateEmployee(Employee employeeNew)
         {
-            string url = SERVER + "/employees/new";
-            string json = "{\"ID\": \"" + employeeNew.ID + "\", \"username\": \"" 
+            string url = SERVER + "/employees";
+            string json = "{\"username\": \"" 
                 + employeeNew.username + "\", \"password\": \""
                 + employeeNew.password + "\", \"displayName\": \""
                 + employeeNew.displayName + "\", \"role\": \""
                 + employeeNew.role + "\", \"dateOfBirth\": \""
-                + employeeNew.dateOfBirth.ToLongDateString() + "\", \"identityNumber\": \""
+                + employeeNew.dateOfBirth+ "\", \"identityNumber\": \""
                 + employeeNew.identityNumber + "\", \"phone\": \""
                 + employeeNew.phone + "\"}";
             try
@@ -62,17 +62,39 @@ namespace QuanLyNhaHang.Model
             }
         }
         //todo server
-        public static string UpdateEmployee(string ID,Employee employeeNew)
+        public static string UpdateEmployee(Employee employee)
         {
-            string url = SERVER + "/employees/" + ID;
-            string json = "{\"ID\": \"" + employeeNew.ID + "\", \"username\": \""
-                            + employeeNew.username + "\", \"password\": \""
-                            + employeeNew.password + "\", \"displayName\": \""
-                            + employeeNew.displayName + "\", \"role\": \""
-                            + employeeNew.role + "\", \"dateOfBirth\": \""
-                            + employeeNew.dateOfBirth.ToLongDateString() + "\", \"identityNumber\": \""
-                            + employeeNew.identityNumber + "\", \"phone\": \""
-                            + employeeNew.phone + "\"}";
+            string url = SERVER + "/employees/" + employee.id;
+            string json = "{\"username\": \""
+                            + employee.username + "\", \"password\": \""
+                            + employee.password + "\", \"displayName\": \""
+                            + employee.displayName + "\", \"role\": \""
+                            + employee.role + "\", \"dateOfBirth\": \""
+                            + employee.dateOfBirth + "\", \"identityNumber\": \""
+                            + employee.identityNumber + "\", \"phone\": \""
+                            + employee.phone + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string UpdatePassword(Employee employee)
+        {
+            string url = SERVER + "/employees/password" + employee.id;
+            string json = "{\"username\": \""
+                            + employee.username + "\", \"password\": \""
+                            + employee.password + "\", \"displayName\": \""
+                            + employee.displayName + "\", \"role\": \""
+                            + employee.role + "\", \"dateOfBirth\": \""
+                            + employee.dateOfBirth + "\", \"identityNumber\": \""
+                            + employee.identityNumber + "\", \"phone\": \""
+                            + employee.phone + "\"}";
             try
             {
                 return PUT(url, json);
@@ -168,9 +190,9 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string UpdateTable(string ID, Model.Table table)
+        public static string UpdateTable( Model.Table table)
         {
-            string url = SERVER + "/tables/" + ID;
+            string url = SERVER + "/tables/" + table.ID;
             string json = "{\"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
                             "\", \"numberOfSeat\": \"" + table.numberOfSeat +

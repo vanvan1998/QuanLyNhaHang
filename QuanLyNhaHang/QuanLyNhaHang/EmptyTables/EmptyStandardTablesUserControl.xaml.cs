@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace QuanLyNhaHang.EmptyTables
     /// </summary>
     public partial class EmptyStandardTablesUserControl : UserControl
     {
-        List<Model.Table> EmptyStandard4PersonTables = new List<Model.Table>();
-        List<Model.Table> EmptyStandard8PersonTables = new List<Model.Table>();
-        List<Model.Table> EmptyStandard12PersonTables = new List<Model.Table>();
+        ObservableCollection<Model.Table> EmptyStandard4PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> EmptyStandard8PersonTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Table> EmptyStandard12PersonTables = new ObservableCollection<Model.Table>();
 
 
         public EmptyStandardTablesUserControl()
@@ -137,19 +138,7 @@ namespace QuanLyNhaHang.EmptyTables
                 var tb = (TextBlock)dt.FindName("NumberTable", cp);
                 var tbtype = (TextBlock)dt.FindName("TypeTable", cp);
 
-                /*foreach (var table in DataProvider.Ins.DB.Phongs.ToList())
-                {
-                    if (tb.Text == table.soPhong)
-                    {
-                        phongHienTai = table;
-                        NumberTable.Text = table.soPhong;
-                        TypeTable.Text = table.loaiPhong;
-                        break;
-                    }
-                }*/
-
-                /*string result = API.GetAllTableWithStatusAndType(tbtype.Text, tb.Text);
-                dynamic stuff = JsonConvert.DeserializeObject(result);*/
+               
                 NumberTable.Text = tb.Text;
                 TypeTable.Text ="Bàn "+ tbtype.Text +" người";
                 //tableSelected = stuff;
