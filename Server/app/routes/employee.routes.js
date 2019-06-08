@@ -1,18 +1,21 @@
 module.exports = (app) => {
-    const user = require('../controllers/employee.controller.js');
+    const employee = require('../controllers/employee.controller.js');
 
-    // Create a new User
-    app.post('/api/employees', user.create);
+    // Create a new Employee
+    app.post('/api/employees', employee.create);
 
-    // Retrieve all Users
-    app.get('/api/employees', user.findAll);
+    // Retrieve all Employees
+    app.get('/api/employees', employee.findAll);
 
-    // Retrieve a single User with userId
-    app.get('/api/employees/:userId', user.findOne);
+    // Retrieve a single Employee with employeeId
+    app.get('/api/employees/:employeeId', employee.findOne);
 
-    // Update a User with userId
-    app.put('/api/employees/:userId', user.update);
+    // Update a Employee with employeeId
+    app.put('/api/employees/:employeeId', employee.update);
 
-    // Delete a User with userId
-    app.delete('/api/employees/:userId', user.delete);
+    // Update a Employee' password with employeeId
+    app.put('/api/employees/password/:employeeId', employee.updatePassword);
+
+    // Delete a Employee with employeeId
+    app.delete('/api/employees/:employeeId', employee.delete);
 }

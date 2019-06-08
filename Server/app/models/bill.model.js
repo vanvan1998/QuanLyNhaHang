@@ -9,7 +9,7 @@ const BillSchema = mongoose.Schema({
     promotion: String,
     total: Number,
     menu: Array,
-    time : Date
+    time : String
 }, {
     timestamps: true
 });

@@ -124,7 +124,7 @@ exports.update = (req, res) => {
         });
     }
 
-    // Validate role
+    // Validate displayName
     if (!req.body.displayName) {
         return res.send({
             message: "Employee displayName can not be empty"
@@ -138,21 +138,21 @@ exports.update = (req, res) => {
         });
     }
 
-    // Validate role
+    // Validate dateOfBirth
     if (!req.body.dateOfBirth) {
         return res.send({
             message: "Employee dateOfBirth can not be empty"
         });
     }
 
-    // Validate role
+    // Validate identityNumber
     if (!req.body.identityNumber) {
         return res.send({
             message: "Employee identityNumber can not be empty"
         });
     }
 
-    // Validate role
+    // Validate phone
     if (!req.body.phone) {
         return res.send({
             message: "Employee phone can not be empty"
@@ -168,6 +168,38 @@ exports.update = (req, res) => {
         dateOfBirth: req.body.dateOfBirth,
         identityNumber: req.body.identityNumber,
         phone: req.body.phone,
+    }, { new: true })
+        .then(employee => {
+            if (!employee) {
+                return res.send({
+                    message: "Employee not found with id " + req.params.employeeId
+                });
+            }
+            res.send({ message: "Employee updated successfully!" });
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.send({
+                    message: "Employee not found with id " + req.params.employeeId
+                });
+            }
+            return res.send({
+                message: "Error updating employee with id " + req.params.employeeId
+            });
+        });
+};
+
+exports.updatePassword = (req, res) => {
+
+    // Validate password
+    if (!req.body.password) {
+        return res.send({
+            message: "Employee password can not be empty"
+        });
+    }
+
+    // Find employee and update it with the request body
+    Employee.findByIdAndUpdate(req.params.employeeId, {
+        password: req.body.password
     }, { new: true })
         .then(employee => {
             if (!employee) {
