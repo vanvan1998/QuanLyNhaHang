@@ -107,11 +107,39 @@ exports.countEmpty = async function (req, res) {
     var countVIP4 = 0;
     var countVIP8 = 0;
     var countVIP12 = 0;
+
+    var count = 0;
     
-    var count = await Table.countDocuments({ status: "empty" });
+    await Table.find().then(tables =>{
+        count = tables.length;
+        tables.forEach(element => {
+            if (element.type == "standard" && element.numberOfSeat == 4){
+                countstandard4++;
+            }
+            if (element.type == "standard" && element.numberOfSeat == 8){
+                countstandard8++;
+            }
+            if (element.type == "standard" && element.numberOfSeat == 12){
+                countstandard12++;
+            }
+            if (element.type == "VIP" && element.numberOfSeat == 4){
+                countVIP4++;
+            }
+            if (element.type == "VIP" && element.numberOfSeat == 8){
+                countVIP8++;
+            }
+            if (element.type == "VIP" && element.numberOfSeat == 12){
+                countVIP12++;
+            }
+        });
+    }).catch(err => {
+        res.send({
+            message: err.message || "Some error occurred while retrieving tables."
+        });
+    });
 
 
-    res.send({ count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
+    res.send({count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
 };
 
 // Find a single table with a tableId
