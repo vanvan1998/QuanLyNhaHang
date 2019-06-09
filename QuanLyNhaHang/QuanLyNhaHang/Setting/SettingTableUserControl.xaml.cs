@@ -84,7 +84,7 @@ namespace QuanLyNhaHang.Setting
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
-            this.Height = Application.Current.MainWindow.ActualHeight - 50;
+            this.Height = Application.Current.MainWindow.ActualHeight - 40;
             
         }
 
@@ -122,7 +122,10 @@ namespace QuanLyNhaHang.Setting
                 foreach (var item in Tables)
                 {
                     if (item.number == tb.Text)
+                    { 
                         tableSelected = item;
+                        break;
+                    }
                 };
 
                 NumberTable.Text = tableSelected.number;

@@ -35,7 +35,10 @@
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Số điện thoại:</TextBlock>
             <TextBox x:Name="Phone" Width="300" Margin="50,0,20,15"></TextBox>
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Thời gian đặt:</TextBlock>
-            <TextBox x:Name="Time" Width="300" Margin="50,0,20,15"></TextBox>
+            <DatePicker x:Name="Time" Width="300" Margin="50,0,20,15"  VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                         materialDesign:HintAssist.Hint="Pick Date"
+                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Ghi chú:</TextBlock>
             <TextBox x:Name="Note" Width="300" Margin="50,0,20,20"></TextBox>
             <StackPanel Orientation="Horizontal">

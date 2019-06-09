@@ -145,7 +145,10 @@ namespace QuanLyNhaHang.Setting
                 foreach (var item in Employees)
                 {
                     if (item.username == tb.Text)
+                    { 
                         employeeSelected = item;
+                        break;
+                    }
                 };
 
                 Username.Text = employeeSelected.username;

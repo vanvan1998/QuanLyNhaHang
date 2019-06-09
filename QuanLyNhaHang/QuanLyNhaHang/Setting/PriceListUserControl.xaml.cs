@@ -135,7 +135,9 @@ namespace QuanLyNhaHang.Setting
                 foreach (var item in Foods)
                 {
                     if (item.name == tb.Text)
+                    { 
                         foodSelected = item;
+                        break;                    }
                 };
 
                 NameFood.Text = foodSelected.name;

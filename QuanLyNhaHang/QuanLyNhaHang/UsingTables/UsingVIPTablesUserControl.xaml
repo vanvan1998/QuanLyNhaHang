@@ -195,8 +195,8 @@
                                     <TextBox x:Name="TbSearch" Grid.Column="0" Margin="8 0 0 0" MinWidth="350" materialDesign:HintAssist.Hint="Nhập số bàn" materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                             BorderThickness="0"
                                             VerticalAlignment="Center" />
-                                    <Button Grid.Column="1" Style="{DynamicResource MaterialDesignToolButton}" Click="Search_Click">
-                                        <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                                    <Button Grid.Column="1" Style="{DynamicResource MaterialDesignToolButton}"  Click="Search_Click">
+                                        <materialDesign:PackIcon Kind="Magnify" Opacity="1" Height="25" Width="30"/>
                                     </Button>
                                 </Grid>
                             </materialDesign:ColorZone>

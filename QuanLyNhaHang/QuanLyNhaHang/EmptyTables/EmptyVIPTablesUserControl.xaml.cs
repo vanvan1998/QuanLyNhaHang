@@ -28,7 +28,7 @@ namespace QuanLyNhaHang.EmptyTables
         ObservableCollection<Model.Table> EmptyVIP4PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> EmptyVIP8PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> EmptyVIP12PersonTables = new ObservableCollection<Model.Table>();
-
+        dynamic stuff;
         public EmptyVIPTablesUserControl()
         {
             InitializeComponent();
@@ -43,7 +43,7 @@ namespace QuanLyNhaHang.EmptyTables
         private async void Load()
         {
             string result = API.GetAllTableWithStatusAndType("empty", "VIP");
-            dynamic stuff = JsonConvert.DeserializeObject(result);
+            stuff= JsonConvert.DeserializeObject(result);
 
             await Task.Run(() =>
             {
@@ -215,18 +215,42 @@ namespace QuanLyNhaHang.EmptyTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //    var room = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 0 && x.daXoa == 0).4PersonOrDefault();
+            Model.Table tableSelected = new Model.Table();
 
-            //    if (room != null)
-            //    {
-            //        phongHienTai = room;
-            //        NumberTable.Text = room.soPhong;
-            //        TypeTable.Text = room.loaiPhong;
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Số phòng không đúng!");
-            //    }
+            if (TbSearch.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập số bàn!!!");
+                return;
+            }
+
+            Boolean search = false;
+            foreach (var item in stuff)
+            {
+                if (item.number == TbSearch.Text)
+                {
+                    tableSelected = new Model.Table()
+                    {
+                        ID = item._id,
+                        number = item.number,
+                        type = item.type,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
+                        note = item.note,
+                        time = item.time
+                    };
+                    search = true;
+                    break;
+                }
+            };
+            if (search == false)
+            {
+                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
+                return;
+            }
+            NumberTable.Text = tableSelected.number;
+            TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
+
         }
     }
 }

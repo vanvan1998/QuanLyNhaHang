@@ -162,17 +162,20 @@ namespace QuanLyNhaHang.UsingTables
                 foreach (var item in stuff)
                 {
                     if (item.number == tb.Text)
+                    {
                         tableSelected = new Model.Table()
                         {
-                            ID=item._id,
+                            ID = item._id,
                             number = item.number,
-                            type=item.type,
+                            type = item.type,
                             numberOfSeat = item.numberOfSeat,
                             status = item.status,
                             customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
-                            note=item.note,
-                            time=item.time
+                            note = item.note,
+                            time = item.time
                         };
+                        break;
+                    }
                 };
                 NumberTable.Text = tableSelected.number;
                 TypeTable.Text ="Bàn " +tableSelected.numberOfSeat + " người";
@@ -304,22 +307,46 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            //var table = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == TbSearch.Text && x.tinhTrang == 1 && x.daXoa == 0).4PersonOrDefault();
+            Model.Table tableSelected = new Model.Table();
 
-            //if (table != null)
-            //{
-            //    NumberTable.Text = table.soPhong;
-            //    TypeTable.Text = table.loaiPhong;
-            //    Customername.Text = table.KhachHang.hoTen;
-            //    CustomerID.Text = table.KhachHang.cmnd;
-            //    NoteTextBlock.Text = table.ghiChu;
-            //    Time.Text = ((DateTime.Now - table.thoiGianBatDau).Value.Days).ToString() + " ngày " + ((DateTime.Now - table.thoiGianBatDau).Value).ToString(@"hh\:mm\:ss");
-            //    Total.Text = Math.Round((((DateTime.Now - table.thoiGianBatDau).Value.Hours + ((DateTime.Now - table.thoiGianBatDau).Value.Days) * 24) * table.DanhSachBangGia.cacGioSau + table.DanhSachBangGia.gioDau), 0).ToString();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Số phòng không đúng!");
-            //}
+            if (TbSearch.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập số bàn!!!");
+                return;
+            }
+
+            Boolean search = false;
+            foreach (var item in stuff)
+            {
+                if (item.number == TbSearch.Text)
+                {
+                    tableSelected = new Model.Table()
+                    {
+                        ID = item._id,
+                        number = item.number,
+                        type = item.type,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
+                        note = item.note,
+                        time = item.time
+                    };
+                    search = true;
+                    break;
+                }
+            };
+            if (search == false)
+            {
+                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
+                return;
+            }
+            NumberTable.Text = tableSelected.number;
+            TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
+            CustomerName.Text = tableSelected.customer.fullName;
+            CustomerPhone.Text = tableSelected.customer.phone;
+            NoteTextBlock.Text = tableSelected.note;
+            Time.Text = tableSelected.time;
+
         }
     }
 }
