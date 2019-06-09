@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,47 +29,38 @@ namespace QuanLyNhaHang.Setting
         public SettingTableUserControl()
         {
             InitializeComponent();
-            string result = API.GetAllTable();
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-            foreach (var item in stuff)
-            {
-                Tables.Add(new Model.Table()
-                {
-                    ID = item._id,
-                    number = item.number,
-                    numberOfSeat = item.numberOfSeat,
-                    type = item.type,
-                    status = item.status,
-                    note = item.note,
-                    time =item.time,
-                    customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
-                });
-            };
-
-            ListViewTable.ItemsSource = Tables;
-
             
-            //Task t = new Task(() =>
-            //{
-            //    string result = API.GetAllTable();
-            //    dynamic stuff = JsonConvert.DeserializeObject(result);
-
-            //    foreach (var item in stuff)
-            //    {
-            //        Tables.Add(new Model.Table()
-            //        {
-            //            number = item.number,
-            //            numberOfSeat = item.numberOfSeat,
-            //            status = item.status,
-            //            customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
-            //        });
-            //    };
-
-            //    ListViewTable.ItemsSource = Tables;
-            //});
-            //t.Start();
+            ListViewTable.ItemsSource = Tables;
         }
 
+        private async void Load()
+        {
+            string result = API.GetAllTable();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuff)
+                    {
+                        Tables.Add(new Model.Table()
+                        {
+                            ID = item._id,
+                            number = item.number,
+                            numberOfSeat = item.numberOfSeat,
+                            type = item.type,
+                            status = item.status,
+                            note = item.note,
+                            time = item.time,
+                            customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
+                        });
+                    };
+                });
+            });
+
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;

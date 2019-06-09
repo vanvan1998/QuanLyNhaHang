@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,52 +31,65 @@ namespace QuanLyNhaHang.UsingTables
 
         ListView lvHienTai = null;
         ListViewItem lviHienTai = null;
-        //Phong phongHienTai = null;
 
         public UsingVIPTablesUserControl()
         {
             InitializeComponent();
 
-            string result = API.GetAllTableWithStatusAndType("booked", "VIP");
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-
-            foreach (var item in stuff)
-            {
-                if (item.numberOfSeat == 4)
-                {
-                    UsingVIP4PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                        customer=new Customer() { fullName=item.customer.fullName,phone=item.customer.phone}
-                    });
-                }
-                else if (item.numberOfSeat == 8)
-                {
-                    UsingVIP8PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
-                    });
-                }
-                else
-                {
-                    UsingVIP12PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
-                    });
-                };
-            }
-
+            
             ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
             ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
             ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
+            Load();
+        }
+
+        private async void Load()
+        {
+            string result = API.GetAllTableWithStatusAndType("booked", "VIP");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuff)
+                    {
+                        if (item.numberOfSeat == 4)
+                        {
+                            UsingVIP4PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                                customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
+                            });
+                        }
+                        else if (item.numberOfSeat == 8)
+                        {
+                            UsingVIP8PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                                customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
+                            });
+                        }
+                        else
+                        {
+                            UsingVIP12PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                                customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
+                            });
+                        };
+                    }
+                });
+            });
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

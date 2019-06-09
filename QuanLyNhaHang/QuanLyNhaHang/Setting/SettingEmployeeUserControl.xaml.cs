@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,26 +30,39 @@ namespace QuanLyNhaHang.Setting
         public SettingEmployeeUserControl()
         {
             InitializeComponent();
-            string result = API.GetAllEmployee();
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-            foreach (var item in stuff)
-            {
-                Employees.Add(new Model.Employee()
-                {
-                    id = item._id,
-                    username = item.username,
-                    password = item.password,
-                    displayName = item.displayName,
-                    role = item.role,
-                    identityNumber = item.identityNumber,
-                    phone = item.phone,
-                    dateOfBirth = item.dateOfBirth
-                });
-            };
+            
 
             ListViewEmployee.ItemsSource = Employees;
+            Load();
         }
 
+        private async void Load()
+        {
+            string result = API.GetAllEmployee();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuff)
+                    {
+                        Employees.Add(new Model.Employee()
+                        {
+                            id = item._id,
+                            username = item.username,
+                            password = item.password,
+                            displayName = item.displayName,
+                            role = item.role,
+                            identityNumber = item.identityNumber,
+                            phone = item.phone,
+                            dateOfBirth = item.dateOfBirth
+                        });
+                    };
+                });
+            });
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;

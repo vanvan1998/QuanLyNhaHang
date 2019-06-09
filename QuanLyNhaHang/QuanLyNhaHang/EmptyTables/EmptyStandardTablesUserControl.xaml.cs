@@ -48,7 +48,7 @@ namespace QuanLyNhaHang.EmptyTables
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             await Task.Run(() => {
-                Thread.Sleep(5000);
+                Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() => {
                     foreach (var item in stuff)
                     {

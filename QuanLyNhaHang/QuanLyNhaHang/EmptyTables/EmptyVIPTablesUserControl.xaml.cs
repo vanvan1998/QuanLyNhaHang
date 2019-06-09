@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,45 +33,58 @@ namespace QuanLyNhaHang.EmptyTables
         {
             InitializeComponent();
 
-            string result = API.GetAllTableWithStatusAndType("empty", "VIP");
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-
-            foreach (var item in stuff)
-            {
-                if (item.numberOfSeat == 4)
-                {
-                    EmptyVIP4PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                    });
-                }
-                else if (item.numberOfSeat == 8)
-                {
-                    EmptyVIP8PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                    });
-                }
-                else
-                {
-                    EmptyVIP12PersonTables.Add(new Model.Table()
-                    {
-                        number = item.number,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                    });
-                };
-            }
-
             ListViewEmptyVIP4PersonTable.ItemsSource = EmptyVIP4PersonTables;
             ListViewEmptyVIP8PersonTable.ItemsSource = EmptyVIP8PersonTables;
             ListViewEmptyVIP12PersonTable.ItemsSource = EmptyVIP12PersonTables;
+
+            Load();
         }
 
+        private async void Load()
+        {
+            string result = API.GetAllTableWithStatusAndType("empty", "VIP");
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuff)
+                    {
+                        if (item.numberOfSeat == 4)
+                        {
+                            EmptyVIP4PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                            });
+                        }
+                        else if (item.numberOfSeat == 8)
+                        {
+                            EmptyVIP8PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                            });
+                        }
+                        else
+                        {
+                            EmptyVIP12PersonTables.Add(new Model.Table()
+                            {
+                                number = item.number,
+                                numberOfSeat = item.numberOfSeat,
+                                status = item.status,
+                            });
+                        };
+                    }
+
+                });
+            });
+
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;

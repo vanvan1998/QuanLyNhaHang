@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,24 +29,36 @@ namespace QuanLyNhaHang.Setting
         public PriceListUserControl()
         {
             InitializeComponent();
-            string result = API.GetAllFood();
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-            foreach (var item in stuff)
-            {
-                Foods.Add(new Model.Food()
-                {
-                    id = item._id,
-                    name = item.name,
-                    type = item.type,
-                    ingredients = item.ingredients,
-                    note = item.note,
-                    price = item.price
-                });
-            };
 
             ListViewFood.ItemsSource = Foods;
+            Load();
         }
 
+        private async void Load()
+        {
+            string result = API.GetAllFood();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuff)
+                    {
+                        Foods.Add(new Model.Food()
+                        {
+                            id = item._id,
+                            name = item.name,
+                            type = item.type,
+                            ingredients = item.ingredients,
+                            note = item.note,
+                            price = item.price
+                        });
+                    };
+                });
+            });
+        }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
