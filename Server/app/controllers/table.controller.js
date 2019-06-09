@@ -71,8 +71,7 @@ exports.findAllWithStatusAndType = (req, res) => {
 };
 
 exports.findAllWithCustomerName = (req, res) => {
-    console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-    Table.find()   
+    Table.find({"customer.fullName": req.body.fullName})   
         .then(tables => {
             res.send(tables);
         }).catch(err => {

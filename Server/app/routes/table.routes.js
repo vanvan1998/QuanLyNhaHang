@@ -7,7 +7,7 @@ module.exports = (app) => {
     // Retrieve all Tables
     app.get('/api/tables/:status/:type', table.findAllWithStatusAndType);
 
-    app.get('/api/tables/customer/customerName', table.findAllWithCustomerName);
+    app.post('/api/tables/findCustomer', table.findAllWithCustomerName);
 
     // Retrieve all Tables
     app.get('/api/tables', table.findAll);
