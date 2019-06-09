@@ -43,12 +43,12 @@ namespace QuanLyNhaHang.Model
         public static string CreateEmployee(Employee employeeNew)
         {
             string url = SERVER + "/employees";
-            string json = "{\"\"username\": \"" 
+            string json = "{\"\"username\": \""
                 + employeeNew.username + "\", \"password\": \""
                 + employeeNew.password + "\", \"displayName\": \""
                 + employeeNew.displayName + "\", \"role\": \""
                 + employeeNew.role + "\", \"dateOfBirth\": \""
-                + employeeNew.dateOfBirth+ "\", \"identityNumber\": \""
+                + employeeNew.dateOfBirth + "\", \"identityNumber\": \""
                 + employeeNew.identityNumber + "\", \"phone\": \""
                 + employeeNew.phone + "\"}";
             try
@@ -186,7 +186,7 @@ namespace QuanLyNhaHang.Model
         public static string GetAllTableWithCustomer(string customer)
         {
             string url = SERVER + "/tables/findCustomer";
-            string json = "{\"fullName\": \"" + customer+ "\"}";
+            string json = "{\"fullName\": \"" + customer + "\"}";
             try
             {
                 return POST(url, json);
@@ -235,7 +235,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string UpdateTable( Model.Table table)
+        public static string UpdateTable(Model.Table table)
         {
             string url = SERVER + "/tables/" + table.ID;
             string json = "{\"number\": \"" + table.number +
@@ -259,7 +259,7 @@ namespace QuanLyNhaHang.Model
 
         public static string BookTable(Model.Table table)
         {
-            string url = SERVER + "/tables/Book/"+table.number;
+            string url = SERVER + "/tables/Book/" + table.number;
             string json = "{\"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
                             "\", \"status\": \"" + table.status +
@@ -452,7 +452,37 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
-        //todo server
+
+        public static string GetFoodInBill(string number)
+        {
+            string url = SERVER + "/foods/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string GetTotalInBill(string number)
+        {
+            string url = SERVER + "/foods/total/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         public static string CreateFood(Food foodNew)
         {
             string url = SERVER + "/foods";
@@ -506,6 +536,46 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
+
+        #endregion
+
+        #region Bill API
+        public static string GetAllBill()
+        {
+            string url = SERVER + "/Bills";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string AddFoodInBill(string TableNumber, Food foodNew)
+        {
+            string url = SERVER + "/addFoodInBill/" + TableNumber;
+            string json = "{\"name\": \""
+                + foodNew.name + "\", \"price\": \""
+                + foodNew.price + "\", \"ingredients\": \""
+                + foodNew.ingredients + "\", \"type\": \""
+                + foodNew.type + "\", \"note\": \""
+                + foodNew.note + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+
 
         #endregion
     }

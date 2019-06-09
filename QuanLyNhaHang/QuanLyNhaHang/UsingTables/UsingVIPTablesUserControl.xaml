@@ -10,148 +10,295 @@
 
     <Grid Background="#FFCFCFCF">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
             <ColumnDefinition Width="1.5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid x:Name="Table">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="10 10 0 10" Background="White">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{ Binding ElementName=BorderG1 }"/>
+                    </Grid.OpacityMask>
+                    <Border x:Name="BorderG1" CornerRadius="5" Background="White"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ListView x:Name="ListViewUsingVIP4PersonTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewUsingVIPTable_MouseUp">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                            <Rectangle.Effect>
+                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Rectangle.Effect>
+                                        </Rectangle>
+                                        <Grid>
+                                            <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                <Grid.Effect>
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
+                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            </Grid>
+                                            <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
+                                                <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
+                                            </StackPanel>
 
-        <Grid Grid.Column="0" Margin="10 20 0 20" Background="White">
-            <Grid.OpacityMask>
-                <VisualBrush Visual="{ Binding ElementName=BorderG1 }"/>
-            </Grid.OpacityMask>
-            <Border x:Name="BorderG1" CornerRadius="5" Background="White"/>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                <ListView x:Name="ListViewUsingVIP4PersonTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewUsingVIPTable_MouseUp">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="1" Rows="100"></UniformGrid>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
-                                    <Rectangle.Effect>
-                                        <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
-                                    </Rectangle.Effect>
-                                </Rectangle>
-                                <Grid>
-                                    <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                        <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                        </Grid.Effect>
-                                        <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
+                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
+                                                <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                                <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
-                                        <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
-                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
 
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
-                                        <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
-                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
-        </Grid>
+                <Grid Grid.Column="1" Margin="10 10 0 10" Background="White">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{ Binding ElementName=BorderG2 }"/>
+                    </Grid.OpacityMask>
+                    <Border x:Name="BorderG2" CornerRadius="5" Background="White"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ListView x:Name="ListViewUsingVIP8PersonTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewUsingVIPTable_MouseUp">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ListView.ItemTemplate >
+                                <DataTemplate>
+                                    <Grid>
+                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                            <Rectangle.Effect>
+                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Rectangle.Effect>
+                                        </Rectangle>
+                                        <Grid>
+                                            <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                <Grid.Effect>
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
+                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            </Grid>
+                                            <TextBlock  Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
+                                                <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
+                                            </StackPanel>
 
-        <Grid Grid.Column="1" Margin="10 20 0 20" Background="White">
-            <Grid.OpacityMask>
-                <VisualBrush Visual="{ Binding ElementName=BorderG2 }"/>
-            </Grid.OpacityMask>
-            <Border x:Name="BorderG2" CornerRadius="5" Background="White"/>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                <ListView x:Name="ListViewUsingVIP8PersonTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewUsingVIPTable_MouseUp">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="1" Rows="100"></UniformGrid>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ListView.ItemTemplate >
-                        <DataTemplate>
-                            <Grid>
-                                <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
-                                    <Rectangle.Effect>
-                                        <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
-                                    </Rectangle.Effect>
-                                </Rectangle>
-                                <Grid>
-                                    <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                        <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                        </Grid.Effect>
-                                        <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
+                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
+                                                <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                                <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                    <TextBlock  Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
-                                        <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
-                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
 
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
-                                        <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
-                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
-        </Grid>
+                <Grid Grid.Column="2" Margin="10 10 0 10" Background="White">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{ Binding ElementName=BorderG3 }"/>
+                    </Grid.OpacityMask>
+                    <Border x:Name="BorderG3" CornerRadius="5" Background="White"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ListView x:Name="ListViewUsingVIP12PersonTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewUsingVIPTable_MouseUp">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ListView.ItemTemplate >
+                                <DataTemplate>
+                                    <Grid>
+                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                            <Rectangle.Effect>
+                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Rectangle.Effect>
+                                        </Rectangle>
+                                        <Grid>
+                                            <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                <Grid.Effect>
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
+                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            </Grid>
+                                            <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
+                                                <TextBlock  x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
+                                            </StackPanel>
 
-        <Grid Grid.Column="2" Margin="10 20 0 20" Background="White">
-            <Grid.OpacityMask>
-                <VisualBrush Visual="{ Binding ElementName=BorderG3 }"/>
-            </Grid.OpacityMask>
-            <Border x:Name="BorderG3" CornerRadius="5" Background="White"/>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                <ListView x:Name="ListViewUsingVIP12PersonTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewUsingVIPTable_MouseUp">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="1" Rows="100"></UniformGrid>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ListView.ItemTemplate >
-                        <DataTemplate>
-                            <Grid>
-                                <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
-                                    <Rectangle.Effect>
-                                        <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
-                                    </Rectangle.Effect>
-                                </Rectangle>
-                                <Grid>
-                                    <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                        <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                        </Grid.Effect>
-                                        <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
+                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
+                                                <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
+                                                <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
-                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
-                                        <TextBlock  x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
-                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Food" Visibility="Hidden">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="10 10 0 10" Background="White">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{ Binding ElementName=BorderG1 }"/>
+                    </Grid.OpacityMask>
+                    <Border x:Name="Border1" CornerRadius="5" Background="White"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ListView x:Name="ListViewFood1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewFood_MouseUp">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                            <Rectangle.Effect>
+                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Rectangle.Effect>
+                                        </Rectangle>
+                                        <Grid Height="95" Width="210">
+                                            <Grid x:Name="TicketType" Background="Pink" Width="25" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+                                                <Grid.Effect >
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
+                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            </Grid>
+                                            <TextBlock Text="Tên món" FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 5 0">
+                                                <TextBlock x:Name="NameFood" Text="{Binding name}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="19"/>
+                                            </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
-                                        <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                        <TextBlock x:Name="CustomerName" Text="{Binding customer.fullName}" FontSize="10" Width="100" Foreground="Gray" TextWrapping="Wrap"/>
-                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" Height="0" Width="0"></TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 10 0 10" Cursor="Hand">
+                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="0 0"/>
+                                                <TextBlock  x:Name="Price" Text="{Binding price}" FontSize="10" Foreground="Gray"/>
+                                                <TextBlock x:Name="ID" Height="0" Width="0"></TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Column="1" Margin="10 10 0 10" Background="White">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{ Binding ElementName=BorderG2 }"/>
+                    </Grid.OpacityMask>
+                    <Border x:Name="Border2" CornerRadius="5" Background="White"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ListView x:Name="ListViewFood2" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewFood_MouseUp">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ListView.ItemTemplate >
+                                <DataTemplate>
+                                    <Grid>
+                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                            <Rectangle.Effect>
+                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Rectangle.Effect>
+                                        </Rectangle>
+                                        <Grid Height="95" Width="210">
+                                            <Grid x:Name="TicketType" Background="#FFF3F311" Width="25" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+                                                <Grid.Effect >
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
+                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            </Grid>
+                                            <TextBlock Text="Tên món" FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 5 0">
+                                                <TextBlock x:Name="NameFood" Text="{Binding name}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="19"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 10 0 10" Cursor="Hand">
+                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="0 0"/>
+                                                <TextBlock  x:Name="Price" Text="{Binding price}" FontSize="10" Foreground="Gray"/>
+                                                <TextBlock x:Name="ID" Height="0" Width="0"></TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid Grid.Column="2" Margin="10 10 0 10" Background="White">
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{ Binding ElementName=BorderG3 }"/>
+                    </Grid.OpacityMask>
+                    <Border x:Name="Border3" CornerRadius="5" Background="White"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ListView x:Name="ListViewFood3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewFood_MouseUp">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ListView.ItemTemplate >
+                                <DataTemplate>
+                                    <Grid>
+                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                            <Rectangle.Effect>
+                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                            </Rectangle.Effect>
+                                        </Rectangle>
+                                        <Grid Height="95" Width="210">
+                                            <Grid x:Name="TicketType" Background="Blue" Width="25" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0">
+                                                <Grid.Effect >
+                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                </Grid.Effect>
+                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                            </Grid>
+                                            <TextBlock Text="Tên món" FontFamily="Champagne &amp; Limousines" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 5 0">
+                                                <TextBlock x:Name="NameFood" Text="{Binding name}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="19"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 10 0 10" Cursor="Hand">
+                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="0 0"/>
+                                                <TextBlock  x:Name="Price" Text="{Binding price}" FontSize="10" Foreground="Gray"/>
+                                                <TextBlock x:Name="ID" Height="0" Width="0"></TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+
+            </Grid>
         </Grid>
-
-        <Grid Grid.Column="3" Margin="10 20 0 20" Background="White">
+        <Grid Grid.Column="1" Margin="10 10 0 10" Background="White">
             <Grid.OpacityMask>
                 <VisualBrush Visual="{ Binding ElementName=BorderG4 }"/>
             </Grid.OpacityMask>
@@ -288,12 +435,19 @@
                 </Grid>
 
                 <Grid Grid.Row="10">
-                    <Button Click="BtnThanhToan" IsDefault="True"
+                    <StackPanel Orientation="Horizontal">
+                        <Button IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                        Width="150"
-                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
-                        Thanh toán
-                    </Button>
+                        Width="150" Margin="40,0,50,0" x:Name="AddFood" Click="AddFood_Click">
+                            Thêm món
+                        </Button>
+
+                        <Button Click="BtnThanhToan" IsDefault="True"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Width="150">
+                            Thanh toán
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>

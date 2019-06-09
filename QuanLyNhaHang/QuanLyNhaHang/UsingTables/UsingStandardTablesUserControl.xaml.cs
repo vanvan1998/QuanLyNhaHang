@@ -30,9 +30,19 @@ namespace QuanLyNhaHang.UsingTables
         ObservableCollection<Model.Table> UsingStandard8PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> UsingStandard12PersonTables = new ObservableCollection<Model.Table>();
 
+        ObservableCollection<Model.Food> Food1 = new ObservableCollection<Model.Food>();
+        ObservableCollection<Model.Food> Food2 = new ObservableCollection<Model.Food>();
+        ObservableCollection<Model.Food> Food3 = new ObservableCollection<Model.Food>();
+
+        Model.Table tableSelected = new Model.Table();
+
         ListView lvHienTai = null;
         ListViewItem lviHienTai = null;
         dynamic stuff;
+        dynamic stuffFood;
+        Boolean AddFoodCheck = false;
+
+        Boolean DetailFoodCheck = false;
 
         public UsingStandardTablesUserControl()
         {
@@ -43,6 +53,14 @@ namespace QuanLyNhaHang.UsingTables
             ListViewUsingStandard8PersonTable.ItemsSource = UsingStandard8PersonTables;
             ListViewUsingStandard12PersonTable.ItemsSource = UsingStandard12PersonTables;
             Load();
+
+            ListViewFood1.ItemsSource = Food1;
+            ListViewFood2.ItemsSource = Food2;
+            ListViewFood3.ItemsSource = Food3;
+
+            string result = API.GetAllFood();
+            stuffFood = JsonConvert.DeserializeObject(result);
+            LoadFood();
         }
 
         private async void Load()
@@ -90,6 +108,51 @@ namespace QuanLyNhaHang.UsingTables
 
                 });
             });
+        }
+
+        private async void LoadFood()
+        {
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuffFood)
+                    {
+                        if(item.type=="dish")
+                        Food2.Add(new Model.Food()
+                        {
+                            id = item._id,
+                            name = item.name,
+                            type = item.type,
+                            ingredients = item.ingredients,
+                            note = item.note,
+                            price = item.price
+                        });
+                        else if (item.type == "dessert")
+                            Food3.Add(new Model.Food()
+                            {
+                                id = item._id,
+                                name = item.name,
+                                type = item.type,
+                                ingredients = item.ingredients,
+                                note = item.note,
+                                price = item.price
+                            });
+                        else
+                            Food1.Add(new Model.Food()
+                            {
+                                id = item._id,
+                                name = item.name,
+                                type = item.type,
+                                ingredients = item.ingredients,
+                                note = item.note,
+                                price = item.price
+                            });
+
+                    };
+                });
+            });
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -156,7 +219,6 @@ namespace QuanLyNhaHang.UsingTables
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
                 var tb = (TextBlock)dt.FindName("NumberTable", cp);
 
-                Model.Table tableSelected = new Model.Table();
 
                 foreach (var item in stuff)
                 {
@@ -182,6 +244,11 @@ namespace QuanLyNhaHang.UsingTables
                 CustomerPhone.Text = tableSelected.customer.phone;
                 NoteTextBlock.Text = tableSelected.note;
                 Time.Text = tableSelected.time;
+
+                string result = API.GetTotalInBill(tableSelected.number);
+                dynamic total= JsonConvert.DeserializeObject(result);
+                Total.Text = total.total;
+
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
@@ -346,6 +413,145 @@ namespace QuanLyNhaHang.UsingTables
             NoteTextBlock.Text = tableSelected.note;
             Time.Text = tableSelected.time;
 
+        }
+
+        private void AddFood_Click(object sender, RoutedEventArgs e)
+        {
+            if(AddFoodCheck==false)
+            {
+                string result = API.GetAllFood();
+                stuffFood = JsonConvert.DeserializeObject(result);
+                LoadFood();
+                Table.Visibility = Visibility.Hidden;
+                Food.Visibility = Visibility.Visible;
+                AddFood.Content = "Trở về";
+                AddFoodCheck = true;
+                return;
+            }
+            else
+            {
+                Table.Visibility = Visibility.Visible;
+                Food.Visibility = Visibility.Hidden;
+                AddFood.Content = "Thêm món";
+                AddFoodCheck = false;
+            }
+            
+        }
+
+        private void ListViewFood_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (((ListView)sender).SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
+            {
+
+
+                var bc = new BrushConverter();
+
+                for (int j = 0; j < Food1.Count; j++)
+                {
+                    ListViewItem lvi1 = ListViewFood1.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("NameFood", cp1);
+                    rt1.Fill = Brushes.White;
+                }
+
+                for (int j = 0; j < Food2.Count; j++)
+                {
+                    ListViewItem lvi2 = ListViewFood2.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp2 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi2);
+
+                    var dt2 = cp2.ContentTemplate as DataTemplate;
+                    var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
+                    var tb2 = (TextBlock)dt2.FindName("NameFood", cp2);
+                    rt2.Fill = Brushes.White;
+                }
+
+                for (int j = 0; j < Food3.Count; j++)
+                {
+                    ListViewItem lvi3 = ListViewFood3.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp3 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi3);
+
+                    var dt3 = cp3.ContentTemplate as DataTemplate;
+                    var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
+                    var tb3 = (TextBlock)dt3.FindName("NameFood", cp3);
+                    rt3.Fill = Brushes.White;
+                }
+
+                var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
+
+                var dt = cp.ContentTemplate as DataTemplate;
+                var rt = (Rectangle)dt.FindName("BackGround", cp);
+                var tb = (TextBlock)dt.FindName("NameFood", cp);
+                Model.Food foodSelected = new Model.Food();
+
+                foreach (var item in stuffFood)
+                {
+                    if (item.name == tb.Text)
+                    {
+                        foodSelected = new Model.Food()
+                        {
+                            name = item.name,
+                            price = item.price,
+                            type = item.type,
+                            ingredients = item.ingredients,
+                            note = item.note,
+                        };
+                        break;
+                    }
+                };
+
+                if(tableSelected==null)
+                {
+                    MessageBox.Show("VUi lòng chọn bàn trước khi chọn món!!!");
+                    return;
+                }
+
+                string result = API.AddFoodInBill(tableSelected.number, foodSelected);
+                dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
+
+
+                //todo mess
+                if (stuffAddFood.message != "Add successfull")
+                {
+                    MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
+                    return;
+                }
+
+                string resulttotal = API.GetTotalInBill(tableSelected.number);
+                dynamic total = JsonConvert.DeserializeObject(resulttotal);
+                Total.Text = total.total;
+                rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+            }
+        }
+
+        private void FoodInBill_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (DetailFoodCheck == false)
+            {
+                string result = API.GetFoodInBill(tableSelected.number);
+                stuffFood = JsonConvert.DeserializeObject(result);
+                LoadFood();
+                Table.Visibility = Visibility.Hidden;
+                Food.Visibility = Visibility.Visible;
+                AddFood.Content = "Trở về";
+                AddFoodCheck = true;
+                return;
+            }
+            else
+            {
+                Table.Visibility = Visibility.Visible;
+                Food.Visibility = Visibility.Hidden;
+                AddFood.Content = "Chi tiết";
+                AddFoodCheck = false;
+            }
         }
     }
 }

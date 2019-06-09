@@ -74,6 +74,7 @@
     <Compile Include="EmptyTables\EmptyStandardTablesUserControl.xaml.cs" />
     <Compile Include="EmptyTables\EmptyVIPTablesUserControl.xaml.cs" />
     <Compile Include="Model\API.cs" />
+    <Compile Include="Model\Bill.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Food.cs" />
