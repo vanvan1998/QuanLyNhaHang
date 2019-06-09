@@ -10,56 +10,101 @@
     <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}">
         <Grid >
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" Grid.Row="0">
                 <DockPanel>
                     <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
-                        <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16 0 0 0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                        <materialDesign:ColorZone Mode="Standard" Padding="8 2 8 2" CornerRadius="2" Panel.ZIndex="1" Margin="16 0 0 0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="25*"/>
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBox x:Name="TbSearch"
+                                <TextBox x:Name="TbSearchTable"
                                     Grid.Column="0"
-                                    Margin="8 0 0 0"
-                                    materialDesign:HintAssist.Hint="Nhập số bàn, tên khách hàng hoặc mã hóa đơn"
+                                    Margin="8,2,0,2"
+                                    materialDesign:HintAssist.Hint="Nhập số bàn,khách hàng hoặc mã hóa đơn"
                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                     BorderThickness="0"
+                                         FontSize="15"
                                     MinWidth="400"
-                                    VerticalAlignment="Center" />
-                                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="1" IsDefault="True" Click="Search_Click">
-                                    <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                                    VerticalAlignment="Center" Grid.ColumnSpan="2" />
+                                <Button Style="{DynamicResource MaterialDesignToolButton}" Grid.Column="2" IsDefault="True" Click="Button_Click">
+                                    <materialDesign:PackIcon Kind="Magnify" Height="25" Width="30" />
                                 </Button>
                             </Grid>
                         </materialDesign:ColorZone>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="100 0 20 0">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Bàn</TextBlock>
+                        <ToggleButton Click="ToggleButton_Click" x:Name="Table"
+                        Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                        ToolTip="MaterialDesignSwitchDarkToggleButton"
+                        IsChecked="True" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Hóa đơn</TextBlock>
+                        <ToggleButton Click="ToggleButton_Click" x:Name="Bill"
+                        Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                        ToolTip="MaterialDesignSwitchDarkToggleButton"
+                        IsChecked="False" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Món ăn</TextBlock>
+                        <ToggleButton Click="ToggleButton_Click" x:Name="Food"
+                        Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                        ToolTip="MaterialDesignSwitchDarkToggleButton"
+                        IsChecked="False" />
+                    </StackPanel>
+
                 </DockPanel>
             </materialDesign:ColorZone>
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+                <StackPanel Height="700" Width="400" Margin="0,0,550,30">
 
-                <Grid Grid.Row="1" Grid.Column="0" x:Name="AreaSearch">
-                    <Grid x:Name="GridListViewRoom" Grid.Column="0" Margin="10 20 0 20" Background="White" Grid.Row="1" Visibility="Hidden">
-                        <Grid.OpacityMask>
-                            <VisualBrush Visual="{ Binding ElementName=BorderG1 }"/>
-                        </Grid.OpacityMask>
-                        <Border x:Name="BorderG1" CornerRadius="5" Background="White"/>
-                        <StackPanel>
-                            <Label Content="Kết quả tìm kiếm" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"></Label>
+                    <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Thông tin bàn</TextBlock>
+                    <TextBlock Margin="0,10,0,0" Foreground="#DD892121">Số bàn:</TextBlock>
+                    <TextBox x:Name="NumberTable" Width="300" Margin="50,0,20,10"></TextBox>
+                    <TextBox x:Name="ID" Width="0" Height="0"></TextBox>
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Loại bàn:</TextBlock>
+                    <TextBox x:Name="TypeTable" Width="300" Margin="50,0,20,10"></TextBox>
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Kích thước bàn:</TextBlock>
+                    <TextBox x:Name="NumberOfSeat" Width="300" Margin="50,0,20,10"></TextBox>
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Trạng thái bàn:</TextBlock>
+                    <TextBox x:Name="Status" Width="300" Margin="50,0,20,10"></TextBox>
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Họ và tên khách hàng:</TextBlock>
+                    <TextBox x:Name="CustomerName" Width="300" Margin="50,0,20,15"></TextBox>
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Số điện thoại:</TextBlock>
+                    <TextBox x:Name="Phone" Width="300" Margin="50,0,20,10"></TextBox>
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Thời gian đặt:</TextBlock>
+                    <DatePicker x:Name="Time" Width="300" Margin="50,0,20,10"  VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                         materialDesign:HintAssist.Hint="Pick Date"
+                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                    <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Ghi chú:</TextBlock>
+                    <TextBox x:Name="Note" Width="300" Margin="50,0,20,0"></TextBox>
+                </StackPanel>
+                <StackPanel Margin="500,0,50,0">
+                    <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Danh sách bàn</TextBlock>
+                    <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" >
+                        <ListView Height="530" Width="400" Margin="0,10,0,0"  x:Name="ListUser" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="{x:Null}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" HorizontalAlignment="Stretch" ></UniformGrid>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                             <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                                <ListView x:Name="ListViewSearchRoom" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewSearchRoom_MouseUp">
+                                <ListView x:Name="ListViewTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewTable_MouseUp">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Columns="1" Rows="100"></UniformGrid>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
-                                    <ListView.ItemTemplate >
+                                    <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
                                                 <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
@@ -68,21 +113,22 @@
                                                     </Rectangle.Effect>
                                                 </Rectangle>
                                                 <Grid>
-                                                    <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                                        <Grid.Effect>
-                                                            <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                    <Grid x:Name="TicketType" Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                        <Grid.Effect >
+                                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                         </Grid.Effect>
                                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                                     </Grid>
-                                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="0 10 30 0" VerticalAlignment="Top" Foreground="Gray"/>
+                                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
-                                                        <TextBlock x:Name="NumberRoom" Text="{Binding soPhong}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
+                                                        <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
                                                     </StackPanel>
 
                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                                        <TextBlock x:Name="TimeGetRoom" Text="{Binding thoiGianBatDau}" FontSize="10" Width="150" Foreground="Gray" VerticalAlignment="Center"/>
-                                                        <TextBlock x:Name="CustomerName" Text="{Binding hoTen}" FontSize="25" FontWeight="Bold"></TextBlock>
+                                                        <TextBlock Text="Bàn " FontSize="10" Foreground="Gray"/>
+                                                        <TextBlock  x:Name="TypeTable" Text="{Binding numberOfSeat}" FontSize="10" Foreground="Gray"/>
+                                                        <TextBlock Text=" người" FontSize="10" Foreground="Gray"/>
                                                     </StackPanel>
                                                 </Grid>
                                             </Grid>
@@ -90,241 +136,9 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </ScrollViewer>
-                        </StackPanel>
-                    </Grid>
-                    <Grid x:Name="GridListViewBill" Grid.Column="0" Margin="10 20 0 20" Background="White" Grid.Row="1" Visibility="Hidden">
-                        <Grid.OpacityMask>
-                            <VisualBrush Visual="{ Binding ElementName=BorderG6 }"/>
-                        </Grid.OpacityMask>
-                        <Border x:Name="BorderG6" CornerRadius="5" Background="White"/>
-                        <StackPanel>
-                            <Label Content="Kết quả tìm kiếm" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"></Label>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                                <ListView x:Name="ListViewSearchBill" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewSearchRoom_MouseUp">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <UniformGrid Columns="1" Rows="100"></UniformGrid>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ListView.ItemTemplate >
-                                        <DataTemplate>
-                                            <Grid>
-                                                <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
-                                                    <Rectangle.Effect>
-                                                        <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
-                                                    </Rectangle.Effect>
-                                                </Rectangle>
-                                                <Grid>
-                                                    <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
-                                                        <Grid.Effect>
-                                                            <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
-                                                        </Grid.Effect>
-                                                        <materialDesign:PackIcon Kind="Book" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
-                                                    </Grid>
-                                                    <TextBlock Text="Mã hóa Đơn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="0 10 30 0" VerticalAlignment="Top" Foreground="Gray"/>
-                                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
-                                                        <TextBlock x:Name="BillCode" Text="{Binding maHoaDon}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
-                                                    </StackPanel>
-
-                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
-                                                        <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
-                                                        <TextBlock x:Name="TimeGetRoom" Text="{Binding thoiGianLap}" FontSize="10" Width="150" Foreground="Gray" VerticalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </ScrollViewer>
-                        </StackPanel>
-                    </Grid>
-
-                </Grid>
-
-                <Grid Grid.Row="1" Grid.Column="1" Margin="10 20 0 20" Background="White" x:Name="AreaRoomResult" Visibility="Hidden">
-                    <Grid.OpacityMask>
-                        <VisualBrush Visual="{ Binding ElementName=BorderG4 }"/>
-                    </Grid.OpacityMask>
-                    <Border x:Name="BorderG4" CornerRadius="5" Background="White"/>
-                    <Grid>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0" >
-                            <Label Content="Thông tin bàn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
-                        </Grid>
-
-                        <Grid Grid.Row="1">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <Label Grid.Column="0" Content="Bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock Grid.Column="1" x:Name="NumberRoom" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Loại bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="TypeRoom" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="CustomerName" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="CMND " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="CustomerID" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Thời gian thuê " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="TotalTime" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Cần thanh toán " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="TotalPay" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" ></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="7">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock Grid.Column="1" x:Name="Note" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-                <Grid Grid.Row="1" Grid.Column="1" Margin="10 20 0 20" Background="White" x:Name="AreaBillResult" Visibility="Hidden">
-                    <Grid.OpacityMask>
-                        <VisualBrush Visual="{ Binding ElementName=BorderG5 }"/>
-                    </Grid.OpacityMask>
-                    <Border x:Name="BorderG5" CornerRadius="5" Background="White"/>
-                    <Grid>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0" >
-                            <Label Content="Thông tin hóa đơn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
-                        </Grid>
-
-                        <Grid Grid.Row="1">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <Label Grid.Column="0" Content="Mã hóa đơn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock Grid.Column="1" x:Name="BillNumber" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Thời gian lập " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="TimeCreateBill" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="3">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Bàn số " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock Grid.Column="1" x:Name="NumberRoomBill" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap" ></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="CustomerNameBill" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Tiền thanh toán " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock x:Name="TotalPayBill" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" ></TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Mã nhân viên lập " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock Grid.Column="1" x:Name="EmployeeID" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap" ></TextBlock>
-                        </Grid>
-                        
-                        <Grid Grid.Row="7">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Content="Mã khuyến mãi " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                            <TextBlock Grid.Column="1" x:Name="DiscountCode" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
+                        </ListView>
+                    </ScrollViewer>
+                </StackPanel>
             </Grid>
         </Grid>
     </materialDesign:TransitioningContent>
