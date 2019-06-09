@@ -30,7 +30,7 @@ namespace QuanLyNhaHang
             result = API.GetCountTableEmpty();
             stuff = JsonConvert.DeserializeObject(result);
             EmptyTables.Text = stuff.count;
-            Load();
+            //Load();
         }
 
         private async void Load()

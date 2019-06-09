@@ -70,6 +70,18 @@ exports.findAllWithStatusAndType = (req, res) => {
         });
 };
 
+exports.findAllWithCustomerName = (req, res) => {
+    console.log("mmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+    Table.find()   
+        .then(tables => {
+            res.send(tables);
+        }).catch(err => {
+            res.send({
+                message: err.message || "Some error occurred while retrieving tables." //alo nghe ko
+            });
+        });
+};
+
 exports.findAll = (req, res) => {
 
     Table.find()
