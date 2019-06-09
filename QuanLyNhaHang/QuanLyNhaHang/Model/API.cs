@@ -138,6 +138,36 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string GetCountTableUsing()
+        {
+            string url = SERVER + "/tables/using";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string GetCountTableEmpty()
+        {
+            string url = SERVER + "/tables/empty";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         public static string GetAllTableWithStatusAndType(string status, string type)
         {
             string url = SERVER + "/tables/" + status + "/" + type;

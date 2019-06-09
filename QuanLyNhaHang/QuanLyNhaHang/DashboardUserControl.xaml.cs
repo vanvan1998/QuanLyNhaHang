@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-//using QuanLyNhaHang.Entity;
+using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang
 {
@@ -20,63 +23,88 @@ namespace QuanLyNhaHang
         {
             InitializeComponent();
 
-            //UsingTables.Text = DataProvider.Ins.DB.Phongs.Where(x => x.tinhTrang == 1 && x.daXoa == 0).Count().ToString();
-            //EmptyTables.Text = DataProvider.Ins.DB.Phongs.Where(x => x.tinhTrang == 0 && x.daXoa == 0).Count().ToString();
-            //NewBills.Text = DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > DateTime.Today).Count().ToString();
+            string result = API.GetCountTableUsing();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            UsingTables.Text = stuff.count;
 
-            //SeriesCollection1 = new SeriesCollection
-            //{
-            //    new PieSeries
-            //    {
-            //        Title = "Phòng đơn",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(DataProvider.Ins.DB.Phongs.Where(x => x.loaiPhong == "Tiêu chuẩn - Đơn" && x.tinhTrang == 0 && x.daXoa == 0).ToList().Count())},
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Phòng đôi",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(DataProvider.Ins.DB.Phongs.Where(x => x.loaiPhong == "Tiêu chuẩn - Đôi" && x.tinhTrang == 0 && x.daXoa == 0).ToList().Count())},
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Phòng nhóm",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(DataProvider.Ins.DB.Phongs.Where(x => x.loaiPhong == "Tiêu chuẩn - Nhóm" && x.tinhTrang == 0 && x.daXoa == 0).ToList().Count())},
-            //        DataLabels = true
-            //    },
-
-            //};
-
-            //SeriesCollection2 = new SeriesCollection
-            //{
-            //    new PieSeries
-            //    {
-            //        Title = "Phòng đơn",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(DataProvider.Ins.DB.Phongs.Where(x => x.loaiPhong == "VIP - Đơn" && x.tinhTrang == 0 && x.daXoa == 0).ToList().Count())},
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Phòng đôi",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(DataProvider.Ins.DB.Phongs.Where(x => x.loaiPhong == "VIP - Đôi" && x.tinhTrang == 0&& x.daXoa == 0).ToList().Count())},
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Phòng nhóm",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(DataProvider.Ins.DB.Phongs.Where(x => x.loaiPhong == "VIP - Nhóm" && x.tinhTrang == 0 && x.daXoa ==0).ToList().Count()) },
-            //        DataLabels = true
-            //    },
-
-            //};
-
-            //DataContext = this;
+            result = API.GetCountTableEmpty();
+            stuff = JsonConvert.DeserializeObject(result);
+            EmptyTables.Text = stuff.count;
+            Load();
         }
 
+        private async void Load()
+        {
+            string result = API.GetCountTableEmpty();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            int countVIP4 = stuff.countVIP4;
+            int countVIP8 = stuff.countVIP8;
+            int countVIP12 = stuff.countVIP12;
+            int countstandard4 = stuff.countstandard4;
+            int countstandard8 = stuff.countstandard8;
+            int countstandard12 = stuff.countstandard12;
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    SeriesCollection1 = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "Bàn 4 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard4) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 8 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard8) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 12 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard12) },
+                    DataLabels = true
+                },
+
+            };
+
+                    SeriesCollection2 = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "Bàn 4 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP4) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 8 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP8) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 12 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP12) },
+                    DataLabels = true
+                },
+
+            };
+
+                    DataContext = this;
+                });
+            });
+            
+        }
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
-            this.Height = Application.Current.MainWindow.ActualHeight - 30;
+            this.Height = Application.Current.MainWindow.ActualHeight - 0;
         }
     }
 }

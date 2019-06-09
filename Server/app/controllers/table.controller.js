@@ -82,6 +82,24 @@ exports.findAll = (req, res) => {
         });
 };
 
+exports.countUsing = async function (req, res) {
+    var count = await Table.countDocuments({ status: "booked" });
+    res.send({ count: count });
+};
+
+exports.countEmpty = async function (req, res) {
+    var count = await Table.countDocuments({ status: "empty" });
+    var countstandard4 = await Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 4 });
+    var countstandard8 = await Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 8 });
+    var countstandard12 = await Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 12 });
+
+    var countVIP4 = await Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 4 });
+    var countVIP8 = await Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 8 });
+    var countVIP12 = await Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 12 });
+
+    res.send({ count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
+};
+
 // Find a single table with a tableId
 exports.findOne = (req, res) => {
     Table.findOne({ "number": req.params.tableNumber })
@@ -92,7 +110,7 @@ exports.findOne = (req, res) => {
                     code: 0
                 });
             }
-            res.send({table, code :1});
+            res.send({ table, code: 1 });
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.send({
@@ -156,7 +174,7 @@ exports.update = (req, res) => {
                     message: "Table not found with id " + req.params.tableId
                 });
             }
-            res.send({message: "Table update successfully!"});
+            res.send({ message: "Table update successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.send({
@@ -178,7 +196,7 @@ exports.book = (req, res) => {
     }
 
     // Find table and update it with the request body
-    Table.findOneAndUpdate({number:req.body.number}, {
+    Table.findOneAndUpdate({ number: req.body.number }, {
         note: req.body.note,
         status: req.body.status,
         customer: {
@@ -193,7 +211,7 @@ exports.book = (req, res) => {
                     message: "Table not found with id " + req.params.tableId
                 });
             }
-            res.send({message: "Table update successfully!"});
+            res.send({ message: "Table update successfully!" });
         }).catch(err => {
             if (err.kind === 'ObjectId') {
                 return res.send({

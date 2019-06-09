@@ -10,6 +10,10 @@ module.exports = (app) => {
     // Retrieve all Tables
     app.get('/api/tables', table.findAll);
 
+    app.get('/api/tables/using', table.countUsing);
+
+    app.get('/api/tables/empty', table.countEmpty);
+
     // Retrieve a single Table with tableNumber
     app.get('/api/tables/:tableNumber', table.findOne);
 
