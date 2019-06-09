@@ -138,7 +138,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string GetCountTableUsing()
+        public static string CountTableUsing()
         {
             string url = SERVER + "/tables/using";
 
@@ -153,7 +153,7 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string GetCountTableEmpty()
+        public static string CountTableEmpty()
         {
             string url = SERVER + "/tables/empty";
 

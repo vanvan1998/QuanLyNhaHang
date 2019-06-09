@@ -47,7 +47,6 @@ namespace QuanLyNhaHang.EmptyTables
 
             await Task.Run(() =>
             {
-                Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)

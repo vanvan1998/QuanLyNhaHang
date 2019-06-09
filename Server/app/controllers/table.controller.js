@@ -88,14 +88,17 @@ exports.countUsing = async function (req, res) {
 };
 
 exports.countEmpty = async function (req, res) {
-    var count = await Table.countDocuments({ status: "empty" });
-    var countstandard4 = await Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 4 });
-    var countstandard8 = await Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 8 });
-    var countstandard12 = await Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 12 });
 
-    var countVIP4 = await Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 4 });
-    var countVIP8 = await Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 8 });
-    var countVIP12 = await Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 12 });
+    var countstandard4 = 0;
+    var countstandard8 = 0;
+    var countstandard12 = 0;
+
+    var countVIP4 = 0;
+    var countVIP8 = 0;
+    var countVIP12 = 0;
+    
+    var count = await Table.countDocuments({ status: "empty" });
+
 
     res.send({ count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
 };
