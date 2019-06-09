@@ -246,6 +246,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Số điện thoại " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBlock x:Name="CustomerPhone" Grid.Column="1" Text="" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                
                 </Grid>
 
                 <Grid Grid.Row="6">
@@ -253,8 +254,10 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Tổn số món " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="NumberOfFoods" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                    <Label Grid.Column="0" Content="Thời gian đặt" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <DatePicker x:Name="Time"  Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
                 </Grid>
 
                 <Grid Grid.Row="7">

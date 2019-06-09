@@ -157,7 +157,6 @@
             </Grid.OpacityMask>
             <Border x:Name="BorderG4" CornerRadius="5" Background="White"/>
             <Grid>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
@@ -170,7 +169,9 @@
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
+
                 </Grid.RowDefinitions>
+
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <materialDesign:ColorZone
                     Mode="PrimaryMid"
@@ -216,7 +217,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Column="0" Content="Bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock Grid.Column="1" x:Name="NumberTable" Text="{Binding number}" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FFF3F311"></TextBlock>
+                    <TextBlock Grid.Column="1" x:Name="NumberTable"  Text="{Binding number}" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
                 </Grid>
 
 
@@ -226,7 +227,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Loại bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="TypeTable" Grid.Column="1" Text="{Binding type}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FFF3F311"></TextBlock>
+                    <TextBlock x:Name="TypeTable" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="4">
@@ -235,7 +236,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="CustomerName" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                    <TextBlock x:Name="CustomerName" Grid.Column="1" Text="" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="5">
@@ -245,6 +246,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Số điện thoại " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBlock x:Name="CustomerPhone" Grid.Column="1" Text="" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+
                 </Grid>
 
                 <Grid Grid.Row="6">
@@ -252,8 +254,10 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Tổng số món " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="NumberOfFoods" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                    <Label Grid.Column="0" Content="Thời gian đặt" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <DatePicker x:Name="Time"  Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
+                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
                 </Grid>
 
                 <Grid Grid.Row="7">
@@ -271,7 +275,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock Grid.Column="1" x:Name="NoteTextBlock" Text="{Binding thongTin}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
+                    <TextBlock Grid.Column="1" x:Name="NoteTextBlock" Text="{Binding note}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="9">

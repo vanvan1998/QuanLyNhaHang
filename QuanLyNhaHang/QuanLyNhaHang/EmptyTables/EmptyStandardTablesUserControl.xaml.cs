@@ -151,7 +151,6 @@ namespace QuanLyNhaHang.EmptyTables
                
                 NumberTable.Text = tb.Text;
                 TypeTable.Text ="Bàn "+ tbtype.Text +" người";
-                //tableSelected = stuff;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }

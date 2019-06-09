@@ -32,6 +32,7 @@ namespace QuanLyNhaHang.UsingTables
 
         ListView lvHienTai = null;
         ListViewItem lviHienTai = null;
+        dynamic stuff;
 
         public UsingStandardTablesUserControl()
         {
@@ -47,7 +48,7 @@ namespace QuanLyNhaHang.UsingTables
         private async void Load()
         {
             string result = API.GetAllTableWithStatusAndType("booked", "standard");
-            dynamic stuff = JsonConvert.DeserializeObject(result);
+            stuff = JsonConvert.DeserializeObject(result);
 
             await Task.Run(() =>
             {
@@ -134,8 +135,6 @@ namespace QuanLyNhaHang.UsingTables
                     var dt2 = cp2.ContentTemplate as DataTemplate;
                     var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
                     var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
-                    var tbtype2 = (TextBlock)dt2.FindName("TypeTable", cp2);
-                    var tbcustomer2 = (TextBlock)dt2.FindName("CustomerName", cp2);
 
                     rt2.Fill = Brushes.White;
                 }
@@ -148,8 +147,6 @@ namespace QuanLyNhaHang.UsingTables
                     var dt3 = cp3.ContentTemplate as DataTemplate;
                     var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
                     var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
-                    var tbtype3 = (TextBlock)dt3.FindName("TypeTable", cp3);
-                    var tbcustomer3 = (TextBlock)dt3.FindName("CustomerName", cp3);
 
                     rt3.Fill = Brushes.White;
                 }
@@ -159,13 +156,30 @@ namespace QuanLyNhaHang.UsingTables
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
                 var tb = (TextBlock)dt.FindName("NumberTable", cp);
-                var tbtype = (TextBlock)dt.FindName("TypeTable", cp);
-                var tbcustomer = (TextBlock)dt.FindName("CustomerName", cp);
 
-                NumberTable.Text = tb.Text;
-                TypeTable.Text ="Bàn "+ tbtype.Text+" người";
-                CustomerName.Text = tbcustomer.Text;
+                Model.Table tableSelected = new Model.Table();
 
+                foreach (var item in stuff)
+                {
+                    if (item.number == tb.Text)
+                        tableSelected = new Model.Table()
+                        {
+                            ID=item._id,
+                            number = item.number,
+                            type=item.type,
+                            numberOfSeat = item.numberOfSeat,
+                            status = item.status,
+                            customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
+                            note=item.note,
+                            time=item.time
+                        };
+                };
+                NumberTable.Text = tableSelected.number;
+                TypeTable.Text ="Bàn " +tableSelected.numberOfSeat + " người";
+                CustomerName.Text = tableSelected.customer.fullName;
+                CustomerPhone.Text = tableSelected.customer.phone;
+                NoteTextBlock.Text = tableSelected.note;
+                Time.Text = tableSelected.time;
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
