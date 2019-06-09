@@ -19,7 +19,7 @@ namespace QuanLyNhaHang
         public SeriesCollection SeriesCollection1 { get; set; }
         public SeriesCollection SeriesCollection2 { get; set; }
         public SeriesCollection SeriesCollection3 { get; set; }
-        
+
         public DashboardUserControl()
         {
             InitializeComponent();
@@ -27,84 +27,84 @@ namespace QuanLyNhaHang
             UsingTables.Text = "0";
             EmptyTables.Text = "0";
 
-            SeriesCollection SeriesCollection1 = new SeriesCollection();
+            SeriesCollection1 = new SeriesCollection { };
+            SeriesCollection2 = new SeriesCollection { };
 
-            SeriesCollection SeriesCollection2 = new SeriesCollection();
             DataContext = this;
 
-            Load();
+            LoadData();
         }
 
-        private async void Load()
+        private async void LoadData()
         {
-            //string result = API.CountTableUsing();
-            //dynamic stuff = JsonConvert.DeserializeObject(result);
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    string result = API.CountTableUsing();
+                    dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //UsingTables.Text = stuff.count;
+                    UsingTables.Text = stuff.count;
 
-            //result = API.CountTableEmpty();
-            //stuff = JsonConvert.DeserializeObject(result);
+                    result = API.CountTableEmpty();
+                    stuff = JsonConvert.DeserializeObject(result);
 
-            //EmptyTables.Text = stuff.count;
+                    EmptyTables.Text = stuff.count;
 
-            //int countVIP4 = stuff.countVIP4;
-            //int countVIP8 = stuff.countVIP8;
-            //int countVIP12 = stuff.countVIP12;
-            //int countstandard4 = stuff.countstandard4;
-            //int countstandard8 = stuff.countstandard8;
-            //int countstandard12 = stuff.countstandard12;
+                    int countVIP4 = stuff.countVIP4;
+                    int countVIP8 = stuff.countVIP8;
+                    int countVIP12 = stuff.countVIP12;
+                    int countstandard4 = stuff.countstandard4;
+                    int countstandard8 = stuff.countstandard8;
+                    int countstandard12 = stuff.countstandard12;
 
-           
-            await Task.Run(() => {
-                this.Dispatcher.Invoke(() => {
-                    Thread.Sleep(5000);
-            //        SeriesCollection1 = new SeriesCollection
-            //{
-            //    new PieSeries
-            //    {
-            //        Title = "Bàn 4 người",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard4) },
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Bàn 8 người",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard8) },
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Bàn 12 người",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard12) },
-            //        DataLabels = true
-            //    },
+                    SeriesCollection1 = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "Bàn 4 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard4) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 8 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard8) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 12 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countstandard12) },
+                    DataLabels = true
+                },
 
-            //};
+            };
 
-            //        SeriesCollection2 = new SeriesCollection
-            //{
-            //    new PieSeries
-            //    {
-            //        Title = "Bàn 4 người",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP4) },
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Bàn 8 người",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP8) },
-            //        DataLabels = true
-            //    },
-            //    new PieSeries
-            //    {
-            //        Title = "Bàn 12 người",
-            //        Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP12) },
-            //        DataLabels = true
-            //    },
+                    SeriesCollection2 = new SeriesCollection
+            {
+                new PieSeries
+                {
+                    Title = "Bàn 4 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP4) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 8 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP8) },
+                    DataLabels = true
+                },
+                new PieSeries
+                {
+                    Title = "Bàn 12 người",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(countVIP12) },
+                    DataLabels = true
+                },
 
-            //};
+            };
 
-            //        DataContext = this;
+                    DataContext = this;
                 });
             });
 

@@ -109,8 +109,7 @@ exports.countEmpty = async function (req, res) {
     var countVIP12 = 0;
 
     var count = 0;
-    
-    await Table.find().then(tables =>{
+    await Table.find({"status": "empty"}).then(tables =>{
         count = tables.length;
         tables.forEach(element => {
             if (element.type == "standard" && element.numberOfSeat == 4){
