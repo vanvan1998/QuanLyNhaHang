@@ -419,6 +419,9 @@ namespace QuanLyNhaHang.UsingTables
         {
             if(AddFoodCheck==false)
             {
+                Food2.Clear();
+                Food1.Clear();
+                Food3.Clear();
                 string result = API.GetAllFood();
                 stuffFood = JsonConvert.DeserializeObject(result);
                 LoadFood();
@@ -536,6 +539,9 @@ namespace QuanLyNhaHang.UsingTables
 
             if (DetailFoodCheck == false)
             {
+                Food2.Clear();
+                Food1.Clear();
+                Food3.Clear();
                 string result = API.GetFoodInBill(tableSelected.number);
                 stuffFood = JsonConvert.DeserializeObject(result);
                 LoadFood();
