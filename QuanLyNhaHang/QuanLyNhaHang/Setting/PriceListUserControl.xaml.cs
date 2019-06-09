@@ -101,6 +101,7 @@ namespace QuanLyNhaHang.Setting
                 }
             };
         }
+
         private void ListViewFood_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (((ListView)sender).SelectedIndex == -1)

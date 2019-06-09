@@ -185,11 +185,11 @@ namespace QuanLyNhaHang.Model
 
         public static string GetAllTableWithCustomer(string customer)
         {
-            string url = SERVER + "/tables/customer";
-            string json = "{\"customer\": \"" + customer+ "\"}";
+            string url = SERVER + "/tables/findCustomer";
+            string json = "{\"fullName\": \"" + customer+ "\"}";
             try
             {
-                return PUT(url, json);
+                return POST(url, json);
             }
             catch
             {
