@@ -167,101 +167,50 @@ namespace QuanLyNhaHang.EmptyTables
         }
 
 
-        private void BtnDatPhong(object sender, RoutedEventArgs e)
+        private void BtnDatBan(object sender, RoutedEventArgs e)
         {
-            //if (NumberTable.Text == "")
-            //{
-            //    MessageBox.Show("Vui lòng chọn phòng trước!");
-            //    return;
-            //}
 
-            //if (CustomerNameTextBox.Text == "")
-            //{
-            //    MessageBox.Show("Chưa nhập tên khách hàng!");
-            //    return;
-            //}
+            if (NumberTable.Text == "")
+            {
+                MessageBox.Show("Vui lòng chọn bàn trước!");
+                return;
+            }
 
-            //if (CustomerIDTextBox.Text == "")
-            //{
-            //    MessageBox.Show("Chưa nhập CMND khách hàng!");
-            //    return;
-            //}
+            if (CustomerNameTextBox.Text == "")
+            {
+                MessageBox.Show("Chưa nhập tên khách hàng!");
+                return;
+            }
 
-            //string maKH = "KH1";
+            if (CustomerPhone.Text == "")
+            {
+                MessageBox.Show("Chưa nhập số điện thoại khách hàng!");
+                return;
+            }
 
-            //if (DataProvider.Ins.DB.KhachHangs.Count() > 0)
-            //{
-            //    maKH = "KH" + (DataProvider.Ins.DB.KhachHangs.Max(x=>x.id) + 1).ToString();
-            //}
+            Model.Table tableBook = new Model.Table();
+            tableBook.number = NumberTable.Text;
+            tableBook.note = NoteTextBox.Text;
+            tableBook.status = "booked";
+            tableBook.time = TimeTextBox.Text;
 
-            //KhachHang khachHang = new KhachHang
-            //{
-            //    hoTen = CustomerNameTextBox.Text,
-            //    cmnd = CustomerIDTextBox.Text,
-            //    maKhachHang = maKH
-            //};
+            tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };
 
-            ////thêm thông tin khách hàng vừa nhập
-            //DataProvider.Ins.DB.KhachHangs.Add(khachHang);
-            //DataProvider.Ins.DB.SaveChanges();
+            string result = API.BookTable(tableBook);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            if (stuff.message == "Table update successfully!")
+            {
+                MessageBox.Show("Đặt bàn thành công!!!");
+            }
+            else
+            {
+                MessageBox.Show("Có lỗi sảy ra trong quá trình đặt bàn, vui lòng thử lại!!!");
+            }
 
-            //// thêm thông tin vào phòng vừa chọn
-            //phongHienTai.maKhachHang = khachHang.maKhachHang;
-            //phongHienTai.tinhTrang = 1;
-            //if (NoteTextBox.Text == "")
-            //{
-            //    phongHienTai.ghiChu = null;
-            //}
-            //else
-            //{
-            //    phongHienTai.ghiChu = NoteTextBox.Text;
-            //}
-            //phongHienTai.thoiGianBatDau = DateTime.Now;
-
-            //foreach (var room in EmptyVIP4PersonTables)
-            //{
-            //    if (room.soPhong == phongHienTai.soPhong)
-            //    {
-            //        EmptyVIP4PersonTables.Remove(room);
-            //        break;
-            //    }
-            //}
-
-            //ListViewEmptyVIP4PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyVIP4PersonTable.ItemsSource = EmptyVIP4PersonTables;
-
-            //foreach (var room in EmptyVIP8PersonTables)
-            //{
-            //    if (room.soPhong == phongHienTai.soPhong)
-            //    {
-            //        EmptyVIP8PersonTables.Remove(room);
-            //        break;
-            //    }
-            //}
-
-            //ListViewEmptyVIP8PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyVIP8PersonTable.ItemsSource = EmptyVIP8PersonTables;
-
-            //foreach (var room in EmptyVIP12PersonTables)
-            //{
-            //    if (room.soPhong == phongHienTai.soPhong)
-            //    {
-            //        EmptyVIP12PersonTables.Remove(room);
-            //        break;
-            //    }
-            //}
-
-            //ListViewEmptyVIP12PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewEmptyVIP12PersonTable.ItemsSource = EmptyVIP12PersonTables;
-
-            //DataProvider.Ins.DB.SaveChanges();
-            //MessageBox.Show("Đặt phòng thành công!");
-
-            //NumberTable.Text = "";
-            //TypeTable.Text = "";
-            //CustomerNameTextBox.Text = "";
-            //CustomerIDTextBox.Text = "";
-            //NoteTextBox.Text = "";
+            EmptyVIP12PersonTables.Clear();
+            EmptyVIP8PersonTables.Clear();
+            EmptyVIP4PersonTables.Clear();
+            Load();
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)

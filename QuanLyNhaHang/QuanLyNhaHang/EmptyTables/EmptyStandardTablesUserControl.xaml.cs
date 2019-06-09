@@ -197,6 +197,9 @@ namespace QuanLyNhaHang.EmptyTables
                 MessageBox.Show("Có lỗi sảy ra trong quá trình đặt bàn, vui lòng thử lại!!!");
             }
 
+            EmptyStandard12PersonTables.Clear();
+            EmptyStandard8PersonTables.Clear();
+            EmptyStandard4PersonTables.Clear();
             LoadData();
         }
 

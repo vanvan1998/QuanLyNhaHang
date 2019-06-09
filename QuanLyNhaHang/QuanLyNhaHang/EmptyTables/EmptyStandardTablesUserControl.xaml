@@ -272,8 +272,7 @@
                 <Grid Grid.Row="8">
                     <Button Click="BtnDatBan" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                        Width="150"
-                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton">
+                        Width="150">
                         Đặt bàn
                     </Button>
                 </Grid>
