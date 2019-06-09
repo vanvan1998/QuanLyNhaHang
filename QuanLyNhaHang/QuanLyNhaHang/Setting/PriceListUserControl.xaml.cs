@@ -58,14 +58,29 @@ namespace QuanLyNhaHang.Setting
                     };
                 });
             });
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    TicketType();
+                });
+            });
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
+            
+        }
+
+        private void TicketType()
+        {
             for (int i = 0; i < Foods.Count; i++)
             {
-                if (Foods[i].type == "desserts")
+                if (Foods[i].type == "dessert")
                 {
                     ListViewItem lvi1 = ListViewFood.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
                     var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
@@ -86,7 +101,6 @@ namespace QuanLyNhaHang.Setting
                 }
             };
         }
-
         private void ListViewFood_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (((ListView)sender).SelectedIndex == -1)
@@ -166,7 +180,7 @@ namespace QuanLyNhaHang.Setting
             }
             else
             {
-                foodNew.type = "desserts";
+                foodNew.type = "dessert";
             }
 
             foreach (var item in Foods)
@@ -183,13 +197,13 @@ namespace QuanLyNhaHang.Setting
             if (stuff.message == "create successful")
             {
                 MessageBox.Show("Tạo món ăn thành công!!!");
+                Foods.Clear();
+                Load();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình tạo món ăn, vui lòng thử lại!!!");
             }
-
-            //todo load food
 
         }
 
@@ -205,12 +219,13 @@ namespace QuanLyNhaHang.Setting
             if (stuff.message == "Food deleted successfully!")
             {
                 MessageBox.Show("Xóa món ăn thành công!!!");
+                Foods.Clear();
+                Load();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình xóa, vui lòng thử lại!!!");
             }
-            //todo load
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -238,7 +253,7 @@ namespace QuanLyNhaHang.Setting
             }
             else
             {
-                foodNew.type = "dish";
+                foodNew.type = "dessert";
             }
             foreach (var item in Foods)
             {
@@ -251,17 +266,17 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.UpdateFood(id.Text, foodNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            //todo message
             if (stuff.message == "Food updated successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin món ăn thành công!!!");
+                Foods.Clear();
+                Load();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình cập nhật, vui lòng thử lại!!!");
             }
 
-            //todo load food
         }
     }
 }

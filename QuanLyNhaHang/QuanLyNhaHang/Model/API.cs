@@ -214,7 +214,7 @@ namespace QuanLyNhaHang.Model
         //todo server
         public static string BookTable(Model.Table table)
         {
-            string url = SERVER + "/tables/Book"+table.number;
+            string url = SERVER + "/tables/Book/"+table.number;
             string json = "{\"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
                             "\", \"status\": \"" + table.status +

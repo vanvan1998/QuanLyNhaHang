@@ -183,6 +183,21 @@ namespace QuanLyNhaHang.EmptyTables
             tableBook.note = NoteTextBox.Text;
             tableBook.status = "booked";
             tableBook.time = TimeTextBox.Text;
+
+            tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };
+
+            string result = API.BookTable(tableBook);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            if (stuff.message == "Table update successfully!")
+            {
+                MessageBox.Show("Đặt bàn thành công!!!");
+            }
+            else
+            {
+                MessageBox.Show("Có lỗi sảy ra trong quá trình đặt bàn, vui lòng thử lại!!!");
+            }
+
+            LoadData();
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)

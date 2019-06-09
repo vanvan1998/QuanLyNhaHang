@@ -62,23 +62,32 @@ namespace QuanLyNhaHang.Setting
                     };
                 });
             });
+
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    for (int i = 0; i < Employees.Count; i++)
+                    {
+                        if (Employees[i].role == "employee")
+                        {
+                            ListViewItem lvi1 = ListViewEmployee.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                            var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                            var dt1 = cp1.ContentTemplate as DataTemplate;
+                            var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                            rt1.Background = Brushes.Blue;
+                        }
+                    };
+                });
+            });
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
-            for (int i = 0; i < Employees.Count; i++)
-            {
-                if (Employees[i].role == "employee")
-                {
-                    ListViewItem lvi1 = ListViewEmployee.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
-
-                    var dt1 = cp1.ContentTemplate as DataTemplate;
-                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                    rt1.Background = Brushes.Blue;
-                }
-            };
+            
         }
 
         static string GetMd5Hash(MD5 md5Hash, string input)
@@ -200,14 +209,13 @@ namespace QuanLyNhaHang.Setting
             if (stuff.message == "create successful")
             {
                 MessageBox.Show("Tạo nhân viên thành công!!!");
+                Employees.Clear();
+                Load();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình tạo nhân viên, vui lòng thử lại!!!");
             }
-
-            //todo load employee
-
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -222,12 +230,13 @@ namespace QuanLyNhaHang.Setting
             if (stuff.message == "Employee deleted successfully!")
             {
                 MessageBox.Show("Xóa nhân viên thành công!!!");
+                Employees.Clear();
+                Load();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình xóa, vui lòng thử lại!!!");
             }
-            //todo load
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -279,17 +288,17 @@ namespace QuanLyNhaHang.Setting
                 result = API.UpdatePassword(employeeNew);
             }
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            //todo message
             if (stuff.message == "Employee updated successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin nhân viên thành công!!!");
+                Employees.Clear();
+                Load();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình cập nhật, vui lòng thử lại!!!");
             }
 
-            //todo load employee
         }
     }
 }

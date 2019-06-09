@@ -26,7 +26,7 @@ namespace QuanLyNhaHang.Setting
         {
             InitializeComponent();
 
-            GridMain.Children.Add(new SettingEmployeeUserControl());
+            GridMain.Children.Add(new SettingTableUserControl());
 
         }
 

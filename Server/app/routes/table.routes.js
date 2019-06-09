@@ -16,6 +16,8 @@ module.exports = (app) => {
     // Update a Table with tableId
     app.put('/api/tables/:tableId', table.update);
 
+    app.put('/api/tables/book/:tableNumber', table.book);
+
     // Delete a Table with tableId
     app.delete('/api/tables/:tableId', table.delete);
 }

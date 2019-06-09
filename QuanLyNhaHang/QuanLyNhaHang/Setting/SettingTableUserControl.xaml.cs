@@ -31,6 +31,7 @@ namespace QuanLyNhaHang.Setting
             InitializeComponent();
             
             ListViewTable.ItemsSource = Tables;
+            Load();
         }
 
         private async void Load()
@@ -60,23 +61,31 @@ namespace QuanLyNhaHang.Setting
                 });
             });
 
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() =>
+                {
+                    for (int i = 0; i < Tables.Count; i++)
+                    {
+                        if (Tables[i].type == "standard")
+                        {
+                            ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                            var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                            var dt1 = cp1.ContentTemplate as DataTemplate;
+                            var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                            rt1.Background = Brushes.Blue;
+                        }
+                    };
+                });
+            });
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
-            for (int i = 0; i < Tables.Count; i++)
-            {
-                if (Tables[i].type == "standard")
-                {
-                    ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
-
-                    var dt1 = cp1.ContentTemplate as DataTemplate;
-                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                    rt1.Background = Brushes.Blue;
-                }
-            };
+            
         }
 
         private void ListViewTable_MouseUp(object sender, MouseButtonEventArgs e)
@@ -220,7 +229,8 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Có lỗi sảy ra trong quá trình tạo bàn, vui lòng thử lại!!!");
             }
 
-            //todo load table
+            Tables.Clear();
+            Load();
 
         }
 
@@ -241,7 +251,8 @@ namespace QuanLyNhaHang.Setting
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình xóa, vui lòng thử lại!!!");
             }
-            //todo load
+            Tables.Clear();
+            Load();
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -313,8 +324,8 @@ namespace QuanLyNhaHang.Setting
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình cập nhật, vui lòng thử lại!!!");
             }
-
-            //todo load table
+            Tables.Clear();
+            Load();
         }
     }
 }

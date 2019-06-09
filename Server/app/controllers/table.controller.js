@@ -169,6 +169,43 @@ exports.update = (req, res) => {
         });
 };
 
+exports.book = (req, res) => {
+    // Validate Request
+    if (!req.body.number) {
+        return res.send({
+            message: "Table number can not be empty"
+        });
+    }
+
+    // Find table and update it with the request body
+    Table.findOneAndUpdate({number:req.body.number}, {
+        note: req.body.note,
+        status: req.body.status,
+        customer: {
+            fullName: req.body.customer.fullName,
+            phone: req.body.customer.phone
+        },
+        time: req.body.time
+    }, { new: true })
+        .then(table => {
+            if (!table) {
+                return res.send({
+                    message: "Table not found with id " + req.params.tableId
+                });
+            }
+            res.send({message: "Table update successfully!"});
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.send({
+                    message: "Table not found with id " + req.params.tableId
+                });
+            }
+            return res.send({
+                message: "Error updating table with id " + req.params.tableId
+            });
+        });
+};
+
 // Delete a table with the specified tableId in the request
 exports.delete = (req, res) => {
     Table.findByIdAndRemove(req.params.tableId)
