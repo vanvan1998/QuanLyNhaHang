@@ -22,7 +22,6 @@ namespace QuanLyNhaHang
         public LoginWindow()
         {
             InitializeComponent();
-           MessageBox.Show(DateTime.Now.ToString("yyyy-MM-dd h:mm:ss tt"));
         }
 
         private void ExitLoginButton_Click(object sender, RoutedEventArgs e)

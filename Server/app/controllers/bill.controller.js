@@ -151,7 +151,8 @@ exports.delete = (req, res) => {
 
 exports.addFoodInBill = async function (req, res) {
     // Find bill and update it with the request body
-    Bill.findOne({ "tableNumber": req.body.tableNumber, "status": "unpaid" })
+    console.log(req.body.tableNumber);
+    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), "status": "unpaid" })
         .then(bill => {
             if (!bill) {
                 console.log("Bill not found!!!");
