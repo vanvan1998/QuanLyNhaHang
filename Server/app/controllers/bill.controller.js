@@ -160,7 +160,7 @@ exports.addFoodInBill = async function (req, res) {
 
             Bill.findByIdAndUpdate(bill._id, {
                 total: parseInt(req.body.price) + bill.total,
-                $push: {menu: mongoose.Types.ObjectId(req.body.foodId)}
+                $push: { menu: mongoose.Types.ObjectId(req.body.foodId) }
             }, { new: true })
                 .then(bill => {
                     if (!bill) {
@@ -186,4 +186,15 @@ exports.addFoodInBill = async function (req, res) {
             console.log("Bill not found!!!");
         });
 
+};
+
+exports.getTotalBill = function (req, res) {
+    Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber) }).then(bill => {
+        if (!bill) {
+            return res.send({
+                message: "Bill not found with " + req.params.tableNumber
+            });
+        }
+        res.send({ total: bill.total });
+    })
 };
