@@ -580,7 +580,7 @@ namespace QuanLyNhaHang.Model
         public static string Pay(string tableNumber)
         {
             string url = SERVER + "/bill/pay/" + tableNumber;
-           
+
             try
             {
                 return GET(url);
