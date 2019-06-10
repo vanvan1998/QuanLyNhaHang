@@ -168,7 +168,6 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -253,23 +252,12 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Thời gian đặt " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <DatePicker  x:Name="TimeTextBox"  Grid.Column="1" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" 
-                         materialDesign:HintAssist.Hint="Pick Date"
-                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                </Grid>
-
-                <Grid Grid.Row="7">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBox x:Name="NoteTextBox" materialDesign:HintAssist.Hint="Ghi chú" Grid.Column="1" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
 
-                <Grid Grid.Row="8">
+                <Grid Grid.Row="7">
                     <Button Click="BtnDatBan" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150">
