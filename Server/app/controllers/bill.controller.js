@@ -1,5 +1,6 @@
 const Bill = require('../models/bill.model.js');
 const Food = require('../models/food.model.js');
+const mongoose = require('mongoose');
 
 // Create and Save a new Bill
 exports.create = (req, res) => {
@@ -150,7 +151,7 @@ exports.delete = (req, res) => {
 
 exports.addFoodInBill = async function (req, res) {
     // Find bill and update it with the request body
-    Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber), "status": "unpaid" })
+    Bill.findOne({ "tableNumber": req.body.tableNumber, "status": "unpaid" })
         .then(bill => {
             if (!bill) {
                 console.log("Bill not found!!!");
@@ -158,24 +159,23 @@ exports.addFoodInBill = async function (req, res) {
 
             Bill.findByIdAndUpdate(bill._id, {
                 total: parseInt(req.body.price) + bill.total,
-                menu:{$push: req.body.id}
-
+                $push: {menu: mongoose.Types.ObjectId(req.body.foodId)}
             }, { new: true })
                 .then(bill => {
                     if (!bill) {
                         return res.status(404).send({
-                            message: "Bill not found with id " + req.params.billId
+                            message: "Bill of table not found with id " + req.body.tableNumber
                         });
                     }
                     res.send({ message: "Add successfull" });
                 }).catch(err => {
                     if (err.kind === 'ObjectId') {
                         return res.status(404).send({
-                            message: "Bill not found with id " + req.params.billId
+                            message: "Bill not found with id " + req.body.tableNumber
                         });
                     }
                     return res.send({
-                        message: "Error updating bill with id " + req.params.billId
+                        message: "Error updating bill with id " + req.body.tableNumber
                     });
                 });
         }).catch(err => {

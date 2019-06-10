@@ -191,7 +191,6 @@ namespace QuanLyNhaHang.EmptyTables
             tableBook.number = NumberTable.Text;
             tableBook.note = NoteTextBox.Text;
             tableBook.status = "booked";
-            tableBook.time = TimeTextBox.Text;
 
             tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };
 

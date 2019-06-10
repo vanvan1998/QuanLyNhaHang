@@ -11,7 +11,7 @@ module.exports = (app) => {
     app.get('/api/bill/:tableNumber', bill.findOne);
 
     // addFoodInBill a Bill with billId
-    app.put('/api/addFoodInBill/:tableNumber', bill.addFoodInBill);
+    app.put('/api/bill/addFoodInBill', bill.addFoodInBill);
 
     // Delete a Bill with billId
     app.delete('/api/bills/:billId', bill.delete);

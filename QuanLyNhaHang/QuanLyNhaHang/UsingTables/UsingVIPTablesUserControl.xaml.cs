@@ -237,7 +237,6 @@ namespace QuanLyNhaHang.UsingTables
                 CustomerName.Text = tableSelected.customer.fullName;
                 CustomerPhone.Text = tableSelected.customer.phone;
                 NoteTextBlock.Text = tableSelected.note;
-                Time.Text = tableSelected.time;
 
                 string result = API.GetTotalInBill(tableSelected.number);
                 dynamic total = JsonConvert.DeserializeObject(result);
@@ -404,7 +403,6 @@ namespace QuanLyNhaHang.UsingTables
             CustomerName.Text = tableSelected.customer.fullName;
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
-            Time.Text = tableSelected.time;
             
         }
 
