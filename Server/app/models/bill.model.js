@@ -4,6 +4,7 @@ const BillSchema = mongoose.Schema({
     _id:mongoose.SchemaTypes.ObjectId,
     tableID: mongoose.SchemaTypes.ObjectId,
     employeeID: mongoose.SchemaTypes.ObjectId,
+    tableNumber: Number,
     billNumber: Number,   
     status: String,
     promotion: Number,

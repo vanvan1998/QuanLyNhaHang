@@ -18,4 +18,10 @@ module.exports = (app) => {
 
     // Get total of Bill
     app.get('/api/getTotalOfBill/:tableNumber', bill.getTotalBill);
+
+    // Pay
+    app.post('/api/bills/pay', bill.pay);
+
+    // Get all bill from time to time
+    app.post('/api/bills/filter', bill.filter);
 }

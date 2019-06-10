@@ -1,5 +1,6 @@
 const Bill = require('../models/bill.model.js');
 const Food = require('../models/food.model.js');
+const Table = require('../models/table.model.js');
 const mongoose = require('mongoose');
 
 // Create and Save a new Bill
@@ -31,6 +32,7 @@ exports.create = (req, res) => {
         employeeID: req.body.employeeID,
         customerID: req.body.customerID,
         billNumber: req.body.billNumber,
+        tableNumber: req.body.tableNumber,
         status: req.body.status,
         promotion: req.body.promotion,
         total: req.body.total,
@@ -65,7 +67,7 @@ exports.findAll = (req, res) => {
 // Find a single bill with a billId
 exports.findOne = async (req, res) => {
     var food = [];
-    var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber) , "status": "unpaid"});
+    var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber), "status": "unpaid" });
     for (var foodId of bill.menu) {
         var foodItem = await Food.findById(foodId);
         food.push(foodItem);
@@ -189,12 +191,101 @@ exports.addFoodInBill = async function (req, res) {
 };
 
 exports.getTotalBill = function (req, res) {
-    Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber) }).then(bill => {
+    Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber), "status": "unpaid" }).then(bill => {
         if (!bill) {
             return res.send({
                 message: "Bill not found with " + req.params.tableNumber
             });
         }
         res.send({ total: bill.total });
+    })
+};
+
+exports.pay = function (req, res) {
+    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), "status": "unpaid" }).then(bill => {
+        if (!bill) {
+            return res.send({
+                message: "Bill not found with " + req.body.tableNumber
+            });
+        }
+
+        Bill.findByIdAndUpdate(bill._id, {
+            status: "paid"
+        }, { new: true })
+            .then(bill => {
+                if (!bill) {
+                    return res.status(404).send({
+                        message: "Bill of table not found with id " + req.body.tableNumber
+                    });
+                }
+                res.send({ message: "Update bill successfull" });
+            }).catch(err => {
+                if (err.kind === 'ObjectId') {
+                    return res.status(404).send({
+                        message: "Bill not found with id " + req.body.tableNumber
+                    });
+                }
+                return res.send({
+                    message: "Error updating bill with id " + req.body.tableNumber
+                });
+            });
+    }).catch(err => {
+        if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.send({
+                message: "Bill not found with id " + req.body.tableNumber
+            });
+        }
+        return res.send({
+            message: "Could not update bill with id " + req.body.tableNumber
+        });
+    });
+
+    Table.findOne({ "number": parseInt(req.body.tableNumber) }).then(table => {
+        if (!table) {
+            return res.send({
+                message: "Table not found with " + req.params.tableNumber
+            });
+        }
+
+        Table.findByIdAndUpdate(table._id, {
+            status: "empty",
+            note: "",
+            customer: { fullName: "", phone: "" },
+            time: ""
+        }, { new: true })
+            .then(table => {
+                if (!table) {
+                    return res.status(404).send({
+                        message: "table not found with id " + req.body.tableNumber
+                    });
+                }
+                res.send({ message: "Update table successfull" });
+            }).catch(err => {
+                if (err.kind === 'ObjectId') {
+                    return res.status(404).send({
+                        message: "table not found with id " + req.body.tableNumber
+                    });
+                }
+                return res.send({
+                    message: "Error updating table with id " + req.body.tableNumber
+                });
+            });
+    }).catch(err => {
+        if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.send({
+                message: "table not found with id " + req.body.tableNumber
+            });
+        }
+        return res.send({
+            message: "Could not update table with id " + req.body.tableNumber
+        });
+    });
+};
+
+exports.filter = function (req, res) {
+    var startTime = req.body.startTime;
+    var endTime = req.body.endTime;
+    Bill.find({ "createdAt": { $gte: new Date(startTime + "T00:00:00.000Z"), $lte: new Date(endTime + "T23:59:59.999Z") } }).then(bill =>{
+        res.send(bill);
     })
 };
