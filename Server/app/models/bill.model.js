@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 
 const BillSchema = mongoose.Schema({
+    _id:mongoose.SchemaTypes.ObjectId,
     tableID: mongoose.SchemaTypes.ObjectId,
     employeeID: mongoose.SchemaTypes.ObjectId,
-    customerID: mongoose.SchemaTypes.ObjectId,
     billNumber: Number,   
     status: String,
-    promotion: String,
+    promotion: Number,
     total: Number,
+    customer: {
+        fullName : String,
+        phone:  String
+    },
     menu: Array,
     time : String
 }, {
