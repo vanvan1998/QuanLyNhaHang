@@ -31,7 +31,7 @@ namespace QuanLyNhaHang
             SeriesCollection2 = new SeriesCollection { };
 
             DataContext = this;
-
+            
             LoadData();
         }
 

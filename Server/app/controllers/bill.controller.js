@@ -1,4 +1,5 @@
 const Bill = require('../models/bill.model.js');
+const Food = require('../models/food.model.js');
 
 // Create and Save a new Bill
 exports.create = (req, res) => {
@@ -61,25 +62,14 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single bill with a billId
-exports.findOne = (req, res) => {
-    Bill.findById(req.params.billId)
-        .then(bill => {
-            if (!bill) {
-                return res.send({
-                    message: "Bill not found with id " + req.params.billId
-                });
-            }
-            res.send(bill);
-        }).catch(err => {
-            if (err.kind === 'ObjectId') {
-                return res.send({
-                    message: "Bill not found with id " + req.params.billId
-                });
-            }
-            return res.send({
-                message: "Error retrieving bill with id " + req.params.billId
-            });
-        });
+exports.findOne = async (req, res) => {
+    var food = [];
+    var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber) });
+    for (var foodId of bill.menu) {
+        var foodItem = await Food.findById(foodId);
+        food.push(foodItem);
+    }
+    res.send(food);
 };
 
 // Update a bill identified by the billId in the request
@@ -156,4 +146,43 @@ exports.delete = (req, res) => {
                 message: "Could not delete bill with id " + req.params.billId
             });
         });
+};
+
+exports.addFoodInBill = async function (req, res) {
+    // Find bill and update it with the request body
+    Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber), "status": "unpaid" })
+        .then(bill => {
+            if (!bill) {
+                console.log("Bill not found!!!");
+            }
+
+            Bill.findByIdAndUpdate(bill._id, {
+                total: parseInt(req.body.price) + bill.total,
+                menu:{$push: req.body.id}
+
+            }, { new: true })
+                .then(bill => {
+                    if (!bill) {
+                        return res.status(404).send({
+                            message: "Bill not found with id " + req.params.billId
+                        });
+                    }
+                    res.send({ message: "Add successfull" });
+                }).catch(err => {
+                    if (err.kind === 'ObjectId') {
+                        return res.status(404).send({
+                            message: "Bill not found with id " + req.params.billId
+                        });
+                    }
+                    return res.send({
+                        message: "Error updating bill with id " + req.params.billId
+                    });
+                });
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                console.log("Bill not found!!!");
+            }
+            console.log("Bill not found!!!");
+        });
+
 };

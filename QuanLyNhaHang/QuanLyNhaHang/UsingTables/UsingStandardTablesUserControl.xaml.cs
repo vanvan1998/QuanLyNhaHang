@@ -245,9 +245,9 @@ namespace QuanLyNhaHang.UsingTables
                 NoteTextBlock.Text = tableSelected.note;
                 Time.Text = tableSelected.time;
 
-                string result = API.GetTotalInBill(tableSelected.number);
-                dynamic total= JsonConvert.DeserializeObject(result);
-                Total.Text = total.total;
+                //string result = API.GetTotalInBill(tableSelected.number);
+                //dynamic total= JsonConvert.DeserializeObject(result);
+                //Total.Text = total.total;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
@@ -500,6 +500,7 @@ namespace QuanLyNhaHang.UsingTables
                     {
                         foodSelected = new Model.Food()
                         {
+                            id=item._id,
                             name = item.name,
                             price = item.price,
                             type = item.type,
@@ -542,6 +543,11 @@ namespace QuanLyNhaHang.UsingTables
                 Food2.Clear();
                 Food1.Clear();
                 Food3.Clear();
+                if(tableSelected.number==null)
+                {
+                    MessageBox.Show("Vui lòng chọn bàn trước!!!");
+                    return;
+                }
                 string result = API.GetFoodInBill(tableSelected.number);
                 stuffFood = JsonConvert.DeserializeObject(result);
                 LoadFood();

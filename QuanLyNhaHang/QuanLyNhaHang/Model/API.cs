@@ -453,36 +453,6 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string GetFoodInBill(string number)
-        {
-            string url = SERVER + "/foods/" + number;
-
-            try
-            {
-                return GET(url);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
-        public static string GetTotalInBill(string number)
-        {
-            string url = SERVER + "/foods/total/" + number;
-
-            try
-            {
-                return GET(url);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
         public static string CreateFood(Food foodNew)
         {
             string url = SERVER + "/foods";
@@ -542,7 +512,7 @@ namespace QuanLyNhaHang.Model
         #region Bill API
         public static string GetAllBill()
         {
-            string url = SERVER + "/Bills";
+            string url = SERVER + "/bills";
 
             try
             {
@@ -558,7 +528,8 @@ namespace QuanLyNhaHang.Model
         public static string AddFoodInBill(string TableNumber, Food foodNew)
         {
             string url = SERVER + "/addFoodInBill/" + TableNumber;
-            string json = "{\"name\": \""
+            string json = "{\"id\": \""
+                + foodNew.id + "\", \"name\": \""
                 + foodNew.name + "\", \"price\": \""
                 + foodNew.price + "\", \"ingredients\": \""
                 + foodNew.ingredients + "\", \"type\": \""
@@ -575,7 +546,35 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string GetFoodInBill(string number)
+        {
+            string url = SERVER + "/bill/" + number;
 
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string GetTotalInBill(string number)
+        {
+            string url = SERVER + "/bill/total/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
 
         #endregion
     }
