@@ -576,6 +576,24 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string Pay(string tableNumber)
+        {
+            string url = SERVER + "/bill/pay/" + tableNumber;
+           
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+            //đổi status trong bill, đổi status trong bàn
+            //create bill trong hàm book
+            //get total in bill 
+        }
+
         #endregion
     }
 }

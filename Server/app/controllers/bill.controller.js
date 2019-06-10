@@ -64,7 +64,7 @@ exports.findAll = (req, res) => {
 // Find a single bill with a billId
 exports.findOne = async (req, res) => {
     var food = [];
-    var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber) });
+    var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber) , "status": "unpaid"});
     for (var foodId of bill.menu) {
         var foodItem = await Food.findById(foodId);
         food.push(foodItem);

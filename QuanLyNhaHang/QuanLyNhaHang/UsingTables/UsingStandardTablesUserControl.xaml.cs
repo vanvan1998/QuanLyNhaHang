@@ -255,103 +255,27 @@ namespace QuanLyNhaHang.UsingTables
 
         private void BtnThanhToan(object sender, RoutedEventArgs e)
         {
-            //if (NumberTable.Text == "")
-            //{
-            //    MessageBox.Show("Chưa chọn phòng!");
-            //    return;
-            //}
+            if (NumberTable.Text == "")
+            {
+                MessageBox.Show("Chưa chọn bàn!");
+                return;
+            }
+            string result = API.Pay(NumberTable.Text);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //var re1 = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == NumberTable.Text).4PersonOrDefault();
-
-            //string maHD = "HD1";
-            //string maKM = null;
-
-            //if (DataProvider.Ins.DB.HoaDons.Count() > 0)
-            //{
-            //    maHD = "HD" + (DataProvider.Ins.DB.HoaDons.Max(x=>x.id) + 1).ToString();
-            //}
-
-            //if (DiscountCodeTextBox.Text != "")
-            //{
-            //    var DSMKM = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
-
-            //    if (DSMKM == null)
-            //    {
-            //        MessageBox.Show("Mã giảm giá không đúng!");
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        maKM = DSMKM.maKhuyenMai;
-            //    }
-            //}
-
-            //HoaDon hoaDon = new HoaDon
-            //{
-            //    thoiGianLap = DateTime.Now,
-            //    maHoaDon = maHD,
-            //    maKhachHang = phongHienTai.maKhachHang,
-            //    maNhanVienLap = "nhanvien", //xu li sau
-            //    maPhong = phongHienTai.maPhong,
-            //    tongTien = Math.Round(decimal.Parse(Total.Text), 0),
-            //    maKhuyenMai = maKM,
-            //};
-
-            //DataProvider.Ins.DB.HoaDons.Add(hoaDon);
-            //DataProvider.Ins.DB.SaveChanges();
-
-            //foreach (var table in UsingStandard4PersonTables)
-            //{
-            //    if (table.soPhong == phongHienTai.soPhong)
-            //    {
-            //        UsingStandard4PersonTables.Remove(table);
-            //        break;
-            //    }
-            //}
-
-            //ListViewUsingStandard4PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingStandard4PersonTable.ItemsSource = UsingStandard4PersonTables;
-
-            //foreach (var table in UsingStandard8PersonTables)
-            //{
-            //    if (table.soPhong == phongHienTai.soPhong)
-            //    {
-            //        UsingStandard8PersonTables.Remove(table);
-            //        break;
-            //    }
-            //}
-
-            //ListViewUsingStandard8PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingStandard8PersonTable.ItemsSource = UsingStandard8PersonTables;
-
-            //foreach (var table in UsingStandard12PersonTables)
-            //{
-            //    if (table.soPhong == phongHienTai.soPhong)
-            //    {
-            //        UsingStandard12PersonTables.Remove(table);
-            //        break;
-            //    }
-            //}
-
-            //ListViewUsingStandard12PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingStandard12PersonTable.ItemsSource = UsingStandard12PersonTables;
-
-            //phongHienTai.tinhTrang = 0;
-            //phongHienTai.thoiGianBatDau = null;
-            //phongHienTai.maKhachHang = null;
-            //phongHienTai.ghiChu = null;
-
-            //DataProvider.Ins.DB.SaveChanges();
-            //MessageBox.Show("Đã thanh toán thành công!");
-
-            //NumberTable.Text = "";
-            //TypeTable.Text = "";
-            //Customername.Text = "";
-            //CustomerID.Text = "";
-            //Time.Text = "";
-            //Total.Text = "";
-            //NoteTextBlock.Text = "";
-            //DiscountCodeTextBox.Text = "";
+            if(stuff.message!="successfull")
+            {
+                MessageBox.Show("Thanh toán thất bại!!!");
+                return;
+            }
+            MessageBox.Show("Thanh toán thành công!!!");
+            NumberTable.Text = "";
+            TypeTable.Text = "";
+            CustomerName.Text = "";
+            CustomerPhone.Text = "";
+            NoteTextBlock.Text = "";
+            Time.Text = "";
+            Load();
         }
 
         private void DiscountCodeTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -422,6 +346,11 @@ namespace QuanLyNhaHang.UsingTables
                 Food2.Clear();
                 Food1.Clear();
                 Food3.Clear();
+                if(NumberTable.Text=="")
+                {
+                    MessageBox.Show("Vui lòng chọn bàn trước!!!");
+                    return;
+                }
                 string result = API.GetAllFood();
                 stuffFood = JsonConvert.DeserializeObject(result);
                 LoadFood();
@@ -521,7 +450,6 @@ namespace QuanLyNhaHang.UsingTables
                 dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
 
 
-                //todo mess
                 if (stuffAddFood.message != "Add successfull")
                 {
                     MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
@@ -553,16 +481,16 @@ namespace QuanLyNhaHang.UsingTables
                 LoadFood();
                 Table.Visibility = Visibility.Hidden;
                 Food.Visibility = Visibility.Visible;
-                AddFood.Content = "Trở về";
-                AddFoodCheck = true;
+                FoodInBill.Content = "Trở về";
+                DetailFoodCheck = true;
                 return;
             }
             else
             {
                 Table.Visibility = Visibility.Visible;
                 Food.Visibility = Visibility.Hidden;
-                AddFood.Content = "Chi tiết";
-                AddFoodCheck = false;
+                FoodInBill.Content = "Chi tiết";
+                DetailFoodCheck = false;
             }
         }
     }
