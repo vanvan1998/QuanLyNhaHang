@@ -35,19 +35,19 @@ namespace QuanLyNhaHang.UsingTables
 
         Model.Table tableSelected = new Model.Table();
 
-        Boolean DetailFoodCheck = false;
-
         ListView lvHienTai = null;
         ListViewItem lviHienTai = null;
         dynamic stuff;
-        dynamic stuffFood;
+        dynamic stuffAllFood;
         Boolean AddFoodCheck = false;
+
+        Boolean DetailFoodCheck = false;
 
         public UsingVIPTablesUserControl()
         {
             InitializeComponent();
 
-            
+
             ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
             ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
             ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
@@ -58,8 +58,8 @@ namespace QuanLyNhaHang.UsingTables
             ListViewFood3.ItemsSource = Food3;
 
             string result = API.GetAllFood();
-            stuffFood = JsonConvert.DeserializeObject(result);
-            LoadFood();
+            stuffAllFood = JsonConvert.DeserializeObject(result);
+            LoadFood(stuffAllFood);
         }
 
         private async void Load()
@@ -67,7 +67,6 @@ namespace QuanLyNhaHang.UsingTables
             string result = API.GetAllTableWithStatusAndType("booked", "VIP");
             stuff = JsonConvert.DeserializeObject(result);
 
-            
             await Task.Run(() =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -105,12 +104,12 @@ namespace QuanLyNhaHang.UsingTables
                             });
                         };
                     }
+
                 });
             });
-
         }
 
-        private async void LoadFood()
+        private async void LoadFood(dynamic stuffFood)
         {
             await Task.Run(() =>
             {
@@ -183,6 +182,9 @@ namespace QuanLyNhaHang.UsingTables
                     var dt1 = cp1.ContentTemplate as DataTemplate;
                     var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
                     var tb1 = (TextBlock)dt1.FindName("NumberTable", cp1);
+                    var tbtype1 = (TextBlock)dt1.FindName("TypeTable", cp1);
+                    var tbcustomer1 = (TextBlock)dt1.FindName("CustomerName", cp1);
+
                     rt1.Fill = Brushes.White;
                 }
 
@@ -194,6 +196,7 @@ namespace QuanLyNhaHang.UsingTables
                     var dt2 = cp2.ContentTemplate as DataTemplate;
                     var rt2 = (Rectangle)dt2.FindName("BackGround", cp2);
                     var tb2 = (TextBlock)dt2.FindName("NumberTable", cp2);
+
                     rt2.Fill = Brushes.White;
                 }
 
@@ -205,6 +208,7 @@ namespace QuanLyNhaHang.UsingTables
                     var dt3 = cp3.ContentTemplate as DataTemplate;
                     var rt3 = (Rectangle)dt3.FindName("BackGround", cp3);
                     var tb3 = (TextBlock)dt3.FindName("NumberTable", cp3);
+
                     rt3.Fill = Brushes.White;
                 }
 
@@ -213,6 +217,7 @@ namespace QuanLyNhaHang.UsingTables
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
                 var tb = (TextBlock)dt.FindName("NumberTable", cp);
+
 
                 foreach (var item in stuff)
                 {
@@ -248,103 +253,29 @@ namespace QuanLyNhaHang.UsingTables
 
         private void BtnThanhToan(object sender, RoutedEventArgs e)
         {
-            //if (NumberTable.Text == "")
-            //{
-            //    MessageBox.Show("Chưa chọn phòng!");
-            //    return;
-            //}
+            if (NumberTable.Text == "")
+            {
+                MessageBox.Show("Chưa chọn bàn!");
+                return;
+            }
+            string result = API.Pay(NumberTable.Text);
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //var re1 = DataProvider.Ins.DB.Phongs.Where(x => x.soPhong == NumberTable.Text).4PersonOrDefault();
-
-            //string maHD = "HD1";
-            //string maKM = null;
-
-            //if (DataProvider.Ins.DB.HoaDons.Count() > 0)
-            //{
-            //    maHD = "HD" + (DataProvider.Ins.DB.HoaDons.Max(x=>x.id) + 1).ToString();
-            //}
-
-            //if (DiscountCodeTextBox.Text != "")
-            //{
-            //    var DSMKM = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
-
-            //    if (DSMKM == null)
-            //    {
-            //        MessageBox.Show("Mã giảm giá không đúng!");
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        maKM = DSMKM.maKhuyenMai;
-            //    }
-            //}
-
-            //HoaDon hoaDon = new HoaDon
-            //{
-            //    thoiGianLap = DateTime.Now,
-            //    maHoaDon = maHD,
-            //    maKhachHang = phongHienTai.maKhachHang,
-            //    maNhanVienLap = "nhanvien", //xu li sau
-            //    maPhong = phongHienTai.maPhong,
-            //    tongTien = Math.Round(decimal.Parse(Total.Text), 0),
-            //    maKhuyenMai = maKM,
-            //};
-
-            //DataProvider.Ins.DB.HoaDons.Add(hoaDon);
-            //DataProvider.Ins.DB.SaveChanges();
-
-            //foreach (var room in UsingVIP4PersonTables)
-            //{
-            //    if (room.soPhong == phongHienTai.soPhong)
-            //    {
-            //        UsingVIP4PersonTables.Remove(room);
-            //        break;
-            //    }
-            //}
-
-            //ListViewUsingVIP4PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
-
-            //foreach (var room in UsingVIP8PersonTables)
-            //{
-            //    if (room.soPhong == phongHienTai.soPhong)
-            //    {
-            //        UsingVIP8PersonTables.Remove(room);
-            //        break;
-            //    }
-            //}
-
-            //ListViewUsingVIP8PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
-
-            //foreach (var room in UsingVIP12PersonTables)
-            //{
-            //    if (room.soPhong == phongHienTai.soPhong)
-            //    {
-            //        UsingVIP12PersonTables.Remove(room);
-            //        break;
-            //    }
-            //}
-
-            //ListViewUsingVIP12PersonTable.ClearValue(ListView.ItemsSourceProperty);
-            //ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
-
-            //phongHienTai.tinhTrang = 0;
-            //phongHienTai.thoiGianBatDau = null;
-            //phongHienTai.maKhachHang = null;
-            //phongHienTai.ghiChu = null;
-
-            //DataProvider.Ins.DB.SaveChanges();
-            //MessageBox.Show("Đã thanh toán thành công!");
-
-            //NumberTable.Text = "";
-            //TypeTable.Text = "";
-            //Customername.Text = "";
-            //CustomerID.Text = "";
-            //Time.Text = "";
-            //Total.Text = "";
-            //NoteTextBlock.Text = "";
-            //DiscountCodeTextBox.Text = "";
+            if (stuff.message != "successfull")
+            {
+                MessageBox.Show("Thanh toán thất bại!!!");
+                return;
+            }
+            MessageBox.Show("Thanh toán thành công!!!");
+            NumberTable.Text = "";
+            TypeTable.Text = "";
+            CustomerName.Text = "";
+            CustomerPhone.Text = "";
+            NoteTextBlock.Text = "";
+            UsingVIP4PersonTables.Clear();
+            UsingVIP8PersonTables.Clear();
+            UsingVIP12PersonTables.Clear();
+            Load();
         }
 
         private void DiscountCodeTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -368,7 +299,7 @@ namespace QuanLyNhaHang.UsingTables
         {
             Model.Table tableSelected = new Model.Table();
 
-            if(TbSearch.Text=="")
+            if (TbSearch.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập số bàn!!!");
                 return;
@@ -377,7 +308,8 @@ namespace QuanLyNhaHang.UsingTables
             Boolean search = false;
             foreach (var item in stuff)
             {
-                if (item.number == TbSearch.Text) { 
+                if (item.number == TbSearch.Text)
+                {
                     tableSelected = new Model.Table()
                     {
                         ID = item._id,
@@ -393,7 +325,7 @@ namespace QuanLyNhaHang.UsingTables
                     break;
                 }
             };
-            if(search==false)
+            if (search == false)
             {
                 MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
                 return;
@@ -403,7 +335,7 @@ namespace QuanLyNhaHang.UsingTables
             CustomerName.Text = tableSelected.customer.fullName;
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
-            
+
         }
 
         private void AddFood_Click(object sender, RoutedEventArgs e)
@@ -413,9 +345,14 @@ namespace QuanLyNhaHang.UsingTables
                 Food2.Clear();
                 Food1.Clear();
                 Food3.Clear();
+                if (NumberTable.Text == "")
+                {
+                    MessageBox.Show("Vui lòng chọn bàn trước!!!");
+                    return;
+                }
                 string result = API.GetAllFood();
-                stuffFood = JsonConvert.DeserializeObject(result);
-                LoadFood();
+                stuffAllFood = JsonConvert.DeserializeObject(result);
+                LoadFood(stuffAllFood);
                 Table.Visibility = Visibility.Hidden;
                 Food.Visibility = Visibility.Visible;
                 AddFood.Content = "Trở về";
@@ -483,14 +420,17 @@ namespace QuanLyNhaHang.UsingTables
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
                 var tb = (TextBlock)dt.FindName("NameFood", cp);
+                rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+
                 Model.Food foodSelected = new Model.Food();
 
-                foreach (var item in stuffFood)
+                foreach (var item in stuffAllFood)
                 {
                     if (item.name == tb.Text)
                     {
                         foodSelected = new Model.Food()
                         {
+                            id = item._id,
                             name = item.name,
                             price = item.price,
                             type = item.type,
@@ -503,7 +443,7 @@ namespace QuanLyNhaHang.UsingTables
 
                 if (tableSelected == null)
                 {
-                    MessageBox.Show("VUi lòng chọn bàn trước khi chọn món!!!");
+                    MessageBox.Show("Vui lòng chọn bàn trước khi chọn món!!!");
                     return;
                 }
 
@@ -511,42 +451,47 @@ namespace QuanLyNhaHang.UsingTables
                 dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
 
 
-                //todo mess
                 if (stuffAddFood.message != "Add successfull")
                 {
                     MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
                     return;
                 }
-
+                MessageBox.Show("Thêm món thành công!!!");
                 string resulttotal = API.GetTotalInBill(tableSelected.number);
                 dynamic total = JsonConvert.DeserializeObject(resulttotal);
                 Total.Text = total.total;
-                rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+                rt.Fill = Brushes.White;
             }
         }
 
         private void FoodInBill_Click(object sender, RoutedEventArgs e)
         {
+
             if (DetailFoodCheck == false)
             {
                 Food2.Clear();
                 Food1.Clear();
                 Food3.Clear();
+                if (tableSelected.number == null)
+                {
+                    MessageBox.Show("Vui lòng chọn bàn trước!!!");
+                    return;
+                }
                 string result = API.GetFoodInBill(tableSelected.number);
-                stuffFood = JsonConvert.DeserializeObject(result);
-                LoadFood();
+                dynamic stuffFood = JsonConvert.DeserializeObject(result);
+                LoadFood(stuffFood);
                 Table.Visibility = Visibility.Hidden;
                 Food.Visibility = Visibility.Visible;
-                AddFood.Content = "Trở về";
-                AddFoodCheck = true;
+                FoodInBill.Content = "Trở về";
+                DetailFoodCheck = true;
                 return;
             }
             else
             {
                 Table.Visibility = Visibility.Visible;
                 Food.Visibility = Visibility.Hidden;
-                AddFood.Content = "Chi tiết";
-                AddFoodCheck = false;
+                FoodInBill.Content = "Chi tiết";
+                DetailFoodCheck = false;
             }
         }
 

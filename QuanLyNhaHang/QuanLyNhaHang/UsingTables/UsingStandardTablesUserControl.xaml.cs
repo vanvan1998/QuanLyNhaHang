@@ -244,9 +244,9 @@ namespace QuanLyNhaHang.UsingTables
                 CustomerPhone.Text = tableSelected.customer.phone;
                 NoteTextBlock.Text = tableSelected.note;
 
-                //string result = API.GetTotalInBill(tableSelected.number);
-                //dynamic total= JsonConvert.DeserializeObject(result);
-                //Total.Text = total.total;
+                string result = API.GetTotalInBill(tableSelected.number);
+                dynamic total = JsonConvert.DeserializeObject(result);
+                Total.Text = total.total;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
@@ -273,6 +273,10 @@ namespace QuanLyNhaHang.UsingTables
             CustomerName.Text = "";
             CustomerPhone.Text = "";
             NoteTextBlock.Text = "";
+            Total.Text ="";
+            UsingStandard4PersonTables.Clear();
+            UsingStandard8PersonTables.Clear();
+            UsingStandard12PersonTables.Clear();
             Load();
         }
 
@@ -455,9 +459,9 @@ namespace QuanLyNhaHang.UsingTables
                     return;
                 }
                 MessageBox.Show("Thêm món thành công!!!");
-                //string resulttotal = API.GetTotalInBill(tableSelected.number);
-                //dynamic total = JsonConvert.DeserializeObject(resulttotal);
-                //Total.Text = total.total;
+                string resulttotal = API.GetTotalInBill(tableSelected.number);
+                dynamic total = JsonConvert.DeserializeObject(resulttotal);
+                Total.Text = total.total;
                 rt.Fill = Brushes.White;
             }
         }

@@ -178,13 +178,15 @@ namespace QuanLyNhaHang.EmptyTables
             }
 
             Model.Table tableBook = new Model.Table();
+            tableBook.type = "standard";
             tableBook.number = NumberTable.Text;
             tableBook.note = NoteTextBox.Text;
             tableBook.status = "booked";
 
             tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };
+            string employeeID = LoginWindow.employee.id;
 
-            string result = API.BookTable(tableBook);
+            string result = API.BookTable(tableBook, employeeID);
             dynamic stuff = JsonConvert.DeserializeObject(result);
             if (stuff.message == "Table update successfully!")
             {

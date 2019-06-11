@@ -17,7 +17,7 @@ namespace QuanLyNhaHang
     public partial class LoginWindow : Window
     {
         public bool IsLoginSuccess = false;
-        public Employee employee = null; // nhân viên
+        public static Employee employee = null; // nhân viên
 
         public LoginWindow()
         {
@@ -128,6 +128,7 @@ namespace QuanLyNhaHang
                         IsLoginSuccess = true;
                         employee = new Employee()
                         {
+                            id=stuff.user._id,
                             username = stuff.user.username,
                             password = stuff.user.password,
                             displayName = stuff.user.displayName,

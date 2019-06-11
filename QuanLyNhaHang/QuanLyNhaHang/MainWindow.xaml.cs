@@ -35,7 +35,7 @@ namespace QuanLyNhaHang
             if (loginWindow.IsLoginSuccess == true)
             {
                 this.Show();
-                employee = loginWindow.employee;
+                employee = LoginWindow.employee;
                 EmployeeName.Content = employee.displayName;
                 if (employee.role == "admin") // quản lý
                 {
@@ -178,7 +178,7 @@ namespace QuanLyNhaHang
             if (loginWindow.IsLoginSuccess == true)
             {
                 this.Show();
-                employee = loginWindow.employee;
+                employee = LoginWindow.employee;
                 EmployeeName.Content = employee.displayName;
                 if (employee.role == "admin") // quản lý
                 {

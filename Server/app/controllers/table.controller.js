@@ -71,7 +71,7 @@ exports.findAllWithStatusAndType = (req, res) => {
 };
 
 exports.findAllWithCustomerName = (req, res) => {
-    Table.find({"customer.fullName": req.body.fullName})   
+    Table.find({ "customer.fullName": req.body.fullName })
         .then(tables => {
             res.send(tables);
         }).catch(err => {
@@ -109,25 +109,25 @@ exports.countEmpty = async function (req, res) {
     var countVIP12 = 0;
 
     var count = 0;
-    await Table.find({"status": "empty"}).then(tables =>{
+    await Table.find({ "status": "empty" }).then(tables => {
         count = tables.length;
         tables.forEach(element => {
-            if (element.type == "standard" && element.numberOfSeat == 4){
+            if (element.type == "standard" && element.numberOfSeat == 4) {
                 countstandard4++;
             }
-            if (element.type == "standard" && element.numberOfSeat == 8){
+            if (element.type == "standard" && element.numberOfSeat == 8) {
                 countstandard8++;
             }
-            if (element.type == "standard" && element.numberOfSeat == 12){
+            if (element.type == "standard" && element.numberOfSeat == 12) {
                 countstandard12++;
             }
-            if (element.type == "VIP" && element.numberOfSeat == 4){
+            if (element.type == "VIP" && element.numberOfSeat == 4) {
                 countVIP4++;
             }
-            if (element.type == "VIP" && element.numberOfSeat == 8){
+            if (element.type == "VIP" && element.numberOfSeat == 8) {
                 countVIP8++;
             }
-            if (element.type == "VIP" && element.numberOfSeat == 12){
+            if (element.type == "VIP" && element.numberOfSeat == 12) {
                 countVIP12++;
             }
         });
@@ -138,7 +138,7 @@ exports.countEmpty = async function (req, res) {
     });
 
 
-    res.send({count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
+    res.send({ count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
 };
 
 // Find a single table with a tableId
@@ -263,6 +263,7 @@ exports.book = (req, res) => {
                 message: "Error updating table with id " + req.params.tableId
             });
         });
+        
 };
 
 // Delete a table with the specified tableId in the request

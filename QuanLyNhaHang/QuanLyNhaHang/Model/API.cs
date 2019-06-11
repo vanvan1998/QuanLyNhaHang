@@ -257,17 +257,26 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string BookTable(Model.Table table)
+        public static string BookTable(Model.Table table,string employeeID)
         {
             string url = SERVER + "/tables/Book/" + table.number;
-            string json = "{\"number\": \"" + table.number +
+            string json = "{\"employeeID\": \"" + employeeID +
+                            "\", \"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
                             "\", \"status\": \"" + table.status +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
                             "\", \"phone\": \"" + table.customer.phone + "\"}" +
                             ", \"time\": \"" + table.time + "\"}";
+            string url1 = SERVER + "/bills";
+            string json1 = "{\"employeeID\": \"" + employeeID +
+                            "\", \"number\": \"" + table.number +
+                            "\", \"type\": \"" + table.type +
+                            "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
+                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
+                            ", \"time\": \"" + table.time + "\"}";
             try
             {
+                string temp= POST(url1, json1);
                 return PUT(url, json);
             }
             catch
@@ -527,7 +536,7 @@ namespace QuanLyNhaHang.Model
 
         public static string AddFoodInBill(string TableNumber, Food foodNew)
         {
-            string url = SERVER + "/bill/addFoodInBill";
+            string url = SERVER + "/bills/addFoodInBill";
             string json = "{\"tableNumber\": \""
                 + TableNumber + "\", \"foodId\": \""
                 + foodNew.id + "\", \"name\": \""
@@ -549,7 +558,7 @@ namespace QuanLyNhaHang.Model
 
         public static string GetFoodInBill(string number)
         {
-            string url = SERVER + "/bill/" + number;
+            string url = SERVER + "/bills/" + number;
 
             try
             {
@@ -564,7 +573,7 @@ namespace QuanLyNhaHang.Model
 
         public static string GetTotalInBill(string number)
         {
-            string url = SERVER + "/bill/total/" + number;
+            string url = SERVER + "/getTotalOfBill/" + number;
 
             try
             {
@@ -579,11 +588,13 @@ namespace QuanLyNhaHang.Model
 
         public static string Pay(string tableNumber)
         {
-            string url = SERVER + "/bill/pay/" + tableNumber;
+            string url = SERVER + "/bills/pay/";
+            string json = "{\"tableNumber\": \""
+                + tableNumber +  "\"}";
 
             try
             {
-                return GET(url);
+                return POST(url,json);
             }
             catch
             {

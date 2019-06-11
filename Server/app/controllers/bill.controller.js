@@ -4,14 +4,7 @@ const Table = require('../models/table.model.js');
 const mongoose = require('mongoose');
 
 // Create and Save a new Bill
-exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.tableID) {
-        return res.send({
-            message: "Bill's tableID can not be empty"
-        });
-    }
-
+exports.create =async function (req, res) {
     // Validate request
     if (!req.body.employeeID) {
         return res.send({
@@ -19,25 +12,29 @@ exports.create = (req, res) => {
         });
     }
 
-    // Validate request
-    if (!req.body.customerID) {
-        return res.send({
-            message: "Bill's customerID can not be empty"
-        });
-    }
-
     // Create a Bill
+    var total=0;
+    if(req.body.type=="standard")
+    {
+        total=50000;
+    }
+    else
+    {
+        total=200000;
+    }
+    var count = await Bill.countDocuments({ }); 
     const bill = new Bill({
-        tableID: req.body.tableID,
         employeeID: req.body.employeeID,
-        customerID: req.body.customerID,
-        billNumber: req.body.billNumber,
-        tableNumber: req.body.tableNumber,
-        status: req.body.status,
-        promotion: req.body.promotion,
-        total: req.body.total,
-        menu: req.body.menu,
-        time: req.body.time
+        tableNumber: req.body.number,
+        billNumber: count+1,
+        status: "unpaid",
+        promotion: 0,
+        total: total,
+        menu: new Array(),
+        customer: {
+            fullName: req.body.fullName,
+            phone: req.body.phone,
+        }
     });
 
     // Save Bill in the database
@@ -218,7 +215,7 @@ exports.pay = function (req, res) {
                         message: "Bill of table not found with id " + req.body.tableNumber
                     });
                 }
-                res.send({ message: "Update bill successfull" });
+                res.send({ message: "successfull" });
             }).catch(err => {
                 if (err.kind === 'ObjectId') {
                     return res.status(404).send({
@@ -259,7 +256,7 @@ exports.pay = function (req, res) {
                         message: "table not found with id " + req.body.tableNumber
                     });
                 }
-                res.send({ message: "Update table successfull" });
+                res.send({ message: "successfull" });
             }).catch(err => {
                 if (err.kind === 'ObjectId') {
                     return res.status(404).send({
