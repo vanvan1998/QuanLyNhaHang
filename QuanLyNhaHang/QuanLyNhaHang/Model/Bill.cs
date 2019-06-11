@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaHang.Model
 {
-    class Bill
+    public class Bill
     {
+        public int total { get; set; }
+        public int tableNumber { get; set; }
+        public string time { get; set; } 
+        public int count { get; set; }
     }
 }

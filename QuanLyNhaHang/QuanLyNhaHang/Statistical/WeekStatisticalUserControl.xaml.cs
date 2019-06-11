@@ -6,6 +6,10 @@ using System.Linq;
 using System.Windows;
 //using HotelManagementApp.Entity;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using QuanLyNhaHang.Model;
+using Newtonsoft.Json;
 
 namespace QuanLyNhaHang.Statistical
 {
@@ -14,6 +18,15 @@ namespace QuanLyNhaHang.Statistical
     /// </summary>
     public partial class WeekStatisticalUserControl : UserControl
     {
+        ObservableCollection<Model.Bill> ListBill = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw3 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw1 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw2 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw4 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw5 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw6 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw7 = new ObservableCollection<Model.Bill>();
+        int totalw1 = 0, totalw2 = 0, totalw3 = 0, totalw4 = 0, totalw5 = 0, totalw6 = 0, totalw7 = 0;
 
         public WeekStatisticalUserControl()
         {
@@ -28,129 +41,133 @@ namespace QuanLyNhaHang.Statistical
             DateTime today = DateTime.Today;
             DateTime midNight = DateTime.Today.AddDays(1).AddSeconds(-1);
 
-            decimal sv0 = 0;
-            decimal sv1 = 0;
-            decimal sv2 = 0;
-            decimal sv3 = 0;
-            decimal sv4 = 0;
-            decimal sv5 = 0;
-            decimal sv6 = 0;
 
-            decimal vv0 = 0;
             decimal vv1 = 0;
             decimal vv2 = 0;
             decimal vv3 = 0;
             decimal vv4 = 0;
             decimal vv5 = 0;
             decimal vv6 = 0;
+            decimal vv7 = 0;
 
             TotalRevenue.Text = "0";
 
-            //if (DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < midNight).Count() != 0)
-            //{
-            //    TotalRevenue.Text = Math.Round(DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < midNight).Sum(x => x.tongTien), 0).ToString();
-            //}
+            string startTime = today.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string endTime = midNight.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week1Time = day1.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week2Time = day2.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week3Time = day3.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week4Time = day4.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week5Time = day5.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week6Time = day6.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
 
-            //IQueryable<HoaDon> banTieuChuan = DataProvider.Ins.DB.HoaDons.Where(x => x.Ban.maBan.Contains("SS") || x.Ban.maBan.Contains("SC") || x.Ban.maBan.Contains("SG"));
 
-            //if (banTieuChuan.Count() > 0)
-            //{
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > today && x.thoiGianLap < midNight).Count() != 0)
-            //    {
-            //        sv0 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > today && x.thoiGianLap < midNight).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > day1 && x.thoiGianLap < today).Count() != 0)
-            //    {
-            //        sv1 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > day1 && x.thoiGianLap < today).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > day2 && x.thoiGianLap < day1).Count() != 0)
-            //    {
-            //        sv2 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > day2 && x.thoiGianLap < day1).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > day3 && x.thoiGianLap < day2).Count() != 0)
-            //    {
-            //        sv3 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > day3 && x.thoiGianLap < day2).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > day4 && x.thoiGianLap < day3).Count() != 0)
-            //    {
-            //        sv4 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > day4 && x.thoiGianLap < day3).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > day5 && x.thoiGianLap < day4).Count() != 0)
-            //    {
-            //        sv5 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > day5 && x.thoiGianLap < day4).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < day5).Count() != 0)
-            //    {
-            //        sv6 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < day5).Sum(x => x.tongTien), 0);
-            //    }
-            //}
+            string result = API.Filter(week6Time.Substring(0, 10), endTime.Substring(0, 10));
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //IQueryable<HoaDon> banVIP = DataProvider.Ins.DB.HoaDons.Where(x => x.Ban.maBan.Contains("VS") || x.Ban.maBan.Contains("VC") || x.Ban.maBan.Contains("VG"));
+            int total = 0;
 
-            //if (banVIP.Count() > 0)
-            //{
-            //    if (banVIP.Where(x => x.thoiGianLap > today && x.thoiGianLap < midNight).Count() != 0)
-            //    {
-            //        vv0 = Math.Round(banVIP.Where(x => x.thoiGianLap > today && x.thoiGianLap < midNight).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > day1 && x.thoiGianLap < today).Count() != 0)
-            //    {
-            //        vv1 = Math.Round(banVIP.Where(x => x.thoiGianLap > day1 && x.thoiGianLap < today).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > day2 && x.thoiGianLap < day1).Count() != 0)
-            //    {
-            //        vv2 = Math.Round(banVIP.Where(x => x.thoiGianLap > day2 && x.thoiGianLap < day1).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > day3 && x.thoiGianLap < day2).Count() != 0)
-            //    {
-            //        vv3 = Math.Round(banVIP.Where(x => x.thoiGianLap > day3 && x.thoiGianLap < day2).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > day4 && x.thoiGianLap < day3).Count() != 0)
-            //    {
-            //        vv4 = Math.Round(banVIP.Where(x => x.thoiGianLap > day4 && x.thoiGianLap < day3).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > day5 && x.thoiGianLap < day4).Count() != 0)
-            //    {
-            //        vv5 = Math.Round(banVIP.Where(x => x.thoiGianLap > day5 && x.thoiGianLap < day4).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < day5).Count() != 0)
-            //    {
-            //        vv6 = Math.Round(banVIP.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < day5).Sum(x => x.tongTien), 0);
-            //    }
-            //}
 
-            //IQueryable<HoaDon> hoaDon7NgayGanDay = DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > day6 && x.thoiGianLap < midNight);
+            foreach (var item in stuff)
+            {
+                Boolean test = false;
+                if (ListBill.Count != 0)
+                {
+                    foreach (var bill in ListBill)
+                    {
+                        int tablenumber = item.tableNumber;
+                        if (bill.tableNumber == tablenumber)
+                        {
+                            bill.count++;
+                            test = true;
+                        }
+                    }
+                }
+                if (test == false)
+                {
+                    ListBill.Add(new Model.Bill()
+                    {
+                        total = item.total,
+                        tableNumber = item.tableNumber,
+                        time = item.createdAt,
+                        count = 1,
+                    });
+                }
+                int temp = item.total;
+                total = temp + total;
+            };
 
-            //List<int> soLuongHoaDonMoiLoaiBan = new List<int>();
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDon7NgayGanDay.Where(x => x.Ban.loaiBan == "Tiêu chuẩn - 4 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDon7NgayGanDay.Where(x => x.Ban.loaiBan == "Tiêu chuẩn - 8 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDon7NgayGanDay.Where(x => x.Ban.loaiBan == "Tiêu chuẩn - 12 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDon7NgayGanDay.Where(x => x.Ban.loaiBan == "VIP - 4 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDon7NgayGanDay.Where(x => x.Ban.loaiBan == "VIP - 8 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDon7NgayGanDay.Where(x => x.Ban.loaiBan == "VIP - 12 người").Count());
+            TotalRevenue.Text = total.ToString();
 
-            //List<string> loaiBan = new List<string>();
-            //loaiBan.Add("Tiêu chuẩn - 4 người");
-            //loaiBan.Add("Tiêu chuẩn - 8 người");
-            //loaiBan.Add("Tiêu chuẩn - 12 người");
-            //loaiBan.Add("VIP - 4 người");
-            //loaiBan.Add("VIP - 8 người");
-            //loaiBan.Add("VIP - 12 người");
+            if (ListBill.Count() > 0)
+            {
+                string result1 = API.Filter(startTime.Substring(0, 10), startTime.Substring(0, 10));
+                totalw1 = Load(result1, ListBillw1);
+                if (ListBillw1.Count != 0)
+                {
+                    vv1 = totalw1;
+                }
+                string result2 = API.Filter(week1Time.Substring(0, 10), week1Time.Substring(0, 10));
+                totalw2 = Load(result2, ListBillw2);
+                if (ListBillw2.Count != 0)
+                {
+                    vv2 = totalw2;
+                }
+                string result3 = API.Filter(week2Time.Substring(0, 10), week2Time.Substring(0, 10));
+                totalw3 = Load(result3, ListBillw3);
+                if (ListBillw3.Count != 0)
+                {
+                    vv3 = totalw3;
+                }
+                string result4 = API.Filter(week3Time.Substring(0, 10), week3Time.Substring(0, 10));
+                totalw4 = Load(result4, ListBillw4);
+                if (ListBillw4.Count != 0)
+                {
+                    vv4 = totalw4;
+                }
+                string result5 = API.Filter(week4Time.Substring(0, 10), week4Time.Substring(0, 10));
+                totalw5 = Load(result5, ListBillw5);
+                if (ListBillw5.Count != 0)
+                {
+                    vv5 = totalw5;
+                }
+                string result6 = API.Filter(week5Time.Substring(0, 10), week5Time.Substring(0, 10));
+                totalw6 = Load(result6, ListBillw6);
+                if (ListBillw6.Count != 0)
+                {
+                    vv6 = totalw6;
+                }
+                string result7 = API.Filter(week6Time.Substring(0, 10), week6Time.Substring(0, 10));
+                totalw7 = Load(result7, ListBillw7);
+                if (ListBillw7.Count != 0)
+                {
+                    vv7 = totalw7;
+                }
+            }
 
-            //BestSale.Text = loaiBan[soLuongHoaDonMoiLoaiBan.IndexOf(soLuongHoaDonMoiLoaiBan.Max())];
-            //BadSale.Text = loaiBan[soLuongHoaDonMoiLoaiBan.IndexOf(soLuongHoaDonMoiLoaiBan.Min())];
+            Bill bestbill = ListBill[0];
+            Bill badbill = ListBill[0];
+
+            foreach (var item in ListBill)
+            {
+                if (item.count > bestbill.count)
+                {
+                    bestbill = item;
+                }
+                if (item.count < badbill.count)
+                {
+                    badbill = item;
+                }
+            }
+            BestSale.Text = "Bàn số " + bestbill.tableNumber.ToString();
+            BadSale.Text = "Bàn số " + badbill.tableNumber.ToString();
 
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
-                    Title = "Phòng Tiêu chuẩn",
-                    Values = new ChartValues<decimal> {sv6,sv5,sv4,sv3,sv2,sv1,sv0}
-                },
-                new LineSeries
-                {
-                    Title = "Phòng VIP",
-                    Values = new ChartValues<decimal> {vv6,vv5,vv4,vv3,vv2,vv1,vv0}
+                    Title = "Doanh thu",
+                    Values = new ChartValues<decimal> {vv7,vv6,vv5,vv4,vv3,vv2,vv1}
                 }
             };
 
@@ -178,5 +195,24 @@ namespace QuanLyNhaHang.Statistical
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 80;
         }
+
+        private int Load(string result, ObservableCollection<Model.Bill> ListBill)
+        {
+            int total = 0;
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            foreach (var item in stuff)
+            {
+                ListBill.Add(new Model.Bill()
+                {
+                    total = item.total,
+                    tableNumber = item.tableNumber,
+                    time = item.createdAt,
+                });
+                int temp = item.total;
+                total = total + temp;
+            };
+            return total;
+        }
+
     }
 }

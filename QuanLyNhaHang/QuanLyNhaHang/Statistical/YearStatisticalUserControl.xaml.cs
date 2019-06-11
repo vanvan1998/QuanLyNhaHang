@@ -6,6 +6,10 @@ using System.Linq;
 using System.Windows;
 //using HotelManagementApp.Entity;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using Newtonsoft.Json;
+using QuanLyNhaHang.Model;
 
 namespace QuanLyNhaHang.Statistical
 {
@@ -14,6 +18,21 @@ namespace QuanLyNhaHang.Statistical
     /// </summary>
     public partial class YearStatisticalUserControl : UserControl
     {
+        ObservableCollection<Model.Bill> ListBill = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw3 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw1 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw2 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw4 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw5 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw6 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw7 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw8 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw9 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw10 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw11 = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> ListBillw12 = new ObservableCollection<Model.Bill>();
+        int totalw1 = 0, totalw2 = 0, totalw3 = 0, totalw4 = 0, totalw5 = 0, totalw6 = 0,
+            totalw7 = 0, totalw8 = 0, totalw9 = 0, totalw10 = 0, totalw11 = 0, totalw12 = 0;
 
         public YearStatisticalUserControl()
         {
@@ -35,19 +54,6 @@ namespace QuanLyNhaHang.Statistical
             DateTime month12 = first.AddMonths(12);
             DateTime end = new DateTime(now.Year + 1, 1, 1);
 
-            decimal sv1 = 0;
-            decimal sv2 = 0;
-            decimal sv3 = 0;
-            decimal sv4 = 0;
-            decimal sv5 = 0;
-            decimal sv6 = 0;
-            decimal sv7 = 0;
-            decimal sv8 = 0;
-            decimal sv9 = 0;
-            decimal sv10 = 0;
-            decimal sv11 = 0;
-            decimal sv12 = 0;
-
             decimal vv1 = 0;
             decimal vv2 = 0;
             decimal vv3 = 0;
@@ -63,150 +69,154 @@ namespace QuanLyNhaHang.Statistical
 
             TotalRevenue.Text = "0";
 
-            //if (DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > first && x.thoiGianLap < end).Count() != 0)
-            //{
-            //    TotalRevenue.Text = Math.Round(DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > first && x.thoiGianLap < end).Sum(x => x.tongTien), 0).ToString();
-            //}
+            string startTime = first.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string endTime = end.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week1Time = month1.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week2Time = month2.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week3Time = month3.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week4Time = month4.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week5Time = month5.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week6Time = month6.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week7Time = month7.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week8Time = month8.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week9Time = month9.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week10Time = month10.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+            string week11Time = month11.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
 
-            //IQueryable<HoaDon> banTieuChuan = DataProvider.Ins.DB.HoaDons.Where(x => x.Ban.maBan.Contains("SS") || x.Ban.maBan.Contains("SC") || x.Ban.maBan.Contains("SG"));
+            string result = API.Filter(startTime.Substring(0, 10), endTime.Substring(0, 10));
+            dynamic stuff = JsonConvert.DeserializeObject(result);
 
-            //if (banTieuChuan.Count() > 0)
-            //{
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > first && x.thoiGianLap < month1).Count() != 0)
-            //    {
-            //        sv1 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > first && x.thoiGianLap < month1).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month1 && x.thoiGianLap < month2).Count() != 0)
-            //    {
-            //        sv2 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month1 && x.thoiGianLap < month2).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month2 && x.thoiGianLap < end).Count() != 0)
-            //    {
-            //        sv3 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month2 && x.thoiGianLap < end).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month3 && x.thoiGianLap < month4).Count() != 0)
-            //    {
-            //        sv4 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month3 && x.thoiGianLap < month4).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month4 && x.thoiGianLap < month5).Count() != 0)
-            //    {
-            //        sv5 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month4 && x.thoiGianLap < month5).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month5 && x.thoiGianLap < month6).Count() != 0)
-            //    {
-            //        sv6 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month5 && x.thoiGianLap < month6).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month6 && x.thoiGianLap < month7).Count() != 0)
-            //    {
-            //        sv7 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month6 && x.thoiGianLap < month7).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month7 && x.thoiGianLap < month8).Count() != 0)
-            //    {
-            //        sv8 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month7 && x.thoiGianLap < month8).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month8 && x.thoiGianLap < month9).Count() != 0)
-            //    {
-            //        sv9 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month8 && x.thoiGianLap < month9).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month9 && x.thoiGianLap < month10).Count() != 0)
-            //    {
-            //        sv10 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month9 && x.thoiGianLap < month10).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month10 && x.thoiGianLap < month11).Count() != 0)
-            //    {
-            //        sv11 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month10 && x.thoiGianLap < month11).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banTieuChuan.Where(x => x.thoiGianLap > month12 && x.thoiGianLap < end).Count() != 0)
-            //    {
-            //        sv12 = Math.Round(banTieuChuan.Where(x => x.thoiGianLap > month12 && x.thoiGianLap < end).Sum(x => x.tongTien), 0);
-            //    }
-            //}
+            int total = 0;
+            foreach (var item in stuff)
+            {
+                Boolean test = false;
+                if (ListBill.Count != 0)
+                {
+                    foreach (var bill in ListBill)
+                    {
+                        int tablenumber = item.tableNumber;
+                        if (bill.tableNumber == tablenumber)
+                        {
+                            bill.count++;
+                            test = true;
+                        }
+                    }
+                }
+                if (test == false)
+                {
+                    ListBill.Add(new Model.Bill()
+                    {
+                        total = item.total,
+                        tableNumber = item.tableNumber,
+                        time = item.createdAt,
+                        count = 1,
+                    });
+                }
+                int temp = item.total;
+                total = temp + total;
+            };
 
-            //IQueryable<HoaDon> banVIP = DataProvider.Ins.DB.HoaDons.Where(x => x.Ban.maBan.Contains("VS") || x.Ban.maBan.Contains("VC") || x.Ban.maBan.Contains("VG"));
+            TotalRevenue.Text = total.ToString();
 
-            //if (banVIP.Count() > 0)
-            //{
-            //    if (banVIP.Where(x => x.thoiGianLap > first && x.thoiGianLap < month1).Count() != 0)
-            //    {
-            //        vv1 = Math.Round(banVIP.Where(x => x.thoiGianLap > first && x.thoiGianLap < month1).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month1 && x.thoiGianLap < month2).Count() != 0)
-            //    {
-            //        vv2 = Math.Round(banVIP.Where(x => x.thoiGianLap > month1 && x.thoiGianLap < month2).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month2 && x.thoiGianLap < end).Count() != 0)
-            //    {
-            //        vv3 = Math.Round(banVIP.Where(x => x.thoiGianLap > month2 && x.thoiGianLap < end).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month3 && x.thoiGianLap < month4).Count() != 0)
-            //    {
-            //        vv4 = Math.Round(banVIP.Where(x => x.thoiGianLap > month3 && x.thoiGianLap < month4).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month4 && x.thoiGianLap < month5).Count() != 0)
-            //    {
-            //        vv5 = Math.Round(banVIP.Where(x => x.thoiGianLap > month4 && x.thoiGianLap < month5).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month5 && x.thoiGianLap < month6).Count() != 0)
-            //    {
-            //        vv6 = Math.Round(banVIP.Where(x => x.thoiGianLap > month5 && x.thoiGianLap < month6).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month6 && x.thoiGianLap < month7).Count() != 0)
-            //    {
-            //        vv7 = Math.Round(banVIP.Where(x => x.thoiGianLap > month6 && x.thoiGianLap < month7).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month7 && x.thoiGianLap < month8).Count() != 0)
-            //    {
-            //        vv8 = Math.Round(banVIP.Where(x => x.thoiGianLap > month7 && x.thoiGianLap < month8).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month8 && x.thoiGianLap < month9).Count() != 0)
-            //    {
-            //        vv9 = Math.Round(banVIP.Where(x => x.thoiGianLap > month8 && x.thoiGianLap < month9).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month9 && x.thoiGianLap < month10).Count() != 0)
-            //    {
-            //        vv10 = Math.Round(banVIP.Where(x => x.thoiGianLap > month9 && x.thoiGianLap < month10).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month10 && x.thoiGianLap < month11).Count() != 0)
-            //    {
-            //        vv11 = Math.Round(banVIP.Where(x => x.thoiGianLap > month10 && x.thoiGianLap < month11).Sum(x => x.tongTien), 0);
-            //    }
-            //    if (banVIP.Where(x => x.thoiGianLap > month12 && x.thoiGianLap < end).Count() != 0)
-            //    {
-            //        vv12 = Math.Round(banVIP.Where(x => x.thoiGianLap > month12 && x.thoiGianLap < end).Sum(x => x.tongTien), 0);
-            //    }
-            //}
+            if (ListBill.Count() > 0)
+            {
+                string result1 = API.Filter(startTime.Substring(0, 10), week1Time.Substring(0, 10));
+                totalw1 = Load(result1, ListBillw1);
+                if (ListBillw1.Count != 0)
+                {
+                    vv1 = totalw1;
+                }
+                string result2 = API.Filter(week1Time.Substring(0, 10), week2Time.Substring(0, 10));
+                totalw2 = Load(result2, ListBillw2);
+                if (ListBillw2.Count != 0)
+                {
+                    vv2 = totalw2;
+                }
+                string result3 = API.Filter(week2Time.Substring(0, 10), week3Time.Substring(0, 10));
+                totalw3 = Load(result3, ListBillw3);
+                if (ListBillw3.Count != 0)
+                {
+                    vv3 = totalw3;
+                }
+                string result4 = API.Filter(week3Time.Substring(0, 10), week4Time.Substring(0, 10));
+                totalw4 = Load(result4, ListBillw4);
+                if (ListBillw4.Count != 0)
+                {
+                    vv4 = totalw4;
+                }
+                string result5 = API.Filter(week4Time.Substring(0, 10), week5Time.Substring(0, 10));
+                totalw5 = Load(result5, ListBillw5);
+                if (ListBillw5.Count != 0)
+                {
+                    vv5 = totalw5;
+                }
+                string result6 = API.Filter(week5Time.Substring(0, 10), week6Time.Substring(0, 10));
+                totalw6 = Load(result6, ListBillw6);
+                if (ListBillw6.Count != 0)
+                {
+                    vv6 = totalw6;
+                }
+                string result7 = API.Filter(week6Time.Substring(0, 10), week7Time.Substring(0, 10));
+                totalw7 = Load(result7, ListBillw7);
+                if (ListBillw7.Count != 0)
+                {
+                    vv7 = totalw7;
+                }
+                string result8 = API.Filter(week7Time.Substring(0, 10), week8Time.Substring(0, 10));
+                totalw8 = Load(result8, ListBillw8);
+                if (ListBillw8.Count != 0)
+                {
+                    vv8 = totalw8;
+                }
+                string result9 = API.Filter(week8Time.Substring(0, 10), week9Time.Substring(0, 10));
+                totalw9 = Load(result9, ListBillw9);
+                if (ListBillw9.Count != 0)
+                {
+                    vv9 = totalw9;
+                }
+                string result10 = API.Filter(week9Time.Substring(0, 10), week10Time.Substring(0, 10));
+                totalw10 = Load(result10, ListBillw10);
+                if (ListBillw10.Count != 0)
+                {
+                    vv10 = totalw10;
+                }
+                string result11 = API.Filter(week10Time.Substring(0, 10), week11Time.Substring(0, 10));
+                totalw11 = Load(result11, ListBillw11);
+                if (ListBillw11.Count != 0)
+                {
+                    vv11 = totalw11;
+                }
+                string result12 = API.Filter(week11Time.Substring(0, 10), endTime.Substring(0, 10));
+                totalw12 = Load(result12, ListBillw12);
+                if (ListBillw12.Count != 0)
+                {
+                    vv12 = totalw12;
+                }
+            }
 
-            //IQueryable<HoaDon> hoaDonThangNay = DataProvider.Ins.DB.HoaDons.Where(x => x.thoiGianLap > first && x.thoiGianLap < end);
+            Bill bestbill = ListBill[0];
+            Bill badbill = ListBill[0];
 
-            //List<int> soLuongHoaDonMoiLoaiBan = new List<int>();
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDonThangNay.Where(x => x.Ban.loaiBan == "Tiêu chuẩn - 4 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDonThangNay.Where(x => x.Ban.loaiBan == "Tiêu chuẩn - 8 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDonThangNay.Where(x => x.Ban.loaiBan == "Tiêu chuẩn - 12 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDonThangNay.Where(x => x.Ban.loaiBan == "VIP - 4 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDonThangNay.Where(x => x.Ban.loaiBan == "VIP - 8 người").Count());
-            //soLuongHoaDonMoiLoaiBan.Add(hoaDonThangNay.Where(x => x.Ban.loaiBan == "VIP - 12 người").Count());
-
-            //List<string> loaiBan = new List<string>();
-            //loaiBan.Add("Tiêu chuẩn - 4 người");
-            //loaiBan.Add("Tiêu chuẩn - 8 người");
-            //loaiBan.Add("Tiêu chuẩn - 12 người");
-            //loaiBan.Add("VIP - 4 người");
-            //loaiBan.Add("VIP - 8 người");
-            //loaiBan.Add("VIP - 12 người");
-
-            //BestSale.Text = loaiBan[soLuongHoaDonMoiLoaiBan.IndexOf(soLuongHoaDonMoiLoaiBan.Max())];
-            //BadSale.Text = loaiBan[soLuongHoaDonMoiLoaiBan.IndexOf(soLuongHoaDonMoiLoaiBan.Min())];
+            foreach (var item in ListBill)
+            {
+                if (item.count > bestbill.count)
+                {
+                    bestbill = item;
+                }
+                if (item.count < badbill.count)
+                {
+                    badbill = item;
+                }
+            }
+            BestSale.Text = "Bàn số " + bestbill.tableNumber.ToString();
+            BadSale.Text = "Bàn số " + badbill.tableNumber.ToString();
+            
 
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
-                    Title = "Phòng Tiêu chuẩn",
-                    Values = new ChartValues<decimal> {sv1,sv2,sv3,sv4,sv5,sv6,sv7,sv8,sv9,sv10,sv11,sv12}
-                },
-                new LineSeries
-                {
-                    Title = "Phòng VIP",
+                    Title = "Doanh thu",
                     Values = new ChartValues<decimal> {vv1,vv2,vv3,vv4,vv5,vv6,vv7,vv8,vv9,vv10,vv11,vv12}
                 }
             };
@@ -240,5 +250,24 @@ namespace QuanLyNhaHang.Statistical
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 80;
         }
+
+        private int Load(string result, ObservableCollection<Model.Bill> ListBill)
+        {
+            int total = 0;
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            foreach (var item in stuff)
+            {
+                ListBill.Add(new Model.Bill()
+                {
+                    total = item.total,
+                    tableNumber = item.tableNumber,
+                    time = item.createdAt,
+                });
+                int temp = item.total;
+                total = total + temp;
+            };
+            return total;
+        }
+
     }
 }

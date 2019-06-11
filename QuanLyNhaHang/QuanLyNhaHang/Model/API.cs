@@ -588,7 +588,7 @@ namespace QuanLyNhaHang.Model
 
         public static string Pay(string tableNumber)
         {
-            string url = SERVER + "/bills/pay/";
+            string url = SERVER + "/bills/pay";
             string json = "{\"tableNumber\": \""
                 + tableNumber +  "\"}";
 
@@ -601,17 +601,27 @@ namespace QuanLyNhaHang.Model
                 MessageBox.Show("Không thể kết nối đến server");
                 return "";
             }
-            //hàm thanh toán đổi status trong bill, đổi status trong bàn,customer trong bàn đổi thành trống
-            /*create bill trong hàm book trong tablecontroller: tạo hết thông tin bill, promotion bằng 0,
-            total:tùy vào loại bàn mà tính giá phục vụ bàn đó,status: unpaid, customer lấy table gửi lên,
-            */
-            //hàm getallbil: gửi lên thời gian bắt đầu thời gian kết thúc theo định dạng dd/mm/yy 
-            //server trả về danh sách bill trong thời gian đó
-
-            //hàm tìm bill theo mã bill: trả về bill có mã bill đó
-            //hàm tìm bill theo tên khách hàng: trả về danh sách bill theo tên khách hàng
+            
         }
 
+        public static string Filter(string startTime,string endTime)
+        {
+            string url = SERVER + "/bills/filter";
+            string json = "{\"startTime\": \""
+                + startTime + "\", \"endTime\": \""
+                + endTime + "\"}";
+
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+            
+        }
         #endregion
     }
 }
