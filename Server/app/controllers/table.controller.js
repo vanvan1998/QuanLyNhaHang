@@ -10,13 +10,6 @@ exports.create = (req, res) => {
     }
 
     // Validate request
-    if (!req.body.status) {
-        return res.send({
-            message: "Table's status can not be empty"
-        });
-    }
-
-    // Validate request
     if (!req.body.numberOfSeat) {
         return res.send({
             message: "Table's numberOfSeat can not be empty"
@@ -35,13 +28,12 @@ exports.create = (req, res) => {
         number: req.body.number,
         note: req.body.note,
         numberOfSeat: req.body.numberOfSeat,
-        status: req.body.status,
+        status: "empty",
         type: req.body.type,
         customer: {
-            fullName: req.body.customer.fullName,
-            phone: req.body.customer.phone
-        },
-        time: req.body.time
+            fullName: "",
+            phone: ""
+        }
     });
 
     // Save Table in the database
@@ -56,114 +48,117 @@ exports.create = (req, res) => {
 };
 
 // Retrieve and return all tables with status and type from the database.
-exports.findAllWithStatusAndType = (req, res) => {
-    var status = req.params.status;
-    const type = req.params.type;
-
-    Table.find({ "status": status, "type": type })
-        .then(tables => {
-            res.send(tables);
-        }).catch(err => {
-            res.send({
-                message: err.message || "Some error occurred while retrieving tables."
-            });
+exports.findAllWithStatusAndType = async function (req, res) {
+    try {
+        var tables = await Table.find({ "status": streq.params.statusatus, "type": req.params.type });
+        res.send(tables);
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
         });
+    }
 };
 
-exports.findAllWithCustomerName = (req, res) => {
-    Table.find({ "customer.fullName": req.body.fullName })
-        .then(tables => {
-            res.send(tables);
-        }).catch(err => {
-            res.send({
-                message: err.message || "Some error occurred while retrieving tables." //alo nghe ko
-            });
+exports.findAllWithCustomerName = async function (req, res) {
+    try {
+        var tables = await Table.find({ "customer.fullName": req.body.fullName });
+        res.send(tables);
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
         });
+    }
 };
 
-exports.findAll = (req, res) => {
-
-    Table.find()
-        .then(tables => {
-            res.send(tables);
-        }).catch(err => {
-            res.send({
-                message: err.message || "Some error occurred while retrieving tables."
-            });
+exports.findAll = async (req, res) => {
+    try {
+        var tables = await Table.find();
+        res.send(tables);
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
         });
+    }
 };
 
 exports.countUsing = async function (req, res) {
-    var count = await Table.countDocuments({ status: "booked" });
-    res.send({ count: count });
+    try {
+        var count = await Table.countDocuments({ status: "booked" });
+        res.send({ count: count });
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
+        });
+    }
 };
 
 exports.countEmpty = async function (req, res) {
+    var count = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty" }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
 
-    var countstandard4 = 0;
-    var countstandard8 = 0;
-    var countstandard12 = 0;
+    var countstandard4 = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 4 }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
 
-    var countVIP4 = 0;
-    var countVIP8 = 0;
-    var countVIP12 = 0;
+    var countstandard8 = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 8 }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
 
-    var count = 0;
-    await Table.find({ "status": "empty" }).then(tables => {
-        count = tables.length;
-        tables.forEach(element => {
-            if (element.type == "standard" && element.numberOfSeat == 4) {
-                countstandard4++;
-            }
-            if (element.type == "standard" && element.numberOfSeat == 8) {
-                countstandard8++;
-            }
-            if (element.type == "standard" && element.numberOfSeat == 12) {
-                countstandard12++;
-            }
-            if (element.type == "VIP" && element.numberOfSeat == 4) {
-                countVIP4++;
-            }
-            if (element.type == "VIP" && element.numberOfSeat == 8) {
-                countVIP8++;
-            }
-            if (element.type == "VIP" && element.numberOfSeat == 12) {
-                countVIP12++;
-            }
-        });
-    }).catch(err => {
-        res.send({
-            message: err.message || "Some error occurred while retrieving tables."
-        });
+    var countstandard12 = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty", type: "standard", numberOfSeat: 12 }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+
+    var countVIP4 = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 4 }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+
+    var countVIP8 = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 8 }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+
+    var countVIP12 = new Promise((resolve, reject) => {
+        Table.countDocuments({ status: "empty", type: "VIP", numberOfSeat: 12 }, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    })
+
+    Promise.all([count, countstandard4, countstandard8, countstandard12, countVIP4, countVIP8, countVIP12]).then(values => {
+        res.send({ count: values[0], countstandard4: values[1], countstandard8: values[2], countstandard12: values[3], countVIP4: values[4], countVIP8: values[5], countVIP12: values[6] });
+    }).catch(error => {
+        res.send(error.message);
     });
-
-
-    res.send({ count: count, countstandard4: countstandard4, countstandard8: countstandard8, countstandard12: countstandard12, countVIP4: countVIP4, countVIP8: countVIP8, countVIP12: countVIP12 });
 };
 
-// Find a single table with a tableId
-exports.findOne = (req, res) => {
-    Table.findOne({ "number": req.params.tableNumber })
-        .then(table => {
-            if (!table) {
-                return res.send({
-                    message: "Table not found with id " + req.params.tableId,
-                    code: 0
-                });
-            }
-            res.send({ table, code: 1 });
-        }).catch(err => {
-            if (err.kind === 'ObjectId') {
-                return res.send({
-                    message: "Table not found with id " + req.params.tableId,
-                    code: 0
-                });
-            }
-            return res.send({
-                message: "Error retrieving table with id " + req.params.tableId,
-                code: 0
-            });
+// Find a single table with a tableNumber
+exports.findOne = async function (req, res) {
+    try {
+        var table = Table.findOne({ "number": req.params.tableNumber });
+        res.send({ table });
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
         });
+    }
 };
 
 // Update a table identified by the tableId in the request
@@ -175,21 +170,18 @@ exports.update = (req, res) => {
         });
     }
 
-    // Validate Request
     if (!req.body.numberOfSeat) {
         return res.send({
             message: "Table numberOfSeat can not be empty"
         });
     }
 
-    // Validate Request
     if (!req.body.status) {
         return res.send({
             message: "Table status can not be empty"
         });
     }
 
-    // Validate Request
     if (!req.body.type) {
         return res.send({
             message: "Table type can not be empty"
@@ -206,8 +198,7 @@ exports.update = (req, res) => {
         customer: {
             fullName: req.body.customer.fullName,
             phone: req.body.customer.phone
-        },
-        time: req.body.time
+        }
     }, { new: true })
         .then(table => {
             if (!table) {
@@ -244,7 +235,6 @@ exports.book = (req, res) => {
             fullName: req.body.customer.fullName,
             phone: req.body.customer.phone
         },
-        time: req.body.time
     }, { new: true })
         .then(table => {
             if (!table) {
@@ -263,7 +253,7 @@ exports.book = (req, res) => {
                 message: "Error updating table with id " + req.params.tableId
             });
         });
-        
+
 };
 
 // Delete a table with the specified tableId in the request

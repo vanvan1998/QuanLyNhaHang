@@ -9,8 +9,7 @@ const TableSchema = mongoose.Schema({
     customer: {
         fullName : String,
         phone:  String
-    },
-    time : String
+    }
 }, {
     timestamps: true
 });
