@@ -52,10 +52,17 @@ namespace QuanLyNhaHang.UsingTables
             ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
             ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
             ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
+
+            ListViewFood1.ItemsSource = Food1;
+            ListViewFood2.ItemsSource = Food2;
+            ListViewFood3.ItemsSource = Food3;
+
             List<temp> temp = new List<temp>();
             for(int i=0;i<10;i++)
             {
-                temp.Add(new temp() { name = "trà sữa", price = "50000", number = 1 });
+                temp.Add(new temp() { name = "trà sữa", price = "2345672", number = 10 });
+                temp.Add(new temp() { name = "chos tuaans", price = "50000", number = 1 });
+                temp.Add(new temp() { name = "cho tuan gau gau", price = "50000", number = 1 });
             }
             lvListBill.ItemsSource = temp;
             LoadData();

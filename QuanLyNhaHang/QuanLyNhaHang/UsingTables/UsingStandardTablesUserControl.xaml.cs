@@ -23,10 +23,21 @@ namespace QuanLyNhaHang.UsingTables
     /// <summary>
     /// Interaction logic for UserControlStandardUsedTable.xaml
     /// </summary>
+    /// 
+
+    public class Order
+    {
+        public string name { get; set; }
+        public string price { get; set; }
+        public int amount { get; set; }
+    }
 
     public partial class UsingStandardTablesUserControl : UserControl
     {
         ObservableCollection<Model.Table> AllTables = new ObservableCollection<Model.Table>();
+        ObservableCollection<Model.Food> AllFoods = new ObservableCollection<Model.Food>();
+        ObservableCollection<Order> Orders = new ObservableCollection<Order>();
+
 
         ObservableCollection<Model.Table> UsingStandard4PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> UsingStandard8PersonTables = new ObservableCollection<Model.Table>();
@@ -46,11 +57,17 @@ namespace QuanLyNhaHang.UsingTables
             ListViewUsingStandard8PersonTable.ItemsSource = UsingStandard8PersonTables;
             ListViewUsingStandard12PersonTable.ItemsSource = UsingStandard12PersonTables;
 
-            LoadData();
-            //LoadAllFood();
+            ListViewFood1.ItemsSource = Food1;
+            ListViewFood2.ItemsSource = Food2;
+            ListViewFood3.ItemsSource = Food3;
+
+            lvListBill.ItemsSource = Orders;
+
+            LoadAlltable();
+            LoadAllFood();
         }
 
-        private async void LoadData()
+        private async void LoadAlltable()
         {
             await Task.Run(() =>
             {
@@ -106,99 +123,84 @@ namespace QuanLyNhaHang.UsingTables
             });
         }
 
-        //private async void LoadFood()
-        //{
-        //    await Task.Run(() =>
-        //    {
-        //        this.Dispatcher.Invoke(() =>
-        //        {
-        //            string result = API.GetFoodInBill(tableSelected.number);
-        //            dynamic stuffFood = JsonConvert.DeserializeObject(result);
-        //            foreach (var item in stuffFood)
-        //            {
-        //                if (item.type == "dish")
-        //                    Food2.Add(new Model.Food()
-        //                    {
-        //                        id = item._id,
-        //                        name = item.name,
-        //                        type = item.type,
-        //                        ingredients = item.ingredients,
-        //                        note = item.note,
-        //                        price = item.price
-        //                    });
-        //                else if (item.type == "dessert")
-        //                    Food3.Add(new Model.Food()
-        //                    {
-        //                        id = item._id,
-        //                        name = item.name,
-        //                        type = item.type,
-        //                        ingredients = item.ingredients,
-        //                        note = item.note,
-        //                        price = item.price
-        //                    });
-        //                else
-        //                    Food1.Add(new Model.Food()
-        //                    {
-        //                        id = item._id,
-        //                        name = item.name,
-        //                        type = item.type,
-        //                        ingredients = item.ingredients,
-        //                        note = item.note,
-        //                        price = item.price
-        //                    });
+        private async void LoadOrders()
+        {
+            await Task.Run(() =>
+            {
+                string result = API.GetFoodInBill(tableSelected.number);
+                dynamic stuffFood = JsonConvert.DeserializeObject(result);
 
-        //            };
-        //        });
-        //    });
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuffFood)
+                    {
+                        Orders.Add(new Order()
+                        {
+                            name = item.name,
+                            price = item.price,
+                            amount = 1
+                        });
+                    };
+                });
+            });
 
-        //}
+        }
 
-        //private async void LoadAllFood()
-        //{
-        //    await Task.Run(() =>
-        //    {
-        //        this.Dispatcher.Invoke(() =>
-        //        {
-        //            string result = API.GetAllFood();
-        //            dynamic stuff = JsonConvert.DeserializeObject(result);
-        //            foreach (var item in stuff)
-        //            {
-        //                if (item.type == "dish")
-        //                    Food2.Add(new Model.Food()
-        //                    {
-        //                        id = item._id,
-        //                        name = item.name,
-        //                        type = item.type,
-        //                        ingredients = item.ingredients,
-        //                        note = item.note,
-        //                        price = item.price
-        //                    });
-        //                else if (item.type == "dessert")
-        //                    Food3.Add(new Model.Food()
-        //                    {
-        //                        id = item._id,
-        //                        name = item.name,
-        //                        type = item.type,
-        //                        ingredients = item.ingredients,
-        //                        note = item.note,
-        //                        price = item.price
-        //                    });
-        //                else
-        //                    Food1.Add(new Model.Food()
-        //                    {
-        //                        id = item._id,
-        //                        name = item.name,
-        //                        type = item.type,
-        //                        ingredients = item.ingredients,
-        //                        note = item.note,
-        //                        price = item.price
-        //                    });
+        private async void LoadAllFood()
+        {
+            await Task.Run(() =>
+            {
+                string result = API.GetAllFood();
+                dynamic stuff = JsonConvert.DeserializeObject(result);
 
-        //            };
-        //        });
-        //    });
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuff)
+                    {
+                        AllFoods.Add(new Model.Food()
+                        {
+                            id = item._id,
+                            name = item.name,
+                            type = item.type,
+                            ingredients = item.ingredients,
+                            note = item.note,
+                            price = item.price
+                        });
 
-        //}
+                        if (item.type == "dish")
+                            Food2.Add(new Model.Food()
+                            {
+                                id = item._id,
+                                name = item.name,
+                                type = item.type,
+                                ingredients = item.ingredients,
+                                note = item.note,
+                                price = item.price
+                            });
+                        else if (item.type == "dessert")
+                            Food3.Add(new Model.Food()
+                            {
+                                id = item._id,
+                                name = item.name,
+                                type = item.type,
+                                ingredients = item.ingredients,
+                                note = item.note,
+                                price = item.price
+                            });
+                        else
+                            Food1.Add(new Model.Food()
+                            {
+                                id = item._id,
+                                name = item.name,
+                                type = item.type,
+                                ingredients = item.ingredients,
+                                note = item.note,
+                                price = item.price
+                            });
+                    };
+                });
+            });
+        }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -304,8 +306,9 @@ namespace QuanLyNhaHang.UsingTables
                 NoteTextBlock.Text = tableSelected.note;
                 getToTal();
 
+                LoadOrders();
+
                 AddFood.IsEnabled = true;
-                FoodInBill.IsEnabled = true;
                 BtnPay.IsEnabled = true;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
@@ -456,8 +459,7 @@ namespace QuanLyNhaHang.UsingTables
 
             if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
             {
-
-
+                ListView ListViewSelected = (ListView)sender;
                 var bc = new BrushConverter();
 
                 for (int j = 0; j < Food1.Count; j++)
@@ -500,34 +502,44 @@ namespace QuanLyNhaHang.UsingTables
                 var tb = (TextBlock)dt.FindName("NameFood", cp);
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
 
-                Model.Food foodSelected = new Model.Food();
+                Model.Food foodSelected = null;
 
-                //foreach (var item in stuff)
-                //{
-                //    if (item.name == tb.Text)
-                //    {
-                //        foodSelected = new Model.Food()
-                //        {
-                //            id = item._id,
-                //            name = item.name,
-                //            price = item.price,
-                //            type = item.type,
-                //            ingredients = item.ingredients,
-                //            note = item.note,
-                //        };
-                //        break;
-                //    }
-                //};
-
-                if (tableSelected == null)
+                if (ListViewSelected.Name == "ListViewFood1")
                 {
-                    MessageBox.Show("Vui lòng chọn bàn trước khi chọn món!!!");
-                    return;
+                    foreach (var item in Food1)
+                    {
+                        if (item.name == tb.Text)
+                        {
+                            foodSelected = item;
+                            break;
+                        }
+                    }
+                }
+                else if (ListViewSelected.Name == "ListViewFood2")
+                {
+                    foreach (var item in Food2)
+                    {
+                        if (item.name == tb.Text)
+                        {
+                            foodSelected = item;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in Food2)
+                    {
+                        if (item.name == tb.Text)
+                        {
+                            foodSelected = item;
+                            break;
+                        }
+                    }
                 }
 
                 string result = API.AddFoodInBill(tableSelected.number, foodSelected);
                 dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
-
 
                 if (stuffAddFood.message != "Add successfull")
                 {
@@ -535,26 +547,9 @@ namespace QuanLyNhaHang.UsingTables
                     return;
                 }
                 MessageBox.Show("Thêm món thành công!!!");
-                string resulttotal = API.GetTotalInBill(tableSelected.number);
-                dynamic total = JsonConvert.DeserializeObject(resulttotal);
-                Total.Text = total.total;
-                rt.Fill = Brushes.White;
-            }
-        }
 
-        private void FoodInBill_Click(object sender, RoutedEventArgs e)
-        {
-            if (FoodInBill.Content.ToString() == "Chi tiết")
-            {
-                Table.Visibility = Visibility.Hidden;
-                Food.Visibility = Visibility.Visible;
-                FoodInBill.Content = "Trở về";
-            }
-            else
-            {
-                Table.Visibility = Visibility.Visible;
-                Food.Visibility = Visibility.Hidden;
-                FoodInBill.Content = "Chi tiết";
+                getToTal();
+                rt.Fill = Brushes.White;
             }
         }
     }

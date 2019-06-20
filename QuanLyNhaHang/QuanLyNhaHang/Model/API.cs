@@ -273,7 +273,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"phone\": \"" + table.customer.phone + "\"}}";
             try
             {
-                string temp= POST(url1, json1);
+                POST(url1, json1);
                 return PUT(url, json);
             }
             catch

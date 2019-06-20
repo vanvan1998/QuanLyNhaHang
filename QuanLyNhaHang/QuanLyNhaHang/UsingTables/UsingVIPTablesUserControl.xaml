@@ -362,7 +362,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal"  Grid.Column="0" HorizontalAlignment="Left">
-                    <Label Grid.Column="0" Content="Bàn: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <Label Grid.Column="0" Content="Bàn: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
                         <TextBlock x:Name="NumberTable" Text="{Binding number}" FontSize="23" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Left">
@@ -377,7 +377,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="0"  HorizontalAlignment="Left">
-                    <Label Grid.Column="0" Content="Khách hàng: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <Label Grid.Column="0" Content="Khách hàng: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
                         <TextBlock x:Name="CustomerName" Text="" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Column="1"  HorizontalAlignment="Left">
@@ -385,37 +385,33 @@
                         <TextBlock x:Name="CustomerPhone" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
                 </Grid>
-                
+
                 <Grid Grid.Row="4">
                     <DataGrid x:Name="lvListBill" Background="White" CanUserAddRows="False" AutoGenerateColumns="False">
                         <DataGrid.Columns >
-                            <DataGridTextColumn x:Name="lvhDrink" Header="Tên món" Width="180" Binding="{Binding name}"></DataGridTextColumn>
-                            <DataGridTextColumn x:Name="lvhPrices" Header="Giá" Binding="{Binding price}"></DataGridTextColumn>
-                            <DataGridTemplateColumn>
+                            <DataGridTextColumn x:Name="Name" Header="Tên món" Width="190" Binding="{Binding name}"></DataGridTextColumn>
+                            <DataGridTextColumn x:Name="Price" Header="Giá" Binding="{Binding price}"></DataGridTextColumn>
+                            <DataGridTemplateColumn >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Height="0" Width="0" Text="{Binding id}"></TextBlock>
-                                            <TextBlock Height="0" Width="0" Text="{Binding gia}"></TextBlock>
                                             <Button Height="20" Width="20"
                                             Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
-                                            ToolTip="MaterialDesignFloatingActionMiniDarkButton">
+                                            >
                                                 <materialDesign:PackIcon Kind="Minus"/>
                                             </Button>
                                         </Grid>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn x:Name="lvhNumber" Header="SL" Binding="{Binding number}"/>
+                            <DataGridTextColumn x:Name="Amount" Header="SL" Binding="{Binding number}"/>
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <TextBlock Height="0" Width="0" Text="{Binding id}"></TextBlock>
-                                            <TextBlock Height="0" Width="0" Text="{Binding gia}"></TextBlock>
                                             <Button Height="20" Width="20"
                                             Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
-                                            ToolTip="MaterialDesignFloatingActionMiniDarkButton" >
+                                            >
                                                 <materialDesign:PackIcon Kind="Add"/>
                                             </Button>
                                         </Grid>
@@ -425,7 +421,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                
+
                 <Grid Grid.Row="5">
                     <StackPanel Orientation="Horizontal">
                         <Label Grid.Column="0" Content="Tổng tiền " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
@@ -451,9 +447,8 @@
                     <Label Grid.Column="0" Content="Mã Giảm Giá " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBox x:Name="DiscountCodeTextBox" materialDesign:HintAssist.Hint="Nhập mã giảm giá" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap" KeyUp="DiscountCodeTextBox_KeyUp"/>
                 </Grid>
-                
 
-                    <Grid Grid.Row="8">
+                <Grid Grid.Row="8">
                     <StackPanel Orientation="Horizontal">
                         <Button IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
