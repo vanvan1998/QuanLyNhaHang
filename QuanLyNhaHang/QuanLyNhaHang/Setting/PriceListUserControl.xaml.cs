@@ -31,16 +31,19 @@ namespace QuanLyNhaHang.Setting
             InitializeComponent();
 
             ListViewFood.ItemsSource = Foods;
+
             Load();
         }
 
         private async void Load()
         {
-            string result = API.GetAllFood();
-            dynamic stuff = JsonConvert.DeserializeObject(result);
+
 
             await Task.Run(() =>
             {
+                string result = API.GetAllFood();
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -72,7 +75,7 @@ namespace QuanLyNhaHang.Setting
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
-            
+
         }
 
         private void TicketType()
@@ -135,16 +138,17 @@ namespace QuanLyNhaHang.Setting
                 foreach (var item in Foods)
                 {
                     if (item.name == tb.Text)
-                    { 
+                    {
                         foodSelected = item;
-                        break;                    }
+                        break;
+                    }
                 };
 
                 NameFood.Text = foodSelected.name;
                 Price.Text = foodSelected.price;
                 Ingredients.Text = foodSelected.ingredients;
                 Note.Text = foodSelected.note;
-                
+
                 if (foodSelected.type == "appetizer")
                 {
                     TypeFood.SelectedIndex = 0;
@@ -153,12 +157,15 @@ namespace QuanLyNhaHang.Setting
                 {
                     TypeFood.SelectedIndex = 1;
                 }
-                 else
+                else
                 {
                     TypeFood.SelectedIndex = 2;
                 }
 
                 id.Text = foodSelected.id;
+
+                btnUpdate.IsEnabled = true;
+                btnDelete.IsEnabled = true;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
@@ -168,15 +175,15 @@ namespace QuanLyNhaHang.Setting
         {
             Model.Food foodNew = new Model.Food();
             foodNew.name = NameFood.Text;
-            foodNew.price =Price.Text;
+            foodNew.price = Price.Text;
             foodNew.ingredients = Ingredients.Text;
             foodNew.note = Note.Text;
-            
+
             if (TypeFood.SelectedIndex == 0)
             {
                 foodNew.type = "appetizer";
             }
-            else if(TypeFood.SelectedIndex == 1)
+            else if (TypeFood.SelectedIndex == 1)
             {
                 foodNew.type = "dish";
             }
