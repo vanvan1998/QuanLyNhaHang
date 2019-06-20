@@ -29,18 +29,19 @@ namespace QuanLyNhaHang.Setting
         public SettingTableUserControl()
         {
             InitializeComponent();
-            
+
             ListViewTable.ItemsSource = Tables;
+
             Load();
         }
 
         private async void Load()
         {
-            string result = API.GetAllTable();
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-
             await Task.Run(() =>
             {
+                string result = API.GetAllTable();
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -113,7 +114,7 @@ namespace QuanLyNhaHang.Setting
                 foreach (var item in Tables)
                 {
                     if (item.number == tb.Text)
-                    { 
+                    {
                         tableSelected = item;
                         break;
                     }
@@ -155,6 +156,9 @@ namespace QuanLyNhaHang.Setting
                 Note.Text = tableSelected.note;
                 ID.Text = tableSelected.id;
 
+                btnUpdate.IsEnabled = true;
+                btnDelete.IsEnabled = true;
+
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
@@ -192,14 +196,14 @@ namespace QuanLyNhaHang.Setting
             }
             else
             {
-                tableNew.status= "booked";
-                if (CustomerName.Text == "" || Phone.Text=="")
+                tableNew.status = "booked";
+                if (CustomerName.Text == "" || Phone.Text == "")
                 {
                     MessageBox.Show("Thông tin khách hàng không được để trống!!!");
                     return;
                 }
                 tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
-                tableNew.note= Note.Text;
+                tableNew.note = Note.Text;
             }
             foreach (var item in Tables)
             {
@@ -208,11 +212,11 @@ namespace QuanLyNhaHang.Setting
                     MessageBox.Show("Số bàn đã có!!!\n Bạn vui lòng chọn số bàn khác!");
                     return;
                 }
-            };            
+            };
 
             string result = API.CreateTable(tableNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            if(stuff.message== "create successful")
+            if (stuff.message == "create successful")
             {
                 MessageBox.Show("Tạo bàn thành công!!!");
             }
@@ -251,7 +255,7 @@ namespace QuanLyNhaHang.Setting
         {
 
             Model.Table tableNew = new Model.Table();
-            if(ID.Text=="")
+            if (ID.Text == "")
             {
                 MessageBox.Show("Vui lòng chọn bàn trước khi cập nhật!!!");
                 return;

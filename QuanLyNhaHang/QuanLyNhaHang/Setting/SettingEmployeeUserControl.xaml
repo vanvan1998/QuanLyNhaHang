@@ -30,8 +30,8 @@
             <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Mật khẩu:</TextBlock>
             <PasswordBox x:Name="Password" Width="300" Margin="50,0,20,30"></PasswordBox>
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnUpdate" Click="BtnUpdate_Click" Margin="10,0,30,0"  HorizontalAlignment="Center"  Content="Cập Nhật" BorderBrush="#ffffff" Background="#DD892121" ></Button>
-                <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="40,0,30,0" HorizontalAlignment="Center" Content="Xóa" BorderBrush="#ffffff" Background="#DD892121"></Button>
+                <Button x:Name="btnUpdate" Click="BtnUpdate_Click" Margin="10,0,30,0"  HorizontalAlignment="Center"  Content="Cập Nhật" BorderBrush="#ffffff" Background="#DD892121" IsEnabled="False"></Button>
+                <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="40,0,30,0" HorizontalAlignment="Center" Content="Xóa" BorderBrush="#ffffff" Background="#DD892121" IsEnabled="False"></Button>
                 <Button x:Name="btnAdd" Click="BtnAdd_Click" Margin="40,0,20,0" HorizontalAlignment="Center" Content="Thêm" BorderBrush="#ffffff" Background="#DD892121"></Button>
             </StackPanel>
         </StackPanel>

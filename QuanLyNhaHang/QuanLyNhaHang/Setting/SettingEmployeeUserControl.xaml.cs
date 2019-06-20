@@ -31,18 +31,18 @@ namespace QuanLyNhaHang.Setting
         {
             InitializeComponent();
             
-
             ListViewEmployee.ItemsSource = Employees;
+
             Load();
         }
 
         private async void Load()
         {
-            string result = API.GetAllEmployee();
-            dynamic stuff = JsonConvert.DeserializeObject(result);
-
             await Task.Run(() =>
             {
+                string result = API.GetAllEmployee();
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -165,6 +165,9 @@ namespace QuanLyNhaHang.Setting
                 }
 
                 id.Text = employeeSelected.id;
+
+                btnUpdate.IsEnabled = true;
+                btnDelete.IsEnabled = true;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
