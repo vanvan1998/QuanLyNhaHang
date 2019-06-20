@@ -108,42 +108,9 @@ namespace QuanLyNhaHang
                     };
                 });
             });
-
-            await Task.Run(() =>
-            {
-                Thread.Sleep(1000);
-                this.Dispatcher.Invoke(() =>
-                {
-                    TicketType();
-                });
-            });
+            
         }
-
-        private void TicketType()
-        {
-            for (int i = 0; i < Foods.Count; i++)
-            {
-                if (Foods[i].type == "dessert")
-                {
-                    ListViewItem lvi1 = ListViewFood.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
-
-                    var dt1 = cp1.ContentTemplate as DataTemplate;
-                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                    rt1.Background = Brushes.Pink;
-                }
-
-                if (Foods[i].type == "appetizer")
-                {
-                    ListViewItem lvi1 = ListViewFood.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
-
-                    var dt1 = cp1.ContentTemplate as DataTemplate;
-                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                    rt1.Background = Brushes.Blue;
-                }
-            };
-        }
+        
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
@@ -340,7 +307,6 @@ namespace QuanLyNhaHang
             CustomerName.Text = "";
             Phone.Text = "";
             Note.Text = "";
-            Time.Text = "";
             Status.Text = "";
         }
 
