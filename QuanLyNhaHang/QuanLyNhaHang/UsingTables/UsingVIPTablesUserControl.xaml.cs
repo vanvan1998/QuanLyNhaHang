@@ -38,6 +38,13 @@ namespace QuanLyNhaHang.UsingTables
 
         Model.Table tableSelected = null;
 
+        public class temp
+        {
+            public string name { get; set; }
+            public string price { get; set; }
+            public int number { get; set; }
+        }
+
         public UsingVIPTablesUserControl()
         {
             InitializeComponent();
@@ -45,7 +52,12 @@ namespace QuanLyNhaHang.UsingTables
             ListViewUsingVIP4PersonTable.ItemsSource = UsingVIP4PersonTables;
             ListViewUsingVIP8PersonTable.ItemsSource = UsingVIP8PersonTables;
             ListViewUsingVIP12PersonTable.ItemsSource = UsingVIP12PersonTables;
-
+            List<temp> temp = new List<temp>();
+            for(int i=0;i<10;i++)
+            {
+                temp.Add(new temp() { name = "trà sữa", price = "50000", number = 1 });
+            }
+            lvListBill.ItemsSource = temp;
             LoadData();
             //LoadAllFood();
         }

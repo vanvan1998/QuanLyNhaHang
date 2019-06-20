@@ -263,13 +263,14 @@ namespace QuanLyNhaHang.Model
                             "\", \"note\": \"" + table.note +
                             "\", \"status\": \"" + table.status +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}}";
             string url1 = SERVER + "/bills";
             string json1 = "{\"employeeID\": \"" + employeeID +
                             "\", \"number\": \"" + table.number +
+                            "\", \"numberOfSeat\": \"" + table.numberOfSeat.ToString() +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}}";
             try
             {
                 string temp= POST(url1, json1);
@@ -300,69 +301,7 @@ namespace QuanLyNhaHang.Model
 
         #endregion
 
-        #region Customer API
-
-        public static string GetCustomer(string ID)
-        {
-            string url = SERVER + "/customers/" + ID;
-
-            try
-            {
-                return GET(url);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
-        public static string CreateNewCustomer(string fullName, string phone)
-        {
-            string url = SERVER + "/customers";
-            string json = "{\"fullName\": \"" + fullName + "\", \"phone\": \"" + phone + "\"}";
-            try
-            {
-                return POST(url, json);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
-        public static string UpdateCustomer(string ID, string fullName, string phone)
-        {
-            string url = SERVER + "/customers/" + ID;
-            string json = "{\"fullName\": \"" + fullName + "\", \"phone\": \"" + phone + "\"}";
-            try
-            {
-                return PUT(url, json);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
-        public static string DeleteCustomer(string ID)
-        {
-            string url = SERVER + "/customers/" + ID;
-
-            try
-            {
-                return DELETE(url);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối đến server");
-                return "";
-            }
-        }
-
-        #endregion
+        
 
         #region Http method
 

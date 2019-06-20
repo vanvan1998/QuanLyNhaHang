@@ -190,6 +190,18 @@ namespace QuanLyNhaHang.EmptyTables
             tableBook.type = "VIP";
             tableBook.number = NumberTable.Text;
             tableBook.note = NoteTextBox.Text;
+            if (TypeTable.Text == "Bàn 4 người")
+            {
+                tableBook.numberOfSeat = 4;
+            }
+            else if (TypeTable.Text == "Bàn 8 người")
+            {
+                tableBook.numberOfSeat = 8;
+            }
+            else
+            {
+                tableBook.numberOfSeat = 12;
+            }
             tableBook.status = "booked";
 
             tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };

@@ -16,11 +16,11 @@ exports.create =async function (req, res) {
     var total=0;
     if(req.body.type=="standard")
     {
-        total=50000;
+        total=parseInt(req.body.numberOfSeat)*10000;
     }
     else
     {
-        total=200000;
+        total=parseInt(req.body.numberOfSeat)*30000;
     }
     var count = await Bill.countDocuments({ }); 
     const bill = new Bill({

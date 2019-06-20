@@ -41,7 +41,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect>
                                                     <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>
@@ -86,7 +86,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect>
                                                     <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>
@@ -131,7 +131,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect>
                                                     <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>
@@ -311,13 +311,11 @@
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="7*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -354,55 +352,95 @@
                 </StackPanel>
 
                 <Grid Grid.Row="1" >
-                    <Label Content="Thanh Toán Bàn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
+                    <Label Content="Thanh Toán Bàn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"></Label>
                 </Grid>
 
                 <Grid Grid.Row="2">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
-                    <Label Grid.Column="0" Content="Bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock Grid.Column="1" x:Name="NumberTable"  Text="{Binding number}" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    <StackPanel Orientation="Horizontal"  Grid.Column="0" HorizontalAlignment="Left">
+                    <Label Grid.Column="0" Content="Bàn: " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock x:Name="NumberTable" Text="{Binding number}" FontSize="23" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"  Grid.Column="1" HorizontalAlignment="Left">
+                        <Label Grid.Column="0" Content="Loại: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock x:Name="TypeTable" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    </StackPanel>
                 </Grid>
-
 
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Loại bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="TypeTable" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Grid.Column="0"  HorizontalAlignment="Left">
+                    <Label Grid.Column="0" Content="Khách hàng: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock x:Name="CustomerName" Text="" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1"  HorizontalAlignment="Left">
+                        <Label Grid.Column="0" Content="SĐT: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock x:Name="CustomerPhone" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
                 </Grid>
-
+                
                 <Grid Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="CustomerName" Grid.Column="1" Text="" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
+                    <DataGrid x:Name="lvListBill" Background="White" CanUserAddRows="False" AutoGenerateColumns="False">
+                        <DataGrid.Columns >
+                            <DataGridTextColumn x:Name="lvhDrink" Header="Tên món" Width="180" Binding="{Binding name}"></DataGridTextColumn>
+                            <DataGridTextColumn x:Name="lvhPrices" Header="Giá" Binding="{Binding price}"></DataGridTextColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Height="0" Width="0" Text="{Binding id}"></TextBlock>
+                                            <TextBlock Height="0" Width="0" Text="{Binding gia}"></TextBlock>
+                                            <Button Height="20" Width="20"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                            ToolTip="MaterialDesignFloatingActionMiniDarkButton">
+                                                <materialDesign:PackIcon Kind="Minus"/>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn x:Name="lvhNumber" Header="SL" Binding="{Binding number}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <TextBlock Height="0" Width="0" Text="{Binding id}"></TextBlock>
+                                            <TextBlock Height="0" Width="0" Text="{Binding gia}"></TextBlock>
+                                            <Button Height="20" Width="20"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                            ToolTip="MaterialDesignFloatingActionMiniDarkButton" >
+                                                <materialDesign:PackIcon Kind="Add"/>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
-
+                
                 <Grid Grid.Row="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Số điện thoại " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="CustomerPhone" Grid.Column="1" Text="" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
-
+                    <StackPanel Orientation="Horizontal">
+                        <Label Grid.Column="0" Content="Tổng tiền " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock Margin="10 0 10 0" x:Name="Total" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Width="200" ></TextBlock>
+                        <Button Margin="25 0 10 0" HorizontalAlignment="Right" x:Name="FoodInBill" Click="FoodInBill_Click" IsEnabled="False">Chi tiết</Button>
+                    </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="6">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Grid.Column="0" Content="Tổng tiền " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                        <TextBlock Margin="10 0 10 0" x:Name="Total" Grid.Column="1" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Width="200" ></TextBlock>
-                        <Button Margin="25 0 10 0" HorizontalAlignment="Right" x:Name="FoodInBill" Click="FoodInBill_Click" IsEnabled="False">Chi tiết</Button>
-                    </StackPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Ghi chú " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <TextBox Grid.Column="1" x:Name="NoteTextBlock" Text="{Binding note}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap" ></TextBox>
                 </Grid>
 
                 <Grid Grid.Row="7">
@@ -410,20 +448,12 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox Grid.Column="1" x:Name="NoteTextBlock" Text="{Binding note}" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap" ></TextBox>
-                </Grid>
-
-                <Grid Grid.Row="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Mã Giảm Giá " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                    <Label Grid.Column="0" Content="Mã Giảm Giá " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBox x:Name="DiscountCodeTextBox" materialDesign:HintAssist.Hint="Nhập mã giảm giá" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap" KeyUp="DiscountCodeTextBox_KeyUp"/>
                 </Grid>
+                
 
-                <Grid Grid.Row="9">
+                    <Grid Grid.Row="8">
                     <StackPanel Orientation="Horizontal">
                         <Button IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
