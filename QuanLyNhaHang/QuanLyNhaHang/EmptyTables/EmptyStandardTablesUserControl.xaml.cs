@@ -45,10 +45,9 @@ namespace QuanLyNhaHang.EmptyTables
 
         private async void LoadData()
         {
-            string result = API.GetAllTableWithStatusAndType("empty", "standard");
-            stuff = JsonConvert.DeserializeObject(result);
-
             await Task.Run(() => {
+                string result = API.GetAllTableWithStatusAndType("empty", "standard");
+                stuff = JsonConvert.DeserializeObject(result);
                 this.Dispatcher.Invoke(() => {
                     foreach (var item in stuff)
                     {
@@ -220,14 +219,13 @@ namespace QuanLyNhaHang.EmptyTables
                 {
                     tableSelected = new Model.Table()
                     {
-                        ID = item._id,
+                        id = item._id,
                         number = item.number,
                         type = item.type,
                         numberOfSeat = item.numberOfSeat,
                         status = item.status,
                         customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
                         note = item.note,
-                        time = item.time
                     };
                     search = true;
                     break;

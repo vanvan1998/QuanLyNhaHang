@@ -52,13 +52,12 @@ namespace QuanLyNhaHang
                     {
                         Tables.Add(new Model.Table()
                         {
-                            ID = item._id,
+                            id = item._id,
                             number = item.number,
                             numberOfSeat = item.numberOfSeat,
                             type = item.type,
                             status = item.status,
                             note = item.note,
-                            time = item.time,
                             customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                         });
                     };
@@ -178,14 +177,13 @@ namespace QuanLyNhaHang
                 {
                     tableSelected = new Model.Table()
                     {
-                        ID = item._id,
+                        id = item._id,
                         number = item.number,
                         type = item.type,
                         numberOfSeat = item.numberOfSeat,
                         status = item.status,
                         customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
-                        note = item.note,
-                        time = item.time
+                        note = item.note
                     };
                     search = true;
                     break;
@@ -205,7 +203,6 @@ namespace QuanLyNhaHang
             CustomerName.Text = tableSelected.customer.fullName;
             Phone.Text = tableSelected.customer.phone;
             Note.Text = tableSelected.note;
-            Time.Text = tableSelected.time;
             Status.Text = tableSelected.status;
 
 
@@ -317,8 +314,7 @@ namespace QuanLyNhaHang
                 Phone.Text = tableSelected.customer.phone;
                 Status.Text = tableSelected.status;
                 Note.Text = tableSelected.note;
-                Time.Text = tableSelected.time;
-                ID.Text = tableSelected.ID;
+                ID.Text = tableSelected.id;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }

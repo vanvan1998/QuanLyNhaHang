@@ -38,45 +38,23 @@ namespace QuanLyNhaHang.Setting
         {
             string result = API.GetAllTable();
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            
+
             await Task.Run(() =>
             {
-                Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
                     {
                         Tables.Add(new Model.Table()
                         {
-                            ID = item._id,
+                            id = item._id,
                             number = item.number,
                             numberOfSeat = item.numberOfSeat,
                             type = item.type,
                             status = item.status,
                             note = item.note,
-                            time = item.time,
                             customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                         });
-                    };
-                });
-            });
-
-            await Task.Run(() =>
-            {
-                Thread.Sleep(1000);
-                this.Dispatcher.Invoke(() =>
-                {
-                    for (int i = 0; i < Tables.Count; i++)
-                    {
-                        if (Tables[i].type == "standard")
-                        {
-                            ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                            var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
-
-                            var dt1 = cp1.ContentTemplate as DataTemplate;
-                            var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                            rt1.Background = Brushes.Blue;
-                        }
                     };
                 });
             });
@@ -85,7 +63,20 @@ namespace QuanLyNhaHang.Setting
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 40;
-            
+
+            for (int i = 0; i < Tables.Count; i++)
+            {
+                if (Tables[i].type == "standard")
+                {
+                    ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                    rt1.Background = Brushes.Blue;
+                }
+            };
+
         }
 
         private void ListViewTable_MouseUp(object sender, MouseButtonEventArgs e)
@@ -162,8 +153,7 @@ namespace QuanLyNhaHang.Setting
                     Status.SelectedIndex = 1;
                 }
                 Note.Text = tableSelected.note;
-                Time.Text = tableSelected.time;
-                ID.Text = tableSelected.ID;
+                ID.Text = tableSelected.id;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
@@ -209,7 +199,6 @@ namespace QuanLyNhaHang.Setting
                     return;
                 }
                 tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
-                tableNew.time =Time.Text;
                 tableNew.note= Note.Text;
             }
             foreach (var item in Tables)
@@ -267,7 +256,7 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Vui lòng chọn bàn trước khi cập nhật!!!");
                 return;
             }
-            tableNew.ID = ID.Text;
+            tableNew.id = ID.Text;
             tableNew.number = NumberTable.Text;
             if (TypeTable.SelectedIndex == 0)
             {
@@ -305,12 +294,11 @@ namespace QuanLyNhaHang.Setting
                     return;
                 }
                 tableNew.customer = new Customer() { fullName = CustomerName.Text, phone = Phone.Text };
-                tableNew.time = Time.Text;
                 tableNew.note = Note.Text;
             }
             foreach (var item in Tables)
             {
-                if (item.number == NumberTable.Text && item.ID != ID.Text)
+                if (item.number == NumberTable.Text && item.id != ID.Text)
                 {
                     MessageBox.Show("Số bàn đã có!!!\n Bạn vui lòng chọn số bàn khác!");
                     return;

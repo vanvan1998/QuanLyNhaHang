@@ -50,7 +50,7 @@ exports.create = (req, res) => {
 // Retrieve and return all tables with status and type from the database.
 exports.findAllWithStatusAndType = async function (req, res) {
     try {
-        var tables = await Table.find({ "status": streq.params.statusatus, "type": req.params.type });
+        var tables = await Table.find({ status: req.params.status, type: req.params.type });
         res.send(tables);
     } catch (error) {
         res.send({

@@ -222,8 +222,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
-                            ", \"time\": \"" + table.time + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}";
             try
             {
                 return POST(url, json);
@@ -237,15 +236,14 @@ namespace QuanLyNhaHang.Model
 
         public static string UpdateTable(Model.Table table)
         {
-            string url = SERVER + "/tables/" + table.ID;
+            string url = SERVER + "/tables/" + table.id;
             string json = "{\"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
                             "\", \"numberOfSeat\": \"" + table.numberOfSeat +
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
-                            ", \"time\": \"" + table.time + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}";
             try
             {
                 return PUT(url, json);
@@ -265,15 +263,13 @@ namespace QuanLyNhaHang.Model
                             "\", \"note\": \"" + table.note +
                             "\", \"status\": \"" + table.status +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
-                            ", \"time\": \"" + table.time + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}";
             string url1 = SERVER + "/bills";
             string json1 = "{\"employeeID\": \"" + employeeID +
                             "\", \"number\": \"" + table.number +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}" +
-                            ", \"time\": \"" + table.time + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}";
             try
             {
                 string temp= POST(url1, json1);

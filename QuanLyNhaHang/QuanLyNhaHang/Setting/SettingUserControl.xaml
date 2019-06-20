@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded" >
     <Grid>
-        <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}">
+        <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.5}">
             <StackPanel Background="#FFCFCFCF">
                 <Grid Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
