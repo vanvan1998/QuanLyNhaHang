@@ -61,7 +61,24 @@ exports.findAllWithStatusAndType = async function (req, res) {
 
 exports.findAllWithCustomerName = async function (req, res) {
     try {
-        var tables = await Table.find({ "customer.fullName": req.body.fullName });
+        var fullName=req.body.fullName.toUpperCase();
+        var tables = await Table.find({status: "booked"});
+        for (i = 0; i < tables.length; i++) {
+            var tableCustomer=tables[i].customer.fullName.toUpperCase();
+            var check=0;
+            if (tableCustomer.indexOf(fullName) != -1) {
+                check=1;
+            }
+            else if (fullName.indexOf(tableCustomer) != -1) {
+                check=1;
+            }
+            if(check==0)
+            {
+                tables.splice(i, 1);
+                i--;
+            }
+
+        }
         res.send(tables);
     } catch (error) {
         res.send({

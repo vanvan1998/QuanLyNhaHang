@@ -64,7 +64,7 @@
                 </DockPanel>
             </materialDesign:ColorZone>
             <Grid Grid.Row="1">
-                <Grid x:Name="GridTable" Visibility="Visible">
+                <Grid x:Name="GridTable" Visibility="Hidden">
                     <Grid Height="580" Width="450" Margin="500,0,50,0">
                         <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
                             <Rectangle.Effect>

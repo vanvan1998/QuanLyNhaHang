@@ -42,7 +42,7 @@ namespace QuanLyNhaHang
             this.Height = Application.Current.MainWindow.ActualHeight - 30;
         }
 
-        private async void Load()
+        private async Task Load()
         {
             await Task.Run(() =>
             {
@@ -111,7 +111,6 @@ namespace QuanLyNhaHang
 
         }
 
-
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             //((ToggleButton)sender).IsChecked
@@ -134,6 +133,8 @@ namespace QuanLyNhaHang
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập số bàn!!!");
+                GridTable.Visibility = Visibility.Hidden;
+                GridFood.Visibility = Visibility.Hidden;
                 return;
             }
 
@@ -159,6 +160,8 @@ namespace QuanLyNhaHang
             if (search == false)
             {
                 MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
+                GridTable.Visibility = Visibility.Hidden;
+                GridFood.Visibility = Visibility.Hidden;
                 return;
             }
             GridTable.Visibility = Visibility.Visible;
@@ -284,16 +287,23 @@ namespace QuanLyNhaHang
                 Status.Text = tableSelected.status;
                 Note.Text = tableSelected.note;
                 ID.Text = tableSelected.id;
+                if (tableSelected.type == "VIP")
+                    TypeTable.Text = "VIP";
+                else
+                    TypeTable.Text = "Tiêu chuẩn";
+                NumberOfSeat.Text = "Bàn " + tableSelected.numberOfSeat + " người";
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
 
-        private void SearchTableCustomer_Click()
+        private async void SearchTableCustomer_Click()
         {
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập tên khách hàng!!!");
+                GridTable.Visibility = Visibility.Hidden;
+                GridFood.Visibility = Visibility.Hidden;
                 return;
             }
             string result = API.GetAllTableWithCustomer(TbSearchTable.Text);
@@ -301,10 +311,12 @@ namespace QuanLyNhaHang
 
             Tables.Clear();
             ListViewTable.ItemsSource = Tables;
-            Load();
-            if(Tables.Count==0)
+            await Load();
+            if (Tables.Count == 0)
             {
                 MessageBox.Show("Không tìm thấy bàn theo yêu cầu của bạn!!!");
+                GridTable.Visibility = Visibility.Hidden;
+                GridFood.Visibility = Visibility.Hidden;
                 return;
             }
             GridTable.Visibility = Visibility.Visible;
@@ -317,6 +329,8 @@ namespace QuanLyNhaHang
             Phone.Text = "";
             Note.Text = "";
             Status.Text = "";
+            TypeTable.Text = "";
+
         }
 
         private void SearchFood_Click()
@@ -379,7 +393,7 @@ namespace QuanLyNhaHang
             TypeFood.Text = "";
             GridTable.Visibility = Visibility.Hidden;
             GridFood.Visibility = Visibility.Visible;
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
