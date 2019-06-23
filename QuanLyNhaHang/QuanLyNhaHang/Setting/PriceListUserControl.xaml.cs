@@ -172,6 +172,7 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Tạo món ăn thành công!!!");
                 Foods.Clear();
                 Load();
+                LoadEmpty();
             }
             else
             {
@@ -194,6 +195,7 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Xóa món ăn thành công!!!");
                 Foods.Clear();
                 Load();
+                LoadEmpty();
             }
             else
             {
@@ -244,12 +246,66 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Cập nhật thông tin món ăn thành công!!!");
                 Foods.Clear();
                 Load();
+                LoadEmpty();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình cập nhật, vui lòng thử lại!!!");
             }
 
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string result = API.GetAllFood();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            Foods.Clear();
+            ListViewFood.ItemsSource = Foods;
+
+            if (TbSearch.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập tên món ăn!!!");
+                return;
+            }
+
+            Boolean search = false;
+            string foodQuery = TbSearch.Text.ToUpper();
+            foreach (var item in stuff)
+            {
+                string foodInList = item.name.ToString().ToUpper();
+                if (foodInList.IndexOf(foodQuery) != -1 || foodQuery.IndexOf(foodInList) != -1)
+                {
+                    search = true;
+                    Foods.Add(new Model.Food()
+                    {
+                        id = item._id,
+                        name = item.name,
+                        price = item.price,
+                        type = item.type,
+                        ingredients = item.ingredients,
+                        note = item.note
+                    });
+                }
+            };
+            if (search == false)
+            {
+                MessageBox.Show("Tên món ăn bạn nhập không tồn tại!!!");
+                return;
+            }
+            LoadEmpty();
+        }
+
+        private void LoadEmpty()
+        {
+            NameFood.Text = "";
+            Price.Text = "";
+            Ingredients.Text = "";
+            Note.Text = "";
+            TypeFood.SelectedIndex = -1;
+
+            id.Text = "";
+            btnUpdate.IsEnabled = false;
+            btnDelete.IsEnabled = false;
         }
     }
 }

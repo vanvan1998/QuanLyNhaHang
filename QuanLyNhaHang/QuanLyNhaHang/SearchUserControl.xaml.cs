@@ -339,8 +339,6 @@ namespace QuanLyNhaHang
             Foods.Clear();
             ListViewFood.ItemsSource = Foods;
 
-            Model.Food foodSelected = new Model.Food();
-
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập tên món ăn!!!");
@@ -356,18 +354,6 @@ namespace QuanLyNhaHang
                 string foodInList = item.name.ToString().ToUpper();
                 if (foodInList.IndexOf(foodQuery) != -1 || foodQuery.IndexOf(foodInList) != -1)
                 {
-                    if (search == false)
-                    {
-                        foodSelected = new Model.Food()
-                        {
-                            name = item.name,
-                            price = item.price,
-                            type = item.type,
-                            ingredients = item.ingredients,
-                            note = item.note,
-                        };
-                        search = true;
-                    }
                     Foods.Add(new Model.Food()
                     {
                         name = item.name,
@@ -376,6 +362,7 @@ namespace QuanLyNhaHang
                         ingredients = item.ingredients,
                         note = item.note
                     });
+                    search = true;
                 }
             };
             if (search == false)

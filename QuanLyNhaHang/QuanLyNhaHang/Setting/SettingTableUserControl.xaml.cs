@@ -25,7 +25,7 @@ namespace QuanLyNhaHang.Setting
     public partial class SettingTableUserControl : UserControl
     {
         ObservableCollection<Model.Table> Tables = new ObservableCollection<Model.Table>();
-
+        dynamic stuff;
         public SettingTableUserControl()
         {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace QuanLyNhaHang.Setting
             await Task.Run(() =>
             {
                 string result = API.GetAllTable();
-                dynamic stuff = JsonConvert.DeserializeObject(result);
+                stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -328,6 +328,79 @@ namespace QuanLyNhaHang.Setting
             }
             Tables.Clear();
             Load();
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Model.Table tableSelected = new Model.Table();
+
+            if (TbSearch.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập số bàn!!!");
+                return;
+            }
+
+            Boolean search = false;
+            foreach (var item in stuff)
+            {
+                if (item.number == TbSearch.Text)
+                {
+                    tableSelected = new Model.Table()
+                    {
+                        id = item._id,
+                        number = item.number,
+                        type = item.type,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
+                        note = item.note,
+                    };
+                    search = true;
+                    break;
+                }
+            };
+            if (search == false)
+            {
+                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
+                return;
+            }
+            NumberTable.Text = tableSelected.number;
+            CustomerName.Text = tableSelected.customer.fullName;
+            Phone.Text = tableSelected.customer.phone;
+            if (tableSelected.type == "standard")
+            {
+                TypeTable.SelectedIndex = 0;
+            }
+            else
+            {
+                TypeTable.SelectedIndex = 1;
+            }
+
+            if (tableSelected.numberOfSeat == 4)
+            {
+                NumberOfSeat.SelectedIndex = 0;
+            }
+            else if (tableSelected.numberOfSeat == 8)
+            {
+                NumberOfSeat.SelectedIndex = 1;
+            }
+            else
+            {
+                NumberOfSeat.SelectedIndex = 2;
+            }
+
+            if (tableSelected.status == "empty")
+            {
+                Status.SelectedIndex = 0;
+            }
+            else
+            {
+                Status.SelectedIndex = 1;
+            }
+            Note.Text = tableSelected.note;
+            ID.Text = tableSelected.id;
+            btnUpdate.IsEnabled = true;
+            btnDelete.IsEnabled = true;
         }
     }
 }

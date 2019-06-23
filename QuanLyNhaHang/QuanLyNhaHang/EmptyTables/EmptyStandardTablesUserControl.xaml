@@ -179,7 +179,6 @@
                         <StackPanel
                             Orientation="Horizontal"
                             materialDesign:RippleAssist.IsCentered="True">
-
                             <materialDesign:ColorZone
                             Mode="Standard"
                             Padding="8 4 8 4"
@@ -200,7 +199,6 @@
                                     </Button>
                                 </Grid>
                             </materialDesign:ColorZone>
-
                         </StackPanel>
                     </materialDesign:ColorZone>
                 </StackPanel>

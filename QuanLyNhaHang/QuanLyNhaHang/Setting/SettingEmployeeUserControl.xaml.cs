@@ -30,7 +30,7 @@ namespace QuanLyNhaHang.Setting
         public SettingEmployeeUserControl()
         {
             InitializeComponent();
-            
+
             ListViewEmployee.ItemsSource = Employees;
 
             Load();
@@ -61,7 +61,11 @@ namespace QuanLyNhaHang.Setting
                     };
                 });
             });
+            LoadTicket();
+        }
 
+        private async void LoadTicket()
+        {
             await Task.Run(() =>
             {
                 Thread.Sleep(1000);
@@ -86,7 +90,7 @@ namespace QuanLyNhaHang.Setting
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
-            
+
         }
 
         static string GetMd5Hash(MD5 md5Hash, string input)
@@ -144,7 +148,7 @@ namespace QuanLyNhaHang.Setting
                 foreach (var item in Employees)
                 {
                     if (item.username == tb.Text)
-                    { 
+                    {
                         employeeSelected = item;
                         break;
                     }
@@ -216,6 +220,7 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Tạo nhân viên thành công!!!");
                 Employees.Clear();
                 Load();
+                LoadEmpty();
             }
             else
             {
@@ -237,6 +242,7 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Xóa nhân viên thành công!!!");
                 Employees.Clear();
                 Load();
+                LoadEmpty();
             }
             else
             {
@@ -277,7 +283,7 @@ namespace QuanLyNhaHang.Setting
                     return;
                 }
             };
-            string result="";
+            string result = "";
             if (Password.Password == "")
             {
                 result = API.UpdateEmployee(employeeNew);
@@ -298,12 +304,70 @@ namespace QuanLyNhaHang.Setting
                 MessageBox.Show("Cập nhật thông tin nhân viên thành công!!!");
                 Employees.Clear();
                 Load();
+                LoadEmpty();
             }
             else
             {
                 MessageBox.Show("Có lỗi sảy ra trong quá trình cập nhật, vui lòng thử lại!!!");
             }
+        }
 
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string result = API.GetAllEmployee();
+            dynamic stuff = JsonConvert.DeserializeObject(result);
+            Employees.Clear();
+            ListViewEmployee.ItemsSource = Employees;
+
+            if (TbSearch.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập username!!!");
+                return;
+            }
+
+            Boolean search = false;
+            string Query = TbSearch.Text.ToUpper();
+            foreach (var item in stuff)
+            {
+                string employeeInList = item.username.ToString().ToUpper();
+                if (employeeInList.IndexOf(Query) != -1 || Query.IndexOf(employeeInList) != -1)
+                {
+                    search = true;
+                    Employees.Add(new Model.Employee()
+                    {
+                        id = item._id,
+                        username = item.username,
+                        displayName = item.displayName,
+                        role = item.role,
+                        password = item.password,
+                        dateOfBirth = item.dateOfBirth,
+                        identityNumber = item.identityNumber,
+                        phone = item.phone
+                    });
+                }
+            };
+            LoadTicket();
+            if (search == false)
+            {
+                MessageBox.Show("Username bạn nhập không tồn tại!!!");
+                return;
+            }
+            LoadEmpty();
+        }
+
+        private void LoadEmpty()
+        {
+            Username.Text = "";
+            NameEmployee.Text = "";
+            DateOfBirth.Text = "";
+            IdentityNumber.Text = "";
+            Phone.Text = "";
+            TypeEmployee.SelectedIndex = -1;
+            id.Text = "";
+            Password.Password = "";
+
+            btnUpdate.IsEnabled = false;
+            btnDelete.IsEnabled = false;
         }
     }
 }
