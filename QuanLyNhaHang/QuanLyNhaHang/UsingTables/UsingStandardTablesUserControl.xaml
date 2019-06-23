@@ -409,7 +409,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Button Height="20" Width="20"
+                                            <Button Height="20" Width="20" Click="IncreaseFood_Click"
                                             Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
                                             >
                                                 <materialDesign:PackIcon Kind="Add"/>

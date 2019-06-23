@@ -4,7 +4,7 @@ const Table = require('../models/table.model.js');
 const mongoose = require('mongoose');
 
 // Create and Save a new Bill
-exports.create =async function (req, res) {
+exports.create = async function (req, res) {
     // Validate request
     if (!req.body.employeeID) {
         return res.send({
@@ -13,20 +13,18 @@ exports.create =async function (req, res) {
     }
 
     // Create a Bill
-    var total=0;
-    if(req.body.type=="standard")
-    {
-        total=parseInt(req.body.numberOfSeat)*10000;
+    var total = 0;
+    if (req.body.type == "standard") {
+        total = parseInt(req.body.numberOfSeat) * 10000;
     }
-    else
-    {
-        total=parseInt(req.body.numberOfSeat)*30000;
+    else {
+        total = parseInt(req.body.numberOfSeat) * 30000;
     }
-    var count = await Bill.countDocuments({ }); 
+    var count = await Bill.countDocuments({});
     const bill = new Bill({
         employeeID: req.body.employeeID,
         tableNumber: req.body.number,
-        billNumber: count+1,
+        billNumber: count + 1,
         status: "unpaid",
         promotion: 0,
         total: total,
@@ -63,13 +61,13 @@ exports.findAll = (req, res) => {
 
 // Find a single bill with a billId
 exports.findOne = async (req, res) => {
-    var food = [];
+    var listFood = [];
     var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber), "status": "unpaid" });
-    for (var foodId of bill.menu) {
-        var foodItem = await Food.findById(foodId);
-        food.push(foodItem);
+    for (var foodItem of bill.menu) {
+        var food = await Food.findById(foodItem.id);
+        listFood.push({ name: food.name, price: food.price, amount: foodItem.amount });
     }
-    res.send(food);
+    res.send(listFood);
 };
 
 // Update a bill identified by the billId in the request
@@ -150,8 +148,7 @@ exports.delete = (req, res) => {
 
 exports.addFoodInBill = async function (req, res) {
     // Find bill and update it with the request body
-    console.log(req.body.tableNumber);
-    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), "status": "unpaid" })
+    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), status: "unpaid" })
         .then(bill => {
             if (!bill) {
                 console.log("Bill not found!!!");
@@ -159,7 +156,10 @@ exports.addFoodInBill = async function (req, res) {
 
             Bill.findByIdAndUpdate(bill._id, {
                 total: parseInt(req.body.price) + bill.total,
-                $push: { menu: mongoose.Types.ObjectId(req.body.foodId) }
+                $addToSet: {
+                    menu:
+                        { id: new mongoose.Types.ObjectId(req.body.foodId), amount: 1 }
+                }
             }, { new: true })
                 .then(bill => {
                     if (!bill) {
@@ -167,7 +167,7 @@ exports.addFoodInBill = async function (req, res) {
                             message: "Bill of table not found with id " + req.body.tableNumber
                         });
                     }
-                    res.send({ message: "Add successfull" });
+                    res.send({ message: "successfull" });
                 }).catch(err => {
                     if (err.kind === 'ObjectId') {
                         return res.status(404).send({
@@ -183,6 +183,44 @@ exports.addFoodInBill = async function (req, res) {
                 console.log("Bill not found!!!");
             }
             console.log("Bill not found!!!");
+        });
+
+};
+
+exports.increaseAmountFood = async function (req, res) {
+    // Find bill and update it with the request body
+    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), status: "unpaid" })
+        .then(bill => {
+            if (!bill) {
+                console.log("Bill not found!!!");
+            }
+            else {
+                Bill.updateOne({_id : bill._id, "menu.id" : new mongoose.Types.ObjectId(req.body.foodId)}, {
+                    total: parseInt(req.body.price) + bill.total,
+                    $inc: { "menu.$.amount": 1 }
+                }).then(bill => {
+                    if (!bill) {
+                        return res.status(404).send({
+                            message: "Bill of table not found with id " + req.body.tableNumber
+                        });
+                    }
+                    res.send({ message: "successfull" });
+                }).catch(err => {
+                    if (err.kind === 'ObjectId') {
+                        return res.status(404).send({
+                            message: "Bill not found with id " + req.body.tableNumber
+                        });
+                    }
+                    return res.send({
+                        message: err
+                    });
+                });
+            }
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                console.log(err);
+            }
+            console.log(err);
         });
 
 };
@@ -205,6 +243,8 @@ exports.pay = function (req, res) {
                 message: "Bill not found with " + req.body.tableNumber
             });
         }
+
+        Pro
 
         Bill.findByIdAndUpdate(bill._id, {
             status: "paid", promotion: req.body.promotion
@@ -282,7 +322,7 @@ exports.pay = function (req, res) {
 exports.filter = function (req, res) {
     var startTime = req.body.startTime;
     var endTime = req.body.endTime;
-    Bill.find({ "createdAt": { $gte: new Date(startTime + "T00:00:00.000Z"), $lte: new Date(endTime + "T23:59:59.999Z") },"status": "unpaid" }).then(bill =>{
+    Bill.find({ "createdAt": { $gte: new Date(startTime + "T00:00:00.000Z"), $lte: new Date(endTime + "T23:59:59.999Z") }, "status": "unpaid" }).then(bill => {
         res.send(bill);
     })
 };

@@ -13,6 +13,10 @@ module.exports = (app) => {
     // addFoodInBill a Bill with billId
     app.put('/api/bills/addFoodInBill', bill.addFoodInBill);
 
+
+    app.put('/api/bills/increaseAmountFood', bill.increaseAmountFood);
+    
+
     // Delete a Bill with billId
     app.delete('/api/bills/:billId', bill.delete);
 
