@@ -511,6 +511,28 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        public static string DecreaseAmountFood(string TableNumber, Food foodNew)
+        {
+            string url = SERVER + "/bills/decreaseAmountFood";
+            string json = "{\"tableNumber\": \""
+                + TableNumber + "\", \"foodId\": \""
+                + foodNew.id + "\", \"name\": \""
+                + foodNew.name + "\", \"price\": \""
+                + foodNew.price + "\", \"ingredients\": \""
+                + foodNew.ingredients + "\", \"type\": \""
+                + foodNew.type + "\", \"note\": \""
+                + foodNew.note + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
         public static string GetFoodInBill(string number)
         {
             string url = SERVER + "/bills/" + number;

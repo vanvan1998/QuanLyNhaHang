@@ -196,9 +196,47 @@ exports.increaseAmountFood = async function (req, res) {
                 console.log("Bill not found!!!");
             }
             else {
-                Bill.updateOne({_id : bill._id, "menu.id" : new mongoose.Types.ObjectId(req.body.foodId)}, {
+                Bill.updateOne({ _id: bill._id, "menu.id": new mongoose.Types.ObjectId(req.body.foodId) }, {
                     total: parseInt(req.body.price) + bill.total,
                     $inc: { "menu.$.amount": 1 }
+                }).then(bill => {
+                    if (!bill) {
+                        return res.status(404).send({
+                            message: "Bill of table not found with id " + req.body.tableNumber
+                        });
+                    }
+                    res.send({ message: "successfull" });
+                }).catch(err => {
+                    if (err.kind === 'ObjectId') {
+                        return res.status(404).send({
+                            message: "Bill not found with id " + req.body.tableNumber
+                        });
+                    }
+                    return res.send({
+                        message: err
+                    });
+                });
+            }
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                console.log(err);
+            }
+            console.log(err);
+        });
+
+};
+
+exports.decreaseAmountFood = async function (req, res) {
+    // Find bill and update it with the request body
+    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), status: "unpaid" })
+        .then(bill => {
+            if (!bill) {
+                console.log("Bill not found!!!");
+            }
+            else {
+                Bill.updateOne({ _id: bill._id, "menu.id": new mongoose.Types.ObjectId(req.body.foodId) }, {
+                    total: bill.total - parseInt(req.body.price),
+                    $inc: { "menu.$.amount": -1 }
                 }).then(bill => {
                     if (!bill) {
                         return res.status(404).send({

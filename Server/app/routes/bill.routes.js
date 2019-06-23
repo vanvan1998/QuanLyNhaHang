@@ -15,6 +15,9 @@ module.exports = (app) => {
 
     // increase amount of food
     app.put('/api/bills/increaseAmountFood', bill.increaseAmountFood);
+
+    // decrease amount of food
+    app.put('/api/bills/decreaseAmountFood', bill.decreaseAmountFood);
     
     // Delete a Bill with billId
     app.delete('/api/bills/:billId', bill.delete);

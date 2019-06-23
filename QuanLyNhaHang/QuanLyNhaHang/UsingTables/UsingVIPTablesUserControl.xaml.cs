@@ -132,12 +132,15 @@ namespace QuanLyNhaHang.UsingTables
                     Orders.Clear();
                     foreach (var item in stuff)
                     {
-                        Orders.Add(new Order()
+                        if (item.amount > 0)
                         {
-                            name = item.name,
-                            price = item.price,
-                            amount = item.amount
-                        });
+                            Orders.Add(new Order()
+                            {
+                                name = item.name,
+                                price = item.price,
+                                amount = item.amount
+                            });
+                        }
                     };
                 });
             });
@@ -394,23 +397,6 @@ namespace QuanLyNhaHang.UsingTables
             MessageBox.Show("Thanh toán thành công!!!");
         }
 
-        private void DiscountCodeTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            //if (DiscountCodeTextBox.Text != "")
-            //{
-            //    var re = DataProvider.Ins.DB.DanhSachMaKhuyenMais.Where(x => x.maKhuyenMai == DiscountCodeTextBox.Text).4PersonOrDefault();
-
-            //    if (re == null)
-            //    {
-            //        Total.Text = Math.Round((((DateTime.Now - phongHienTai.thoiGianBatDau).Value.Hours + ((DateTime.Now - phongHienTai.thoiGianBatDau).Value.Days) * 24) * phongHienTai.DanhSachBangGia.cacGioSau + phongHienTai.DanhSachBangGia.gioDau), 0).ToString();
-            //    }
-            //    else
-            //    {
-            //        Total.Text = (decimal.Parse(Total.Text) * (100 - re.phanTramGiam) / 100).ToString();
-            //    }
-            //}
-        }
-
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             Boolean isExistTable = false;
@@ -658,5 +644,46 @@ namespace QuanLyNhaHang.UsingTables
             });
         }
 
+        private async void DecreaseFood_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedFoodName = ((TextBlock)((Grid)((Button)sender).Parent).Children[0]).Text;
+
+            foreach (Order order in Orders)
+            {
+                if (order.name == selectedFoodName)
+                {
+                    if (order.amount > 0)
+                    {
+                        order.amount--;
+                    }
+                    else
+                    {
+                        Orders.Remove(order);
+                    }
+
+                    lvListBill.Items.Refresh();
+                    break;
+                }
+            }
+
+            foreach (Food item in AllFoods)
+            {
+                if (item.name == selectedFoodName)
+                {
+                    foodSelected = item;
+                    break;
+                }
+            }
+            await Task.Run(() =>
+            {
+                string result = API.DecreaseAmountFood(tableSelected.number, foodSelected);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateBillLayout();
+                });
+            });
+        }
     }
 }
