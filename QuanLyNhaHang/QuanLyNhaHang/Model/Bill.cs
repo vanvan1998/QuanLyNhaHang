@@ -8,9 +8,11 @@ namespace QuanLyNhaHang.Model
 {
     public class Bill
     {
+        public int billNumber { get; set; }
         public int total { get; set; }
         public int tableNumber { get; set; }
         public string time { get; set; } 
         public int count { get; set; }
+        public string promotion { get; set; }
     }
 }

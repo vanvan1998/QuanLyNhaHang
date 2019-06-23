@@ -133,8 +133,7 @@ namespace QuanLyNhaHang
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập số bàn!!!");
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Hidden;
+                HiddenScreen();
                 return;
             }
 
@@ -160,12 +159,14 @@ namespace QuanLyNhaHang
             if (search == false)
             {
                 MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Hidden;
+                HiddenScreen();
+
                 return;
             }
+            HiddenScreen();
             GridTable.Visibility = Visibility.Visible;
-            GridFood.Visibility = Visibility.Hidden;
+
+
             NumberTable.Text = tableSelected.number;
             if (tableSelected.type == "VIP")
                 TypeTable.Text = "VIP";
@@ -292,7 +293,6 @@ namespace QuanLyNhaHang
                 else
                     TypeTable.Text = "Tiêu chuẩn";
                 NumberOfSeat.Text = "Bàn " + tableSelected.numberOfSeat + " người";
-
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
@@ -302,8 +302,7 @@ namespace QuanLyNhaHang
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập tên khách hàng!!!");
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Hidden;
+                HiddenScreen();
                 return;
             }
             string result = API.GetAllTableWithCustomer(TbSearchTable.Text);
@@ -315,12 +314,12 @@ namespace QuanLyNhaHang
             if (Tables.Count == 0)
             {
                 MessageBox.Show("Không tìm thấy bàn theo yêu cầu của bạn!!!");
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Hidden;
+                HiddenScreen();
+
                 return;
             }
+            HiddenScreen();
             GridTable.Visibility = Visibility.Visible;
-            GridFood.Visibility = Visibility.Hidden;
 
             NumberTable.Text = "";
 
@@ -345,8 +344,8 @@ namespace QuanLyNhaHang
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập tên món ăn!!!");
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Hidden;
+                HiddenScreen();
+
                 return;
             }
 
@@ -382,8 +381,8 @@ namespace QuanLyNhaHang
             if (search == false)
             {
                 MessageBox.Show("Tên món ăn bạn nhập không tồn tại!!!");
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Hidden;
+                HiddenScreen();
+
                 return;
             }
             NameFood.Text = "";
@@ -391,9 +390,51 @@ namespace QuanLyNhaHang
             Ingredients.Text = "";
             NoteFood.Text = "";
             TypeFood.Text = "";
-            GridTable.Visibility = Visibility.Hidden;
+            HiddenScreen();
             GridFood.Visibility = Visibility.Visible;
 
+
+        }
+
+        private void SearchBill_Click()
+        {
+
+            Model.Bill billSelected = new Model.Bill();
+
+            if (TbSearchTable.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập số hóa đơn!!!");
+                HiddenScreen();
+                return;
+            }
+
+            string result = API.FindOneBill(TbSearchTable.Text);
+            dynamic stuffbill = JsonConvert.DeserializeObject(result);
+
+            try
+            {
+                billSelected = new Model.Bill()
+                {
+                    billNumber = stuffbill.bill.billNumber,
+                    tableNumber = stuffbill.bill.tableNumber,
+                    total = stuffbill.bill.total,
+                    promotion = stuffbill.bill.promotion,
+                };
+            }
+            catch
+            {
+                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
+                HiddenScreen();
+                return;
+            }
+            HiddenScreen();
+            GridBill.Visibility = Visibility.Visible;
+
+            NumberBill.Text = billSelected.billNumber.ToString();
+            NumberTableBill.Text = billSelected.tableNumber.ToString();
+            EmployeeBill.Text = stuffbill.employee.displayName;
+            TotalBill.Text = billSelected.total.ToString();
+            PromotionBill.Text = billSelected.promotion;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -415,6 +456,27 @@ namespace QuanLyNhaHang
             {
                 SearchFood_Click();
             }
+            if (Bill.IsChecked == true)
+            {
+                try
+                {
+                    int.Parse(TbSearchTable.Text);
+
+                    SearchBill_Click();
+                }
+                catch
+                {
+                    SearchTableCustomer_Click();
+                }
+            }
+        }
+
+        private void HiddenScreen()
+        {
+            GridTable.Visibility = Visibility.Hidden;
+            GridFood.Visibility = Visibility.Hidden;
+            GridBill.Visibility = Visibility.Hidden;
+
         }
     }
 }

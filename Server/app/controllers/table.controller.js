@@ -169,7 +169,7 @@ exports.countEmpty = async function (req, res) {
 // Find a single table with a tableNumber
 exports.findOne = async function (req, res) {
     try {
-        var table = Table.findOne({ "number": req.params.tableNumber });
+        var table = await Table.findOne({ "number": req.params.tableNumber });
         res.send({ table });
     } catch (error) {
         res.send({

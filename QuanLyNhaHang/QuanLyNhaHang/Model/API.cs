@@ -222,7 +222,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}}";
             try
             {
                 return POST(url, json);
@@ -243,7 +243,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"status\": \"" + table.status +
                             "\", \"type\": \"" + table.type +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
-                            "\", \"phone\": \"" + table.customer.phone + "\"}";
+                            "\", \"phone\": \"" + table.customer.phone + "\"}}";
             try
             {
                 return PUT(url, json);
@@ -577,6 +577,21 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
             
+        }
+
+        public static string FindOneBill(string number)
+        {
+            string url = SERVER + "/bills/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
         }
         #endregion
 
