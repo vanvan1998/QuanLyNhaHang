@@ -301,8 +301,6 @@ namespace QuanLyNhaHang.Model
 
         #endregion
 
-        
-
         #region Http method
 
         private static string GET(string uri)
@@ -556,6 +554,23 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
             
+        }
+        #endregion
+
+        #region Promotions API
+        public static string GetPromotions()
+        {
+            string url = SERVER + "/promotions";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
         }
         #endregion
     }

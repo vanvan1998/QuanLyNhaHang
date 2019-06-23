@@ -14,6 +14,7 @@ namespace QuanLyNhaHang.Model
         public int numberOfSeat { get; set; }
         public string status { get; set; }
         public string note { get; set; }
+        public int total { get; set; }
         public Customer customer { get; set; }
     }
 }
