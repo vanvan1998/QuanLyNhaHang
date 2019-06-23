@@ -427,7 +427,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Tổng tiền " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <Label Grid.Column="0" Content="Tổng tiền " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
                     <TextBlock Grid.Column="1" Margin="10 0 10 0" x:Name="Total" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" ></TextBlock>
                 </Grid>
 
@@ -446,9 +446,8 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Mã Giảm Giá " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="DiscountCodeTextBox" IsEnabled="False" materialDesign:HintAssist.Hint="Nhập mã giảm giá" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap" KeyUp="DiscountCodeTextBox_KeyUp" TextChanged="DiscountCodeTextBox_TextChanged"/>
+                    <TextBox x:Name="DiscountCodeTextBox" materialDesign:HintAssist.Hint="Nhập mã giảm giá" Grid.Column="1" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap" KeyUp="DiscountCodeTextBox_KeyUp" TextChanged="DiscountCodeTextBox_TextChanged" />
                 </Grid>
-
                 <Grid Grid.Row="8">
                     <StackPanel Orientation="Horizontal">
                         <Button IsDefault="True"

@@ -5,7 +5,7 @@ const BillSchema = mongoose.Schema({
     tableNumber: Number,
     billNumber: Number,   
     status: String,
-    promotion: Number,
+    promotion: String,
     total: Number,
     customer: {
         fullName : String,

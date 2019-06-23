@@ -321,9 +321,7 @@ namespace QuanLyNhaHang.UsingTables
                     }
                 }
 
-                ResetLayout();
-                getToTalTableSelected();
-                LoadOrders();
+                UpdateBillLayout();
 
                 AddFood.IsEnabled = true;
                 BtnPay.IsEnabled = true;
@@ -333,7 +331,7 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private async void getToTalTableSelected()
+        private async void UpdateToTalOfTableSelected()
         {
             await Task.Run(() =>
             {
@@ -349,7 +347,7 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Pay(object sender, RoutedEventArgs e)
         {
-            string result = API.Pay(NumberTable.Text);
+            string result = API.Pay(NumberTable.Text, DiscountCodeTextBox.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             if (stuff.message != "successfull")
@@ -392,8 +390,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
             }
 
-            ResetLayout();
-            Orders.Clear();
+            ResetBillLayout();
             MessageBox.Show("Thanh toán thành công!!!");
         }
 
@@ -424,6 +421,7 @@ namespace QuanLyNhaHang.UsingTables
                 {
                     tableSelected = item;
                     isExistTable = true;
+                    break;
                 }
             }
             if (!isExistTable)
@@ -432,9 +430,7 @@ namespace QuanLyNhaHang.UsingTables
             }
             else
             {
-                LoadOrders();
-                getToTalTableSelected();
-                ResetLayout();
+                UpdateBillLayout();
             }
         }
 
@@ -532,7 +528,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else
                 {
-                    foreach (var item in Food2)
+                    foreach (var item in Food3)
                     {
                         if (item.name == tb.Text)
                         {
@@ -552,10 +548,9 @@ namespace QuanLyNhaHang.UsingTables
                 else
                 {
                     MessageBox.Show("Thêm món thành công!!!");
-                    getToTalTableSelected();
+                    UpdateBillLayout();
                     rt.Fill = Brushes.White;
                 }
-
             }
         }
 
@@ -571,13 +566,26 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private void ResetLayout()
+        private void UpdateBillLayout()
         {
             NumberTable.Text = tableSelected.number;
             TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
             CustomerName.Text = tableSelected.customer.fullName;
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
+
+            UpdateToTalOfTableSelected();
+            LoadOrders();
+        }
+
+        private void ResetBillLayout()
+        {
+            Orders.Clear();
+            NumberTable.Text = "";
+            TypeTable.Text = "";
+            CustomerName.Text = "";
+            CustomerPhone.Text = "";
+            NoteTextBlock.Text = "";
         }
 
         private void DiscountCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)

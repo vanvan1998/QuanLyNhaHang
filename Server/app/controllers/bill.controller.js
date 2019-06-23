@@ -207,7 +207,7 @@ exports.pay = function (req, res) {
         }
 
         Bill.findByIdAndUpdate(bill._id, {
-            status: "paid"
+            status: "paid", promotion: req.body.promotion
         }, { new: true })
             .then(bill => {
                 if (!bill) {

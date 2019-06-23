@@ -519,12 +519,12 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string Pay(string tableNumber)
+        public static string Pay(string tableNumber, string promotion)
         {
             string url = SERVER + "/bills/pay";
             string json = "{\"tableNumber\": \""
-                + tableNumber +  "\"}";
-
+                + tableNumber + "\", \"promotion\": \""
+                + promotion + "\"}";
             try
             {
                 return POST(url,json);
