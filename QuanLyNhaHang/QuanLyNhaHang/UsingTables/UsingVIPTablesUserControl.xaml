@@ -451,13 +451,13 @@
 
                 <Grid Grid.Row="8">
                     <StackPanel Orientation="Horizontal">
-                        <Button IsDefault="True" BorderBrush="#ffffff"
+                        <Button Background="MidnightBlue" IsDefault="True" BorderBrush="#ffffff"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150" Margin="40,0,50,0" x:Name="AddFood" Click="AddFood_Click" IsEnabled="False">
                             Thêm món
                         </Button>
 
-                        <Button x:Name="BtnPay" Click="Pay" IsDefault="True" BorderBrush="#ffffff"
+                        <Button Background="MidnightBlue" x:Name="BtnPay" Click="Pay" IsDefault="True" BorderBrush="#ffffff"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150" IsEnabled="False">
                             Thanh toán

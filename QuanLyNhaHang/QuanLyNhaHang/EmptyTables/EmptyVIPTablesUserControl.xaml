@@ -258,7 +258,7 @@
 
 
                 <Grid Grid.Row="7">
-                    <Button BorderBrush="#ffffff" Click="BtnDatBan" IsDefault="True"
+                    <Button BorderBrush="#ffffff" Background="MidnightBlue" Click="BtnDatBan" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150">
                         Đặt bàn
