@@ -108,9 +108,9 @@ namespace QuanLyNhaHang
                     };
                 });
             });
-            
+
         }
-        
+
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
@@ -161,6 +161,8 @@ namespace QuanLyNhaHang
                 MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
                 return;
             }
+            GridTable.Visibility = Visibility.Visible;
+            GridFood.Visibility = Visibility.Hidden;
             NumberTable.Text = tableSelected.number;
             if (tableSelected.type == "VIP")
                 TypeTable.Text = "VIP";
@@ -300,9 +302,16 @@ namespace QuanLyNhaHang
             Tables.Clear();
             ListViewTable.ItemsSource = Tables;
             Load();
-                              
+            if(Tables.Count==0)
+            {
+                MessageBox.Show("Không tìm thấy bàn theo yêu cầu của bạn!!!");
+                return;
+            }
+            GridTable.Visibility = Visibility.Visible;
+            GridFood.Visibility = Visibility.Hidden;
+
             NumberTable.Text = "";
-            
+
             NumberOfSeat.Text = "";
             CustomerName.Text = "";
             Phone.Text = "";
@@ -314,82 +323,82 @@ namespace QuanLyNhaHang
         {
             string result = API.GetAllFood();
             stuff = JsonConvert.DeserializeObject(result);
-
+            Foods.Clear();
             ListViewFood.ItemsSource = Foods;
-            LoadFood();
 
             Model.Food foodSelected = new Model.Food();
 
             if (TbSearchTable.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập tên món ăn!!!");
+                GridTable.Visibility = Visibility.Hidden;
+                GridFood.Visibility = Visibility.Hidden;
                 return;
             }
 
             Boolean search = false;
+            string foodQuery = TbSearchTable.Text.ToUpper();
             foreach (var item in stuff)
             {
-                if (item.name == TbSearchTable.Text)
+                string foodInList = item.name.ToString().ToUpper();
+                if (foodInList.IndexOf(foodQuery) != -1 || foodQuery.IndexOf(foodInList) != -1)
                 {
-                    foodSelected = new Model.Food()
+                    if (search == false)
+                    {
+                        foodSelected = new Model.Food()
+                        {
+                            name = item.name,
+                            price = item.price,
+                            type = item.type,
+                            ingredients = item.ingredients,
+                            note = item.note,
+                        };
+                        search = true;
+                    }
+                    Foods.Add(new Model.Food()
                     {
                         name = item.name,
-                        price=item.price,
-                        type=item.type,
-                        ingredients=item.ingredients,
-                        note=item.note,
-                    };
-                    search = true;
-                    break;
+                        price = item.price,
+                        type = item.type,
+                        ingredients = item.ingredients,
+                        note = item.note
+                    });
                 }
             };
             if (search == false)
             {
                 MessageBox.Show("Tên món ăn bạn nhập không tồn tại!!!");
+                GridTable.Visibility = Visibility.Hidden;
+                GridFood.Visibility = Visibility.Hidden;
                 return;
             }
-
-            NameFood.Text = foodSelected.name;
-            Price.Text = foodSelected.price;
-            Ingredients.Text = foodSelected.ingredients;
-            NoteFood.Text = foodSelected.note;
-
-            if (foodSelected.type == "appetizer")
-            {
-                TypeFood.Text = "Khai vị";
-            }
-            else if (foodSelected.type == "dish")
-            {
-                TypeFood.Text = "Món chính";
-            }
-            else
-            {
-                TypeFood.Text = "Tráng miệng";
-            }
-
+            NameFood.Text = "";
+            Price.Text = "";
+            Ingredients.Text = "";
+            NoteFood.Text = "";
+            TypeFood.Text = "";
+            GridTable.Visibility = Visibility.Hidden;
+            GridFood.Visibility = Visibility.Visible;
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(Table.IsChecked==true)
+            if (Table.IsChecked == true)
             {
-                GridTable.Visibility = Visibility.Visible;
-                GridFood.Visibility = Visibility.Hidden;
                 try
                 {
                     int.Parse(TbSearchTable.Text);
 
                     SearchTable_Click();
                 }
-                catch 
+                catch
                 {
                     SearchTableCustomer_Click();
                 }
             }
             if (Food.IsChecked == true)
             {
-                GridTable.Visibility = Visibility.Hidden;
-                GridFood.Visibility = Visibility.Visible;
                 SearchFood_Click();
             }
         }

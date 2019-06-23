@@ -8,7 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Loaded="UserControl_Loaded">
     <Grid>
-        <Grid Height="590" Width="450" Margin="0,15,550,30">
+        <Grid Height="590" Width="450" Margin="500,15,50,30">
             <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
                 <Rectangle.Effect>
                     <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
@@ -48,7 +48,7 @@
             </StackPanel>
         </StackPanel>
         </Grid>
-        <Grid Margin="500,15,50,30" Height="590" Width="400">
+        <Grid Margin="0,15,550,30" Height="590" Width="400">
             <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
                 <Rectangle.Effect>
                     <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
