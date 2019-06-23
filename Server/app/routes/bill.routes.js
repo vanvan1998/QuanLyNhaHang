@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.get('/api/bills', bill.findAll);
 
     // Retrieve a single Bill with billId
-    app.get('/api/bills/:tableNumber', bill.findOne);
+    app.get('/api/bills/:billNumber', bill.findOne);
 
     // addFoodInBill a Bill with billId
     app.put('/api/bills/addFoodInBill', bill.addFoodInBill);

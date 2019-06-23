@@ -1,6 +1,7 @@
 const Bill = require('../models/bill.model.js');
 const Food = require('../models/food.model.js');
 const Table = require('../models/table.model.js');
+const Employee = require('../models/employee.model.js');
 const mongoose = require('mongoose');
 
 // Create and Save a new Bill
@@ -285,4 +286,18 @@ exports.filter = function (req, res) {
     Bill.find({ "createdAt": { $gte: new Date(startTime + "T00:00:00.000Z"), $lte: new Date(endTime + "T23:59:59.999Z") },"status": "unpaid" }).then(bill =>{
         res.send(bill);
     })
+};
+
+exports.findOne = async function (req, res) {
+    try {
+        var bill =await Bill.findOne({ "billNumber": parseInt( req.params.billNumber) });
+        console.log(bill);
+        var employee=await Employee.findById(bill.employeeID);
+        console.log(employee);
+        res.send( {bill,employee});
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
+        });
+    }
 };

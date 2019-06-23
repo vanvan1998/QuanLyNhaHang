@@ -150,6 +150,89 @@
                     </Grid>
                 </Grid>
 
+                <Grid x:Name="GridBill" Visibility="Hidden">
+                    <Grid Height="580" Width="450" Margin="500,0,50,0">
+                        <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
+                            <Rectangle.Effect>
+                                <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <StackPanel Margin="20,10,10,10">
+                            <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Thông tin bàn</TextBlock>
+                            <TextBlock Margin="0,25,0,0" Foreground="#DD892121">Số hóa đơn:</TextBlock>
+                            <TextBox x:Name="NumberBill" Width="300" Margin="50,0,20,15"></TextBox>
+                            <TextBox x:Name="IDBill" Width="0" Height="0"></TextBox>
+                            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Số bàn:</TextBlock>
+                            <TextBox x:Name="NumberTableBill" Width="300" Margin="50,0,20,15"></TextBox>
+                            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Nhân viên thanh toán:</TextBlock>
+                            <TextBox x:Name="EmployeeBill" Width="300" Margin="50,0,20,15"></TextBox>
+                            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Tổng tiền:</TextBlock>
+                            <TextBox x:Name="TotalBill" Width="300" Margin="50,0,20,15"></TextBox>
+                            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Họ và tên khách hàng:</TextBlock>
+                            <TextBox x:Name="CustomerBill" Width="300" Margin="50,0,20,15"></TextBox>
+                            <TextBlock Margin="0,0,0,0" Foreground="#DD892121">Giảm giá:</TextBlock>
+                            <TextBox x:Name="PromotionBill" Width="300" Margin="50,0,20,15"></TextBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Margin="0,0,550,0" Height="580" Width="400">
+                        <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
+                            <Rectangle.Effect>
+                                <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                            </Rectangle.Effect>
+                        </Rectangle>
+                        <StackPanel >
+                            <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Danh sách món trong hóa đơn</TextBlock>
+                            <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" >
+                                <ListView Height="530" Width="400" Margin="0,10,0,0"  x:Name="ListFoodInBill" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="{x:Null}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="1" HorizontalAlignment="Stretch" ></UniformGrid>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                        <ListView x:Name="ListViewFoodInBill" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewFood_MouseUp">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="1" Rows="100"></UniformGrid>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Rectangle x:Name="BackGround" Fill="White" RadiusY="10" RadiusX="10" >
+                                                            <Rectangle.Effect>
+                                                                <DropShadowEffect BlurRadius="10" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                                                            </Rectangle.Effect>
+                                                        </Rectangle>
+                                                        <Grid>
+                                                            <Grid x:Name="TicketType" Background="#FFF3F311" Width="30" Height="45" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                                                <Grid.Effect >
+                                                                    <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                                                </Grid.Effect>
+                                                                <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
+                                                            </Grid>
+                                                            <TextBlock Text="Tên món" FontFamily="Champagne &amp; Limousines" Margin="200,10,10,10" VerticalAlignment="Top" Foreground="Gray"/>
+                                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
+                                                                <TextBlock x:Name="NameFood" Text="{Binding name}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="25"/>
+                                                            </StackPanel>
+
+                                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
+                                                                <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
+                                                                <TextBlock  x:Name="Price" Text="{Binding price}" FontSize="10" Foreground="Gray"/>
+                                                                <TextBlock x:Name="ID" Height="0" Width="0"></TextBlock>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </ScrollViewer>
+                                </ListView>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
                 <Grid x:Name="GridFood" Visibility="Hidden">
                     <Grid Height="580" Width="450" Margin="500,0,50,0">
                         <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
