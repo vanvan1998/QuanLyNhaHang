@@ -25,13 +25,6 @@ namespace QuanLyNhaHang.UsingTables
     /// </summary>
     /// 
 
-    public class Order
-    {
-        public string name { get; set; }
-        public string price { get; set; }
-        public int amount { get; set; }
-    }
-
     public partial class UsingStandardTablesUserControl : UserControl
     {
         ObservableCollection<Model.Table> AllTables = new ObservableCollection<Model.Table>();
