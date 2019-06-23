@@ -37,13 +37,13 @@
                                     </Rectangle.Effect>
                                 </Rectangle>
                                 <Grid>
-                                    <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                    <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                     </Grid>
-                                    <TextBlock Text="Số phòng" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
+                                    <TextBlock Text="Số bàn" HorizontalAlignment="Right" FontFamily="Champagne &amp; Limousines" Margin="10" VerticalAlignment="Top" Foreground="Gray"/>
                                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 40 30 0">
                                         <TextBlock x:Name="NumberTable" Text="{Binding number}" FontFamily="Champagne &amp; Limousines" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="40"/>
                                     </StackPanel>
@@ -51,7 +51,7 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Cursor="Hand">
                                         <materialDesign:PackIcon Kind="Calendar" Foreground="Gray" Width="10" Height="10" VerticalAlignment="Center" Margin="5 0"/>
                                         <TextBlock Text="Bàn " FontSize="10" Foreground="Gray"/>
-                                        <TextBlock  x:Name="TypeTable" Text="{Binding numberOfSeat}" FontSize="10" Foreground="Gray"/>
+                                        <TextBlock x:Name="TypeTable" Text="{Binding numberOfSeat}" FontSize="10" Foreground="Gray"/>
                                         <TextBlock Text=" người" FontSize="10" Foreground="Gray"/>
                                     </StackPanel>
                                 </Grid>
@@ -83,9 +83,9 @@
                                     </Rectangle.Effect>
                                 </Rectangle>
                                 <Grid>
-                                    <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                    <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                     </Grid>
@@ -129,9 +129,9 @@
                                     </Rectangle.Effect>
                                 </Rectangle>
                                 <Grid>
-                                    <Grid Width="30" Height="45" Background="#FFF3F311" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                    <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                         <Grid.Effect>
-                                            <DropShadowEffect BlurRadius="5" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
+                                            <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                         </Grid.Effect>
                                         <materialDesign:PackIcon Kind="Ticket" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5" Foreground="White" Width="20" Height="20"/>
                                     </Grid>
@@ -179,7 +179,6 @@
                         <StackPanel
                             Orientation="Horizontal"
                             materialDesign:RippleAssist.IsCentered="True">
-
                             <materialDesign:ColorZone
                             Mode="Standard"
                             Padding="8 4 8 4"
@@ -200,7 +199,6 @@
                                     </Button>
                                 </Grid>
                             </materialDesign:ColorZone>
-
                         </StackPanel>
                     </materialDesign:ColorZone>
                 </StackPanel>
@@ -217,7 +215,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Column="0" Content="Bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="NumberTable" Text="{Binding number}" Grid.Column="1" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    <TextBlock x:Name="NumberTable" Text="{Binding number}" Grid.Column="1" FontSize="55" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FFF2E821"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="3">
@@ -226,7 +224,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Loại bàn " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock x:Name="TypeTable" Grid.Column="1" Text="{Binding numberOfSeat}" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    <TextBlock x:Name="TypeTable" Grid.Column="1" Text="{Binding numberOfSeat}" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" Background="White" Foreground="#FFF2E821"></TextBlock>
                 </Grid>
 
                 <Grid Grid.Row="4">
@@ -235,7 +233,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="CustomerNameTextBox" materialDesign:HintAssist.Hint="Họ tên khách hàng" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox x:Name="CustomerNameTextBox" TextChanged="CheckForBtnBook" IsEnabled="False" materialDesign:HintAssist.Hint="Họ tên khách hàng" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
                 <Grid Grid.Row="5">
@@ -244,7 +242,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Số điện thoại " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="CustomerPhone" materialDesign:HintAssist.Hint="Số điện thoại" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox x:Name="CustomerPhone" TextChanged="CheckForBtnBook" IsEnabled="False" materialDesign:HintAssist.Hint="Số điện thoại" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
                 <Grid Grid.Row="6">
@@ -253,12 +251,12 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="NoteTextBox" materialDesign:HintAssist.Hint="Ghi chú" Grid.Column="1" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox x:Name="NoteTextBox" IsEnabled="False" materialDesign:HintAssist.Hint="Ghi chú" Grid.Column="1" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
 
                 <Grid Grid.Row="7">
-                    <Button BorderBrush="#ffffff" Background="MidnightBlue" Click="BtnDatBan" IsDefault="True"
+                    <Button x:Name="BtnBook" Background="MidnightBlue" IsEnabled="False" BorderBrush="#ffffff" Click="Book" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150">
                         Đặt bàn

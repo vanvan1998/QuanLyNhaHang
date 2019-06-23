@@ -40,7 +40,10 @@ namespace QuanLyNhaHang.UsingTables
         ObservableCollection<Model.Food> Food2 = new ObservableCollection<Model.Food>();
         ObservableCollection<Model.Food> Food3 = new ObservableCollection<Model.Food>();
 
+        List<Promotion> Promotions = new List<Promotion>();
+
         Model.Table tableSelected = null;
+        Model.Food foodSelected = null;
 
         public UsingVIPTablesUserControl()
         {
@@ -58,6 +61,7 @@ namespace QuanLyNhaHang.UsingTables
 
             LoadAlltable();
             LoadAllFood();
+            LoadPromotions();
         }
 
         private async void LoadAlltable()
@@ -121,18 +125,42 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetFoodInBill(tableSelected.number);
-                dynamic stuffFood = JsonConvert.DeserializeObject(result);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
                 {
                     Orders.Clear();
-                    foreach (var item in stuffFood)
+                    foreach (var item in stuff)
                     {
                         Orders.Add(new Order()
                         {
                             name = item.name,
                             price = item.price,
-                            amount = 1
+                            amount = item.amount
+                        });
+                    };
+                });
+            });
+        }
+
+        private async void LoadPromotions()
+        {
+            await Task.Run(() =>
+            {
+                string result = API.GetPromotions();
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Promotions.Clear();
+                    foreach (var item in stuff)
+                    {
+                        Promotions.Add(new Promotion()
+                        {
+                            code = item.code,
+                            type = item.type,
+                            value = item.value,
+                            rule = item.rule
                         });
                     };
                 });
@@ -293,9 +321,7 @@ namespace QuanLyNhaHang.UsingTables
                     }
                 }
 
-                ResetLayout();
-                getToTal();
-                LoadOrders();
+                UpdateBillLayout();
 
                 AddFood.IsEnabled = true;
                 BtnPay.IsEnabled = true;
@@ -305,15 +331,16 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private async void getToTal()
+        private async void UpdateToTalOfTableSelected()
         {
             await Task.Run(() =>
             {
                 string result = API.GetTotalInBill(tableSelected.number);
-                dynamic total = JsonConvert.DeserializeObject(result);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
                 this.Dispatcher.Invoke(() =>
                 {
-                    Total.Text = total.total;
+                    tableSelected.total = stuff.total;
+                    Total.Text = tableSelected.total.ToString();
                 });
             });
         }
@@ -363,8 +390,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
             }
 
-            ResetLayout();
-            Orders.Clear();
+            ResetBillLayout();
             MessageBox.Show("Thanh toán thành công!!!");
         }
 
@@ -395,6 +421,7 @@ namespace QuanLyNhaHang.UsingTables
                 {
                     tableSelected = item;
                     isExistTable = true;
+                    break;
                 }
             }
             if (!isExistTable)
@@ -403,9 +430,7 @@ namespace QuanLyNhaHang.UsingTables
             }
             else
             {
-                LoadOrders();
-                getToTal();
-                ResetLayout();
+                UpdateBillLayout();
             }
         }
 
@@ -477,8 +502,6 @@ namespace QuanLyNhaHang.UsingTables
                 var tb = (TextBlock)dt.FindName("NameFood", cp);
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
 
-                Model.Food foodSelected = null;
-
                 if (ListViewSelected.Name == "ListViewFood1")
                 {
                     foreach (var item in Food1)
@@ -503,7 +526,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else
                 {
-                    foreach (var item in Food2)
+                    foreach (var item in Food3)
                     {
                         if (item.name == tb.Text)
                         {
@@ -516,17 +539,16 @@ namespace QuanLyNhaHang.UsingTables
                 string result = API.AddFoodInBill(tableSelected.number, foodSelected);
                 dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
 
-                if (stuffAddFood.message != "Add successfull")
+                if (stuffAddFood.message != "successfull")
                 {
                     MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
                 }
                 else
                 {
                     MessageBox.Show("Thêm món thành công!!!");
-                    getToTal();
+                    UpdateBillLayout();
                     rt.Fill = Brushes.White;
                 }
-
             }
         }
 
@@ -542,13 +564,99 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private void ResetLayout()
+        private async void UpdateBillLayout()
         {
             NumberTable.Text = tableSelected.number;
             TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
             CustomerName.Text = tableSelected.customer.fullName;
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
+
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateToTalOfTableSelected();
+                    LoadOrders();
+                });
+            });
         }
+
+        private void ResetBillLayout()
+        {
+            Orders.Clear();
+            NumberTable.Text = "";
+            TypeTable.Text = "";
+            CustomerName.Text = "";
+            CustomerPhone.Text = "";
+            NoteTextBlock.Text = "";
+            Total.Text = "";
+
+            AddFood.IsEnabled = false;
+            BtnPay.IsEnabled = false;
+            DiscountCodeTextBox.IsEnabled = false;
+        }
+
+        private void DiscountCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            bool exist = false;
+            Promotion promotion = null;
+
+            foreach (Promotion item in Promotions)
+            {
+                if (DiscountCodeTextBox.Text == item.code)
+                {
+                    promotion = item;
+                    exist = true;
+                    break;
+                }
+            }
+            if (exist)
+            {
+                if (promotion.type == "percent")
+                {
+                    Total.Text = (tableSelected.total * (100 - promotion.value) / 100).ToString();
+                }
+            }
+            else
+            {
+                Total.Text = tableSelected.total.ToString();
+            }
+        }
+
+        private async void IncreaseFood_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedFoodName = ((TextBlock)((Grid)((Button)sender).Parent).Children[0]).Text;
+
+            foreach (Order order in Orders)
+            {
+                if (order.name == selectedFoodName)
+                {
+                    order.amount++;
+                    lvListBill.Items.Refresh();
+                    break;
+                }
+            }
+
+            foreach (Food item in AllFoods)
+            {
+                if (item.name == selectedFoodName)
+                {
+                    foodSelected = item;
+                    break;
+                }
+            }
+            await Task.Run(() =>
+            {
+                string result = API.IncreaseAmountFood(tableSelected.number, foodSelected);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateBillLayout();
+                });
+            });
+        }
+
     }
 }

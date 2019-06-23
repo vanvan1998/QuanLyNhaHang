@@ -45,10 +45,12 @@ namespace QuanLyNhaHang.EmptyTables
 
         private async void LoadData()
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 string result = API.GetAllTableWithStatusAndType("empty", "standard");
                 stuff = JsonConvert.DeserializeObject(result);
-                this.Dispatcher.Invoke(() => {
+                this.Dispatcher.Invoke(() =>
+                {
                     foreach (var item in stuff)
                     {
                         if (item.numberOfSeat == 4)
@@ -80,8 +82,8 @@ namespace QuanLyNhaHang.EmptyTables
                         };
                     }
                 });
-                
-            });       
+
+            });
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -147,15 +149,19 @@ namespace QuanLyNhaHang.EmptyTables
                 var tb = (TextBlock)dt.FindName("NumberTable", cp);
                 var tbtype = (TextBlock)dt.FindName("TypeTable", cp);
 
-               
+
                 NumberTable.Text = tb.Text;
-                TypeTable.Text ="Bàn "+ tbtype.Text +" người";
+                TypeTable.Text = "Bàn " + tbtype.Text + " người";
+
+                CustomerNameTextBox.IsEnabled = true;
+                CustomerPhone.IsEnabled = true;
+                NoteTextBox.IsEnabled = true;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
 
-        private void BtnDatBan(object sender, RoutedEventArgs e)
+        private void Book(object sender, RoutedEventArgs e)
         {
 
             if (NumberTable.Text == "")
@@ -180,7 +186,7 @@ namespace QuanLyNhaHang.EmptyTables
             tableBook.type = "standard";
             tableBook.number = NumberTable.Text;
             tableBook.note = NoteTextBox.Text;
-            if(TypeTable.Text=="Bàn 4 người")
+            if (TypeTable.Text == "Bàn 4 người")
             {
                 tableBook.numberOfSeat = 4;
             }
@@ -253,5 +259,16 @@ namespace QuanLyNhaHang.EmptyTables
 
         }
 
+        private void CheckForBtnBook(object sender, TextChangedEventArgs e)
+        {
+            if (CustomerNameTextBox.Text.Length > 0 && CustomerPhone.Text.Length > 0)
+            {
+                BtnBook.IsEnabled = true;
+            }
+            else
+            {
+                BtnBook.IsEnabled = false;
+            }
+        }
     }
 }

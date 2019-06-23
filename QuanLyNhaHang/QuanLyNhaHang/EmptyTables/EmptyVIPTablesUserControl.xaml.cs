@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +31,7 @@ namespace QuanLyNhaHang.EmptyTables
         ObservableCollection<Model.Table> EmptyVIP8PersonTables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Table> EmptyVIP12PersonTables = new ObservableCollection<Model.Table>();
         dynamic stuff;
+
         public EmptyVIPTablesUserControl()
         {
             InitializeComponent();
@@ -37,10 +40,10 @@ namespace QuanLyNhaHang.EmptyTables
             ListViewEmptyVIP8PersonTable.ItemsSource = EmptyVIP8PersonTables;
             ListViewEmptyVIP12PersonTable.ItemsSource = EmptyVIP12PersonTables;
 
-            Load();
+            LoadData();
         }
 
-        private async void Load()
+        private async void LoadData()
         {
             await Task.Run(() =>
             {
@@ -78,11 +81,11 @@ namespace QuanLyNhaHang.EmptyTables
                             });
                         };
                     }
-
                 });
-            });
 
+            });
         }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
@@ -146,26 +149,19 @@ namespace QuanLyNhaHang.EmptyTables
                 var tb = (TextBlock)dt.FindName("NumberTable", cp);
                 var tbtype = (TextBlock)dt.FindName("TypeTable", cp);
 
-                //foreach (var room in DataProvider.Ins.DB.Phongs.ToList())
-                //{
-                //    if (tb.Text == room.soPhong)
-                //    {
-                //        phongHienTai = room;
-                //        NumberTable.Text = room.soPhong;
-                //        TypeTable.Text = room.loaiPhong;
-                //        break;
-                //    }
-                //}
+
                 NumberTable.Text = tb.Text;
                 TypeTable.Text = "Bàn " + tbtype.Text + " người";
 
+                CustomerNameTextBox.IsEnabled = true;
+                CustomerPhone.IsEnabled = true;
+                NoteTextBox.IsEnabled = true;
+
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
-
         }
 
-
-        private void BtnDatBan(object sender, RoutedEventArgs e)
+        private void Book(object sender, RoutedEventArgs e)
         {
 
             if (NumberTable.Text == "")
@@ -206,7 +202,8 @@ namespace QuanLyNhaHang.EmptyTables
 
             tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };
             string employeeID = LoginWindow.employee.id;
-            string result = API.BookTable(tableBook,employeeID);
+
+            string result = API.BookTable(tableBook, employeeID);
             dynamic stuff = JsonConvert.DeserializeObject(result);
             if (stuff.message == "Table update successfully!")
             {
@@ -220,7 +217,7 @@ namespace QuanLyNhaHang.EmptyTables
             EmptyVIP12PersonTables.Clear();
             EmptyVIP8PersonTables.Clear();
             EmptyVIP4PersonTables.Clear();
-            Load();
+            LoadData();
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
@@ -246,7 +243,7 @@ namespace QuanLyNhaHang.EmptyTables
                         numberOfSeat = item.numberOfSeat,
                         status = item.status,
                         customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
-                        note = item.note
+                        note = item.note,
                     };
                     search = true;
                     break;
@@ -260,6 +257,18 @@ namespace QuanLyNhaHang.EmptyTables
             NumberTable.Text = tableSelected.number;
             TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
 
+        }
+
+        private void CheckForBtnBook(object sender, TextChangedEventArgs e)
+        {
+            if (CustomerNameTextBox.Text.Length > 0 && CustomerPhone.Text.Length > 0)
+            {
+                BtnBook.IsEnabled = true;
+            }
+            else
+            {
+                BtnBook.IsEnabled = false;
+            }
         }
     }
 }

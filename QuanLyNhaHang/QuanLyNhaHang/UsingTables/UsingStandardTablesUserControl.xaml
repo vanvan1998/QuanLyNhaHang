@@ -41,7 +41,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect>
                                                     <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>
@@ -86,7 +86,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect>
                                                     <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>
@@ -131,7 +131,7 @@
                                             </Rectangle.Effect>
                                         </Rectangle>
                                         <Grid>
-                                            <Grid Width="30" Height="45" Background="#FFF2E821" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
+                                            <Grid Width="30" Height="45" Background="#FF2195F2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 0">
                                                 <Grid.Effect>
                                                     <DropShadowEffect BlurRadius="10" Color="#FFECECEC" RenderingBias="Quality" ShadowDepth="1"/>
                                                 </Grid.Effect>
@@ -378,11 +378,11 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="0"  HorizontalAlignment="Left">
                         <Label Grid.Column="0" Content="Khách hàng: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                        <TextBlock x:Name="CustomerName" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock x:Name="CustomerName" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Column="1"  HorizontalAlignment="Left">
                         <Label Grid.Column="0" Content="SĐT: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                        <TextBlock x:Name="CustomerPhone" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock x:Name="CustomerPhone" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
                     </StackPanel>
                 </Grid>
 

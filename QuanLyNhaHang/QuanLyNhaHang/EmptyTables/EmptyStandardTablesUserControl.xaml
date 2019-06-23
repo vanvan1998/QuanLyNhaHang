@@ -233,7 +233,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Khách hàng " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="CustomerNameTextBox" materialDesign:HintAssist.Hint="Họ tên khách hàng" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox x:Name="CustomerNameTextBox" TextChanged="CheckForBtnBook" IsEnabled="False" materialDesign:HintAssist.Hint="Họ tên khách hàng" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
                 <Grid Grid.Row="5">
@@ -242,7 +242,7 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Số điện thoại " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="CustomerPhone" materialDesign:HintAssist.Hint="Số điện thoại" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox x:Name="CustomerPhone" TextChanged="CheckForBtnBook" IsEnabled="False" materialDesign:HintAssist.Hint="Số điện thoại" Grid.Column="1" FontSize="25" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
                 <Grid Grid.Row="6">
@@ -251,12 +251,12 @@
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Ghi chú " FontSize="20" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBox x:Name="NoteTextBox" materialDesign:HintAssist.Hint="Ghi chú" Grid.Column="1" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBox x:Name="NoteTextBox" IsEnabled="False" materialDesign:HintAssist.Hint="Ghi chú" Grid.Column="1" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" TextWrapping="Wrap"/>
                 </Grid>
 
 
                 <Grid Grid.Row="7">
-                    <Button Background="MidnightBlue" BorderBrush="#ffffff" Click="BtnDatBan" IsDefault="True"
+                    <Button x:Name="BtnBook" Background="MidnightBlue" IsEnabled="False" BorderBrush="#ffffff" Click="Book" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150">
                         Đặt bàn
