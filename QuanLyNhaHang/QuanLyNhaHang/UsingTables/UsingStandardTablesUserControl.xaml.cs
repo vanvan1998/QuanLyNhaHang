@@ -43,6 +43,7 @@ namespace QuanLyNhaHang.UsingTables
         List<Promotion> Promotions = new List<Promotion>();
 
         Model.Table tableSelected = null;
+        Model.Food foodSelected = null;
 
         public UsingStandardTablesUserControl()
         {
@@ -124,23 +125,22 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetFoodInBill(tableSelected.number);
-                dynamic stuffFood = JsonConvert.DeserializeObject(result);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
                 {
                     Orders.Clear();
-                    foreach (var item in stuffFood)
+                    foreach (var item in stuff)
                     {
                         Orders.Add(new Order()
                         {
                             name = item.name,
                             price = item.price,
-                            amount = 1
+                            amount = item.amount
                         });
                     };
                 });
             });
-
         }
 
         private async void LoadPromotions()
@@ -502,8 +502,6 @@ namespace QuanLyNhaHang.UsingTables
                 var tb = (TextBlock)dt.FindName("NameFood", cp);
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
 
-                Model.Food foodSelected = null;
-
                 if (ListViewSelected.Name == "ListViewFood1")
                 {
                     foreach (var item in Food1)
@@ -541,7 +539,7 @@ namespace QuanLyNhaHang.UsingTables
                 string result = API.AddFoodInBill(tableSelected.number, foodSelected);
                 dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
 
-                if (stuffAddFood.message != "Add successfull")
+                if (stuffAddFood.message != "successfull")
                 {
                     MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
                 }
@@ -566,7 +564,7 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private void UpdateBillLayout()
+        private async void UpdateBillLayout()
         {
             NumberTable.Text = tableSelected.number;
             TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
@@ -574,8 +572,14 @@ namespace QuanLyNhaHang.UsingTables
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
 
-            UpdateToTalOfTableSelected();
-            LoadOrders();
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateToTalOfTableSelected();
+                    LoadOrders();
+                });
+            });
         }
 
         private void ResetBillLayout()
@@ -586,6 +590,11 @@ namespace QuanLyNhaHang.UsingTables
             CustomerName.Text = "";
             CustomerPhone.Text = "";
             NoteTextBlock.Text = "";
+            Total.Text = "";
+
+            AddFood.IsEnabled = false;
+            BtnPay.IsEnabled = false;
+            DiscountCodeTextBox.IsEnabled = false;
         }
 
         private void DiscountCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -614,5 +623,30 @@ namespace QuanLyNhaHang.UsingTables
                 Total.Text = tableSelected.total.ToString();
             }
         }
+
+        private async void IncreaseFood_Click(object sender, RoutedEventArgs e)
+        {
+            string selectedFoodName = ((TextBlock)((Grid)((Button)sender).Parent).Children[0]).Text;
+
+            foreach (Food item in AllFoods)
+            {
+                if (item.name == selectedFoodName)
+                {
+                    foodSelected = item;
+                }
+            }
+            await Task.Run(() =>
+            {
+                string result = API.IncreaseAmountFood(tableSelected.number, foodSelected);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+                Thread.Sleep(3000);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateBillLayout();
+                });
+            });
+        }
+        
     }
 }

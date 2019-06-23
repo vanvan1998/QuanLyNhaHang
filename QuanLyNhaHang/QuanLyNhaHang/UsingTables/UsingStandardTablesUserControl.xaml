@@ -409,9 +409,9 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Grid>
-                                            <Button Height="20" Width="20"
-                                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
-                                            >
+                                            <TextBlock Height="0" Width="0" Text="{Binding name}"></TextBlock>
+                                            <Button Height="20" Width="20" Click="IncreaseFood_Click"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}" >
                                                 <materialDesign:PackIcon Kind="Add"/>
                                             </Button>
                                         </Grid>
@@ -454,7 +454,7 @@
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="150" Margin="40,0,50,0" x:Name="AddFood" Click="AddFood_Click" IsEnabled="False">
                             Thêm món
-                        </Button>
+                        </Button> 
 
                         <Button x:Name="BtnPay" Click="Pay" IsDefault="True"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
