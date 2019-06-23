@@ -7,6 +7,7 @@ module.exports = (app) => {
     // Retrieve all Bills
     app.get('/api/bills', bill.findAll);
 
+
     // Retrieve a single Bill with billId
     app.get('/api/bills/:billNumber', bill.findOne);
 

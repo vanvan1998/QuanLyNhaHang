@@ -31,6 +31,7 @@ namespace QuanLyNhaHang.Statistical
 
 
             DateTime now = DateTime.Now;
+
             DateTime first = new DateTime(now.Year, now.Month, 1);
             DateTime week1 = new DateTime(now.Year, now.Month, 8);
             DateTime week2 = new DateTime(now.Year, now.Month, 15);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace QuanLyNhaHang
 
             UsingTables.Text = "0";
             EmptyTables.Text = "0";
+            NewBills.Text = "0";
 
             SeriesCollection1 = new SeriesCollection {
                 new PieSeries
@@ -88,6 +90,11 @@ namespace QuanLyNhaHang
         {
             await Task.Run(() =>
             {
+                DateTime today = DateTime.Today;
+                string startTime = today.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+                string result3 = API.Filter(startTime.Substring(0, 10), startTime.Substring(0, 10));
+                dynamic stuff3 = JsonConvert.DeserializeObject(result3);
+
                 string result1 = API.CountTableUsing();
                 dynamic stuff1 = JsonConvert.DeserializeObject(result1);
 
@@ -96,6 +103,8 @@ namespace QuanLyNhaHang
 
                 this.Dispatcher.Invoke(() =>
                 {
+                    NewBills.Text = stuff3.Count.ToString();
+
                     UsingTables.Text = stuff1.count;
 
                     EmptyTables.Text = stuff2.count;
@@ -111,6 +120,7 @@ namespace QuanLyNhaHang
             });
 
         }
+
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;

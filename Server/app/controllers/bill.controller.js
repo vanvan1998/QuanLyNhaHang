@@ -323,7 +323,7 @@ exports.pay = function (req, res) {
 exports.filter = function (req, res) {
     var startTime = req.body.startTime;
     var endTime = req.body.endTime;
-    Bill.find({ "createdAt": { $gte: new Date(startTime + "T00:00:00.000Z"), $lte: new Date(endTime + "T23:59:59.999Z") }, "status": "unpaid" }).then(bill => {
+    Bill.find({ "createdAt": { $gte: new Date(startTime + "T00:00:00.000Z"), $lte: new Date(endTime + "T23:59:59.999Z") }, "status": "paid" }).then(bill => {
         res.send(bill);
     })
 };
@@ -341,3 +341,4 @@ exports.findOne = async function (req, res) {
         });
     }
 };
+
