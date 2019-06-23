@@ -132,6 +132,7 @@ namespace QuanLyNhaHang.UsingTables
 
                 this.Dispatcher.Invoke(() =>
                 {
+                    Orders.Clear();
                     foreach (var item in stuffFood)
                     {
                         Orders.Add(new Order()
@@ -299,17 +300,13 @@ namespace QuanLyNhaHang.UsingTables
                     }
                 }
 
-                NumberTable.Text = tableSelected.number;
-                TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
-                CustomerName.Text = tableSelected.customer.fullName;
-                CustomerPhone.Text = tableSelected.customer.phone;
-                NoteTextBlock.Text = tableSelected.note;
+                ResetLayout();
                 getToTal();
-
                 LoadOrders();
 
                 AddFood.IsEnabled = true;
                 BtnPay.IsEnabled = true;
+                DiscountCodeTextBox.IsEnabled = true;
 
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
@@ -330,11 +327,6 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Pay(object sender, RoutedEventArgs e)
         {
-            if (NumberTable.Text == "")
-            {
-                MessageBox.Show("Chưa chọn bàn!");
-                return;
-            }
             string result = API.Pay(NumberTable.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
@@ -343,6 +335,7 @@ namespace QuanLyNhaHang.UsingTables
                 MessageBox.Show("Thanh toán thất bại!!!");
                 return;
             }
+
             if (tableSelected.numberOfSeat == 4)
             {
                 foreach (var item in UsingStandard4PersonTables)
@@ -377,13 +370,9 @@ namespace QuanLyNhaHang.UsingTables
                 }
             }
 
+            ResetLayout();
+            Orders.Clear();
             MessageBox.Show("Thanh toán thành công!!!");
-            NumberTable.Text = "";
-            TypeTable.Text = "";
-            CustomerName.Text = "";
-            CustomerPhone.Text = "";
-            NoteTextBlock.Text = "";
-            Total.Text = "";
         }
 
         private void DiscountCodeTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -405,12 +394,6 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            if (TbSearch.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập số bàn!!!");
-                return;
-            }
-
             Boolean isExistTable = false;
 
             foreach (var item in AllTables)
@@ -424,14 +407,13 @@ namespace QuanLyNhaHang.UsingTables
             if (!isExistTable)
             {
                 MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
-                return;
             }
-            NumberTable.Text = tableSelected.number;
-            TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
-            CustomerName.Text = tableSelected.customer.fullName;
-            CustomerPhone.Text = tableSelected.customer.phone;
-            NoteTextBlock.Text = tableSelected.note;
-            getToTal();
+            else
+            {
+                LoadOrders();
+                getToTal();
+                ResetLayout();
+            }        
         }
 
         private void AddFood_Click(object sender, RoutedEventArgs e)
@@ -544,13 +526,36 @@ namespace QuanLyNhaHang.UsingTables
                 if (stuffAddFood.message != "Add successfull")
                 {
                     MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
-                    return;
                 }
-                MessageBox.Show("Thêm món thành công!!!");
-
-                getToTal();
-                rt.Fill = Brushes.White;
+                else
+                {
+                    MessageBox.Show("Thêm món thành công!!!");
+                    getToTal();
+                    rt.Fill = Brushes.White;
+                }
+                
             }
+        }
+
+        private void TbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TbSearch.Text.Length > 0)
+            {
+                BtnSearch.IsEnabled = true;
+            }
+            else
+            {
+                BtnSearch.IsEnabled = false;
+            }
+        }
+
+        private void ResetLayout()
+        {
+            NumberTable.Text = tableSelected.number;
+            TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
+            CustomerName.Text = tableSelected.customer.fullName;
+            CustomerPhone.Text = tableSelected.customer.phone;
+            NoteTextBlock.Text = tableSelected.note;
         }
     }
 }

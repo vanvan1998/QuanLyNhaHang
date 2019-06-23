@@ -25,7 +25,7 @@ mongoose.connect(dbConfig.url, {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
-mongoose.set('useFindAndModify', true);
+mongoose.set('useFindAndModify', true); 
 
 require('./app/routes/table.routes.js')(app);
 require('./app/routes/employee.routes.js')(app);

@@ -58,7 +58,7 @@ namespace QuanLyNhaHang.UsingTables
             ListViewFood3.ItemsSource = Food3;
 
             List<temp> temp = new List<temp>();
-            for(int i=0;i<10;i++)
+            for (int i = 0; i < 10; i++)
             {
                 temp.Add(new temp() { name = "trà sữa", price = "2345672", number = 10 });
                 temp.Add(new temp() { name = "chos tuaans", price = "50000", number = 1 });
