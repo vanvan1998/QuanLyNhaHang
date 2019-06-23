@@ -301,8 +301,6 @@ namespace QuanLyNhaHang.Model
 
         #endregion
 
-        
-
         #region Http method
 
         private static string GET(string uri)
@@ -521,12 +519,12 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string Pay(string tableNumber)
+        public static string Pay(string tableNumber, string promotion)
         {
             string url = SERVER + "/bills/pay";
             string json = "{\"tableNumber\": \""
-                + tableNumber +  "\"}";
-
+                + tableNumber + "\", \"promotion\": \""
+                + promotion + "\"}";
             try
             {
                 return POST(url,json);
@@ -561,6 +559,23 @@ namespace QuanLyNhaHang.Model
         public static string FindOneBill(string number)
         {
             string url = SERVER + "/bills/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+        #endregion
+
+        #region Promotions API
+        public static string GetPromotions()
+        {
+            string url = SERVER + "/promotions";
 
             try
             {

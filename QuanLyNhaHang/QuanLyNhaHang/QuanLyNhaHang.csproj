@@ -79,6 +79,7 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Food.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Promotion.cs" />
     <Compile Include="Model\Table.cs" />
     <Compile Include="SearchUserControl.xaml.cs">
       <DependentUpon>SearchUserControl.xaml</DependentUpon>

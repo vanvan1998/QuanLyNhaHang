@@ -40,6 +40,8 @@ namespace QuanLyNhaHang.UsingTables
         ObservableCollection<Model.Food> Food2 = new ObservableCollection<Model.Food>();
         ObservableCollection<Model.Food> Food3 = new ObservableCollection<Model.Food>();
 
+        List<Promotion> Promotions = new List<Promotion>();
+
         Model.Table tableSelected = null;
 
         public UsingStandardTablesUserControl()
@@ -58,6 +60,7 @@ namespace QuanLyNhaHang.UsingTables
 
             LoadAlltable();
             LoadAllFood();
+            LoadPromotions();
         }
 
         private async void LoadAlltable()
@@ -133,6 +136,31 @@ namespace QuanLyNhaHang.UsingTables
                             name = item.name,
                             price = item.price,
                             amount = 1
+                        });
+                    };
+                });
+            });
+
+        }
+
+        private async void LoadPromotions()
+        {
+            await Task.Run(() =>
+            {
+                string result = API.GetPromotions();
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Promotions.Clear();
+                    foreach (var item in stuff)
+                    {
+                        Promotions.Add(new Promotion()
+                        {
+                            code = item.code,
+                            type = item.type,
+                            value = item.value,
+                            rule = item.rule
                         });
                     };
                 });
@@ -293,9 +321,7 @@ namespace QuanLyNhaHang.UsingTables
                     }
                 }
 
-                ResetLayout();
-                getToTal();
-                LoadOrders();
+                UpdateBillLayout();
 
                 AddFood.IsEnabled = true;
                 BtnPay.IsEnabled = true;
@@ -305,22 +331,23 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private async void getToTal()
+        private async void UpdateToTalOfTableSelected()
         {
             await Task.Run(() =>
             {
                 string result = API.GetTotalInBill(tableSelected.number);
-                dynamic total = JsonConvert.DeserializeObject(result);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
                 this.Dispatcher.Invoke(() =>
                 {
-                    Total.Text = total.total;
+                    tableSelected.total = stuff.total;
+                    Total.Text = tableSelected.total.ToString();
                 });
             });
         }
 
         private void Pay(object sender, RoutedEventArgs e)
         {
-            string result = API.Pay(NumberTable.Text);
+            string result = API.Pay(NumberTable.Text, DiscountCodeTextBox.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             if (stuff.message != "successfull")
@@ -363,8 +390,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
             }
 
-            ResetLayout();
-            Orders.Clear();
+            ResetBillLayout();
             MessageBox.Show("Thanh toán thành công!!!");
         }
 
@@ -395,6 +421,7 @@ namespace QuanLyNhaHang.UsingTables
                 {
                     tableSelected = item;
                     isExistTable = true;
+                    break;
                 }
             }
             if (!isExistTable)
@@ -403,10 +430,8 @@ namespace QuanLyNhaHang.UsingTables
             }
             else
             {
-                LoadOrders();
-                getToTal();
-                ResetLayout();
-            }        
+                UpdateBillLayout();
+            }
         }
 
         private void AddFood_Click(object sender, RoutedEventArgs e)
@@ -503,7 +528,7 @@ namespace QuanLyNhaHang.UsingTables
                 }
                 else
                 {
-                    foreach (var item in Food2)
+                    foreach (var item in Food3)
                     {
                         if (item.name == tb.Text)
                         {
@@ -523,10 +548,9 @@ namespace QuanLyNhaHang.UsingTables
                 else
                 {
                     MessageBox.Show("Thêm món thành công!!!");
-                    getToTal();
+                    UpdateBillLayout();
                     rt.Fill = Brushes.White;
                 }
-                
             }
         }
 
@@ -542,13 +566,53 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private void ResetLayout()
+        private void UpdateBillLayout()
         {
             NumberTable.Text = tableSelected.number;
             TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
             CustomerName.Text = tableSelected.customer.fullName;
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
+
+            UpdateToTalOfTableSelected();
+            LoadOrders();
+        }
+
+        private void ResetBillLayout()
+        {
+            Orders.Clear();
+            NumberTable.Text = "";
+            TypeTable.Text = "";
+            CustomerName.Text = "";
+            CustomerPhone.Text = "";
+            NoteTextBlock.Text = "";
+        }
+
+        private void DiscountCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            bool exist = false;
+            Promotion promotion = null;
+
+            foreach (Promotion item in Promotions)
+            {
+                if (DiscountCodeTextBox.Text == item.code)
+                {
+                    promotion = item;
+                    exist = true;
+                    break;
+                }
+            }
+            if (exist)
+            {
+                if (promotion.type == "percent")
+                {
+                    Total.Text = (tableSelected.total * (100 - promotion.value) / 100).ToString();
+                }
+            }
+            else
+            {
+                Total.Text = tableSelected.total.ToString();
+            }
         }
     }
 }
