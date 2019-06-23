@@ -8,8 +8,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Loaded="UserControl_Loaded">
     <Grid>
-        <StackPanel Height="700" Width="400" Margin="0,15,550,30">
-
+        <Grid Height="590" Width="450" Margin="0,15,550,30">
+            <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                </Rectangle.Effect>
+            </Rectangle>
+        <StackPanel Margin="25,10,0,0">
             <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Thông tin bàn</TextBlock>
             <TextBlock Margin="0,10,0,0" Foreground="#DD892121">Số bàn:</TextBlock>
             <TextBox x:Name="NumberTable" Width="300" Margin="50,0,20,15"></TextBox>
@@ -42,7 +47,14 @@
                 <Button x:Name="btnAdd" Click="BtnAdd_Click" Margin="40,0,20,0" HorizontalAlignment="Center" Content="Thêm" BorderBrush="#ffffff" Background="#DD892121"></Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel Margin="500,15,50,0">
+        </Grid>
+        <Grid Margin="500,15,50,30" Height="590" Width="400">
+            <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                </Rectangle.Effect>
+            </Rectangle>
+        <StackPanel Margin="0,10,0,0">
             <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#DD892121">Danh sách bàn</TextBlock>
             <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" >
                 <ListView Height="530" Width="400" Margin="0,10,0,0"  x:Name="ListUser" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="{x:Null}">
@@ -93,5 +105,6 @@
                 </ListView>
             </ScrollViewer>
         </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

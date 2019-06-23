@@ -150,7 +150,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid x:Name="GridFood" Visibility="Visible">
+                <Grid x:Name="GridFood" Visibility="Hidden">
                     <Grid Height="580" Width="450" Margin="0,0,550,0">
                         <Rectangle Fill="White" RadiusY="10" RadiusX="10" >
                             <Rectangle.Effect>
