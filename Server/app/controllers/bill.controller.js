@@ -328,17 +328,16 @@ exports.filter = function (req, res) {
     })
 };
 
-exports.findOne = async function (req, res) {
-    try {
-        var bill =await Bill.findOne({ "billNumber": parseInt( req.params.billNumber) });
-        console.log(bill);
-        var employee=await Employee.findById(bill.employeeID);
-        console.log(employee);
-        res.send( {bill,employee});
-    } catch (error) {
-        res.send({
-            message: error.message || "Some error occurred while retrieving tables."
-        });
-    }
-};
-
+// exports.findOne = async function (req, res) {
+//     try {
+//         var bill =await Bill.findOne({ "billNumber": parseInt( req.params.billNumber) });
+//         console.log(bill);
+//         var employee=await Employee.findById(bill.employeeID);
+//         console.log(employee);
+//         res.send( {bill,employee});
+//     } catch (error) {
+//         res.send({
+//             message: error.message || "Some error occurred while retrieving tables."
+//         });
+//     }
+// };

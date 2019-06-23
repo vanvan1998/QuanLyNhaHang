@@ -628,18 +628,28 @@ namespace QuanLyNhaHang.UsingTables
         {
             string selectedFoodName = ((TextBlock)((Grid)((Button)sender).Parent).Children[0]).Text;
 
+            foreach(Order order in Orders)
+            {
+                if (order.name == selectedFoodName)
+                {
+                    order.amount++;
+                    lvListBill.Items.Refresh();
+                    break;
+                }
+            }
+
             foreach (Food item in AllFoods)
             {
                 if (item.name == selectedFoodName)
                 {
                     foodSelected = item;
+                    break;
                 }
             }
             await Task.Run(() =>
             {
                 string result = API.IncreaseAmountFood(tableSelected.number, foodSelected);
                 dynamic stuff = JsonConvert.DeserializeObject(result);
-                Thread.Sleep(3000);
 
                 this.Dispatcher.Invoke(() =>
                 {
