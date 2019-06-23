@@ -564,7 +564,7 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private void UpdateBillLayout()
+        private async void UpdateBillLayout()
         {
             NumberTable.Text = tableSelected.number;
             TypeTable.Text = "Bàn " + tableSelected.numberOfSeat + " người";
@@ -572,8 +572,14 @@ namespace QuanLyNhaHang.UsingTables
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
 
-            UpdateToTalOfTableSelected();
-            LoadOrders();
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateToTalOfTableSelected();
+                    LoadOrders();
+                });
+            });
         }
 
         private void ResetBillLayout()
@@ -618,16 +624,29 @@ namespace QuanLyNhaHang.UsingTables
             }
         }
 
-        private void IncreaseFood_Click(object sender, RoutedEventArgs e)
+        private async void IncreaseFood_Click(object sender, RoutedEventArgs e)
         {
-            GridView a = (GridView)sender;
-            string result = API.IncreaseAmountFood(tableSelected.number, foodSelected);
-            dynamic stuff = JsonConvert.DeserializeObject(result);
+            string selectedFoodName = ((TextBlock)((Grid)((Button)sender).Parent).Children[0]).Text;
 
-            if (stuff.message != "successfull")
+            foreach (Food item in AllFoods)
             {
-                MessageBox.Show("Có lỗi sảy ra, vui lòng thử lại!!!");
+                if (item.name == selectedFoodName)
+                {
+                    foodSelected = item;
+                }
             }
+            await Task.Run(() =>
+            {
+                string result = API.IncreaseAmountFood(tableSelected.number, foodSelected);
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+                Thread.Sleep(3000);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    UpdateBillLayout();
+                });
+            });
         }
+        
     }
 }

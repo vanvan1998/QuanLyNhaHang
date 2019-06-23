@@ -491,7 +491,7 @@ namespace QuanLyNhaHang.Model
 
         public static string IncreaseAmountFood(string TableNumber, Food foodNew)
         {
-            string url = SERVER + "/bills/addFoodInBill";
+            string url = SERVER + "/bills/increaseAmountFood";
             string json = "{\"tableNumber\": \""
                 + TableNumber + "\", \"foodId\": \""
                 + foodNew.id + "\", \"name\": \""
@@ -510,7 +510,6 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
-
 
         public static string GetFoodInBill(string number)
         {
