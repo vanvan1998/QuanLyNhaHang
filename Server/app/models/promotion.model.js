@@ -4,7 +4,8 @@ const PromotionSchema = mongoose.Schema({
     code: String,
     type: String,
     value: Number,
-    rule: String
+    rule: String,
+    active: Boolean
 }, {
         timestamps: true
     });
