@@ -318,12 +318,7 @@ namespace QuanLyNhaHang.Setting
             dynamic stuff = JsonConvert.DeserializeObject(result);
             Employees.Clear();
             ListViewEmployee.ItemsSource = Employees;
-
-            if (TbSearch.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập username!!!");
-                return;
-            }
+            
 
             Boolean search = false;
             string Query = TbSearch.Text.ToUpper();
@@ -368,6 +363,18 @@ namespace QuanLyNhaHang.Setting
 
             btnUpdate.IsEnabled = false;
             btnDelete.IsEnabled = false;
+        }
+
+        private void TbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TbSearch.Text.Length > 0)
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
         }
     }
 }

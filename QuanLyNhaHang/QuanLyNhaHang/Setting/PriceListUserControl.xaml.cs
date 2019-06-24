@@ -261,13 +261,7 @@ namespace QuanLyNhaHang.Setting
             dynamic stuff = JsonConvert.DeserializeObject(result);
             Foods.Clear();
             ListViewFood.ItemsSource = Foods;
-
-            if (TbSearch.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập tên món ăn!!!");
-                return;
-            }
-
+            
             Boolean search = false;
             string foodQuery = TbSearch.Text.ToUpper();
             foreach (var item in stuff)
@@ -306,6 +300,18 @@ namespace QuanLyNhaHang.Setting
             id.Text = "";
             btnUpdate.IsEnabled = false;
             btnDelete.IsEnabled = false;
+        }
+
+        private void TbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TbSearch.Text.Length > 0)
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
         }
     }
 }

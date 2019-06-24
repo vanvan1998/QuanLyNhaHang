@@ -334,12 +334,6 @@ namespace QuanLyNhaHang.Setting
         {
             Model.Table tableSelected = new Model.Table();
 
-            if (TbSearch.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập số bàn!!!");
-                return;
-            }
-
             Boolean search = false;
             foreach (var item in stuff)
             {
@@ -401,6 +395,17 @@ namespace QuanLyNhaHang.Setting
             ID.Text = tableSelected.id;
             btnUpdate.IsEnabled = true;
             btnDelete.IsEnabled = true;
+        }
+        private void TbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TbSearch.Text.Length > 0)
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
         }
     }
 }

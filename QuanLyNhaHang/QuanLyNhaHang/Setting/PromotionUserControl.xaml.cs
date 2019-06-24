@@ -266,13 +266,7 @@ namespace QuanLyNhaHang.Setting
             dynamic stuff = JsonConvert.DeserializeObject(result);
             Promotions.Clear();
             ListViewPromotion.ItemsSource = Promotions;
-
-            if (TbSearch.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập mã khuyến mãi!!!");
-                return;
-            }
-
+            
             Boolean search = false;
             string promotionQuery = TbSearch.Text.ToUpper();
             foreach (var item in stuff)
@@ -311,6 +305,18 @@ namespace QuanLyNhaHang.Setting
             id.Text = "";
             btnUpdate.IsEnabled = false;
             btnDelete.IsEnabled = false;
+        }
+
+        private void TbSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TbSearch.Text.Length > 0)
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
         }
     }
 }
