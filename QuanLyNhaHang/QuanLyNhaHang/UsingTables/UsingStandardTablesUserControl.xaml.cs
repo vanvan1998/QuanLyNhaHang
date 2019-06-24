@@ -175,7 +175,8 @@ namespace QuanLyNhaHang.UsingTables
                             code = item.code,
                             type = item.type,
                             value = item.value,
-                            rule = item.rule
+                            rule = item.rule,
+                            active = item.active
                         });
                     };
                 });
