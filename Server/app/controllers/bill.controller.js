@@ -31,8 +31,8 @@ exports.create = async function (req, res) {
         total: total,
         menu: new Array(),
         customer: {
-            fullName: req.body.fullName,
-            phone: req.body.phone,
+            fullName: req.body.customer.fullName,
+            phone: req.body.customer.phone,
         }
     });
 
