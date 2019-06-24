@@ -264,6 +264,7 @@ namespace QuanLyNhaHang.Model
                             "\", \"status\": \"" + table.status +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
                             "\", \"phone\": \"" + table.customer.phone + "\"}}";
+
             string url1 = SERVER + "/bills";
             string json1 = "{\"employeeID\": \"" + employeeID +
                             "\", \"number\": \"" + table.number +
