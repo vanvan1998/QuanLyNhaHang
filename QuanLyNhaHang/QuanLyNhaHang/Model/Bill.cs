@@ -14,5 +14,7 @@ namespace QuanLyNhaHang.Model
         public string time { get; set; } 
         public int count { get; set; }
         public string promotion { get; set; }
+        public Customer customer { get; set; }
+        public string employeeName { get; set; }
     }
 }

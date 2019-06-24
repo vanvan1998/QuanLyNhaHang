@@ -28,6 +28,7 @@ namespace QuanLyNhaHang
     {
         ObservableCollection<Model.Table> Tables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Food> Foods = new ObservableCollection<Model.Food>();
+        ObservableCollection<Model.Bill> Bills= new ObservableCollection<Model.Bill>();
 
         dynamic stuff;
 
@@ -85,6 +86,29 @@ namespace QuanLyNhaHang
             });
         }
 
+        private async Task LoadBill(dynamic stuffbill)
+        {
+            await Task.Run(() =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    foreach (var item in stuffbill)
+                    {
+                        Bills.Add(new Model.Bill()
+                        {
+                            employeeName=item.employeeName,
+                            billNumber = item.billNumber,
+                            tableNumber = item.tableNumber,
+                            total = item.total,
+                            promotion = item.promotion,
+                            customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
+                        });
+                       
+                    };
+                });
+            });
+        }
+
         private async void LoadFood()
         {
             string result = API.GetAllFood();
@@ -125,10 +149,8 @@ namespace QuanLyNhaHang
             string result = API.GetAllTable();
             stuff = JsonConvert.DeserializeObject(result);
 
+            Tables.Clear();
             ListViewTable.ItemsSource = Tables;
-            Load();
-
-            Model.Table tableSelected = new Model.Table();
 
             if (TbSearchTable.Text == "")
             {
@@ -142,7 +164,8 @@ namespace QuanLyNhaHang
             {
                 if (item.number == TbSearchTable.Text)
                 {
-                    tableSelected = new Model.Table()
+                    search = true;
+                    Tables.Add(new Model.Table()
                     {
                         id = item._id,
                         number = item.number,
@@ -151,32 +174,26 @@ namespace QuanLyNhaHang
                         status = item.status,
                         customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
                         note = item.note
-                    };
-                    search = true;
-                    break;
+                    });
                 }
             };
             if (search == false)
             {
                 MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
                 HiddenScreen();
-
                 return;
             }
             HiddenScreen();
             GridTable.Visibility = Visibility.Visible;
 
 
-            NumberTable.Text = tableSelected.number;
-            if (tableSelected.type == "VIP")
-                TypeTable.Text = "VIP";
-            else
-                TypeTable.Text = "Tiêu chuẩn";
-            NumberOfSeat.Text = "Bàn " + tableSelected.numberOfSeat + " người";
-            CustomerName.Text = tableSelected.customer.fullName;
-            Phone.Text = tableSelected.customer.phone;
-            Note.Text = tableSelected.note;
-            Status.Text = tableSelected.status;
+            NumberTable.Text = "";
+            TypeTable.Text = "";
+            NumberOfSeat.Text = "";
+            CustomerName.Text = "";
+            Phone.Text = "";
+            Note.Text = "";
+            Status.Text = "";
 
 
         }
@@ -222,7 +239,7 @@ namespace QuanLyNhaHang
                 };
 
                 NameFood.Text = foodSelected.name;
-                Price.Text = foodSelected.price;
+                PriceFood.Text = foodSelected.price;
                 Ingredients.Text = foodSelected.ingredients;
                 NoteFood.Text = foodSelected.note;
 
@@ -293,6 +310,56 @@ namespace QuanLyNhaHang
                 else
                     TypeTable.Text = "Tiêu chuẩn";
                 NumberOfSeat.Text = "Bàn " + tableSelected.numberOfSeat + " người";
+                rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
+            }
+        }
+
+        private void ListViewBill_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (((ListView)sender).SelectedIndex == -1)
+            {
+                return;
+            }
+
+            if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
+            {
+                var bc = new BrushConverter();
+
+                for (int j = 0; j < Bills.Count; j++)
+                {
+                    ListViewItem lvi1 = ListViewBill.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+
+                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                    var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("NumberBill", cp1);
+                    rt1.Fill = Brushes.White;
+                }
+
+                var cp = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi);
+
+                var dt = cp.ContentTemplate as DataTemplate;
+                var rt = (Rectangle)dt.FindName("BackGround", cp);
+                var tb = (TextBlock)dt.FindName("NumberBill", cp);
+                Model.Bill billSelected = new Model.Bill();
+
+                foreach (var item in Bills)
+                {
+                    if (item.billNumber.ToString() == tb.Text)
+                    {
+                        billSelected = item;
+                        break;
+                    }
+                };
+
+                NumberBill.Text = billSelected.billNumber.ToString();
+                NumberTableBill.Text =billSelected.tableNumber.ToString();
+                TotalBill.Text = billSelected.total.ToString();
+                PromotionBill.Text = billSelected.promotion;
+                EmployeeBill.Text = billSelected.employeeName;
+                CustomerBill.Text = billSelected.customer.fullName;
+
+                //todo list food
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
@@ -373,7 +440,7 @@ namespace QuanLyNhaHang
                 return;
             }
             NameFood.Text = "";
-            Price.Text = "";
+            PriceFood.Text = "";
             Ingredients.Text = "";
             NoteFood.Text = "";
             TypeFood.Text = "";
@@ -385,8 +452,8 @@ namespace QuanLyNhaHang
 
         private void SearchBill_Click()
         {
-
-            Model.Bill billSelected = new Model.Bill();
+            Bills.Clear();
+            ListViewBill.ItemsSource = Bills;
 
             if (TbSearchTable.Text == "")
             {
@@ -400,29 +467,63 @@ namespace QuanLyNhaHang
 
             try
             {
-                billSelected = new Model.Bill()
+                Bills.Add( new Model.Bill()
                 {
                     billNumber = stuffbill.bill.billNumber,
                     tableNumber = stuffbill.bill.tableNumber,
                     total = stuffbill.bill.total,
                     promotion = stuffbill.bill.promotion,
-                };
+                    employeeName= stuffbill.bill.employeeName,
+                    customer = new Customer() { fullName = stuffbill.bill.customer.fullName, phone = stuffbill.bill.customer.phone }
+                });
             }
             catch
             {
-                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
+                MessageBox.Show("Số hóa đơn bạn nhập không tồn tại!!!");
                 HiddenScreen();
                 return;
             }
             HiddenScreen();
             GridBill.Visibility = Visibility.Visible;
 
-            NumberBill.Text = billSelected.billNumber.ToString();
-            NumberTableBill.Text = billSelected.tableNumber.ToString();
-            EmployeeBill.Text = stuffbill.employee.displayName;
-            TotalBill.Text = billSelected.total.ToString();
-            PromotionBill.Text = billSelected.promotion;
+            NumberBill.Text ="";
+            NumberTableBill.Text = "";
+            EmployeeBill.Text = "";
+            TotalBill.Text = "";
+            PromotionBill.Text = "";
         }
+
+        private async void SearchBillCustomer_Click()
+        {
+            if (TbSearchTable.Text == "")
+            {
+                MessageBox.Show("Vui lòng nhập tên khách hàng!!!");
+                HiddenScreen();
+                return;
+            }
+            string result = API.GetAllBillWithCustomer(TbSearchTable.Text);
+            dynamic stuffBill = JsonConvert.DeserializeObject(result);
+
+            Bills.Clear();
+            ListViewBill.ItemsSource = Bills;
+            await LoadBill(stuffBill);
+            if (Tables.Count == 0)
+            {
+                MessageBox.Show("Không tìm thấy hóa đơn theo yêu cầu của bạn!!!");
+                HiddenScreen();
+
+                return;
+            }
+            HiddenScreen();
+            GridBill.Visibility = Visibility.Visible;
+
+            NumberBill.Text = "";
+            NumberTableBill.Text = "";
+            EmployeeBill.Text = "";
+            TotalBill.Text = "";
+            PromotionBill.Text = "";
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -453,7 +554,7 @@ namespace QuanLyNhaHang
                 }
                 catch
                 {
-                    SearchTableCustomer_Click();
+                    SearchBillCustomer_Click();
                 }
             }
         }

@@ -10,8 +10,12 @@ module.exports = (app) => {
     // Retrieve a single Bill with billId
     app.get('/api/bills/:tableNumber', bill.findOne);
 
+    app.get('/api/bills/bill/:billNumber', bill.findOneBill);
+
     // addFoodInBill a Bill with billId
     app.put('/api/bills/addFoodInBill', bill.addFoodInBill);
+
+    app.post('/api/bills/findCustomer', bill.findAllWithCustomerName);
 
     // increase amount of food
     app.put('/api/bills/increaseAmountFood', bill.increaseAmountFood);

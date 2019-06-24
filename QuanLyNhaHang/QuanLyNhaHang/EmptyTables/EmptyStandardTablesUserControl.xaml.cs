@@ -201,9 +201,9 @@ namespace QuanLyNhaHang.EmptyTables
             tableBook.status = "booked";
 
             tableBook.customer = new Customer() { fullName = CustomerNameTextBox.Text, phone = CustomerPhone.Text };
-            string employeeID = LoginWindow.employee.id;
+            string employeeName = LoginWindow.employee.displayName;
 
-            string result = API.BookTable(tableBook, employeeID);
+            string result = API.BookTable(tableBook, employeeName);
             dynamic stuff = JsonConvert.DeserializeObject(result);
             if (stuff.message == "Table update successfully!")
             {

@@ -255,17 +255,17 @@ namespace QuanLyNhaHang.Model
             }
         }
 
-        public static string BookTable(Model.Table table,string employeeID)
+        public static string BookTable(Model.Table table,string employeeName)
         {
             string url = SERVER + "/tables/Book/" + table.number;
-            string json = "{\"employeeID\": \"" + employeeID +
+            string json = "{\"employeeName\": \"" + employeeName +
                             "\", \"number\": \"" + table.number +
                             "\", \"note\": \"" + table.note +
                             "\", \"status\": \"" + table.status +
                             "\", \"customer\": { \"fullName\": \"" + table.customer.fullName +
                             "\", \"phone\": \"" + table.customer.phone + "\"}}";
             string url1 = SERVER + "/bills";
-            string json1 = "{\"employeeID\": \"" + employeeID +
+            string json1 = "{\"employeeName\": \"" + employeeName +
                             "\", \"number\": \"" + table.number +
                             "\", \"numberOfSeat\": \"" + table.numberOfSeat.ToString() +
                             "\", \"type\": \"" + table.type +
@@ -602,11 +602,26 @@ namespace QuanLyNhaHang.Model
 
         public static string FindOneBill(string number)
         {
-            string url = SERVER + "/bills/" + number;
+            string url = SERVER + "/bills/bill/" + number;
 
             try
             {
                 return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string GetAllBillWithCustomer(string customer)
+        {
+            string url = SERVER + "/bills/findCustomer";
+            string json = "{\"fullName\": \"" + customer + "\"}";
+            try
+            {
+                return POST(url, json);
             }
             catch
             {

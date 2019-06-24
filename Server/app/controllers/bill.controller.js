@@ -364,16 +364,41 @@ exports.filter = function (req, res) {
     })
 };
 
-// exports.findOne = async function (req, res) {
-//     try {
-//         var bill =await Bill.findOne({ "billNumber": parseInt( req.params.billNumber) });
-//         console.log(bill);
-//         var employee=await Employee.findById(bill.employeeID);
-//         console.log(employee);
-//         res.send( {bill,employee});
-//     } catch (error) {
-//         res.send({
-//             message: error.message || "Some error occurred while retrieving tables."
-//         });
-//     }
-// };
+exports.findOneBill = async function (req, res) {
+    try {
+        var bill =await Bill.findOne({ "billNumber": parseInt( req.params.billNumber) });
+        res.send( bill);
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving tables."
+        });
+    }
+};
+
+exports.findAllWithCustomerName = async function (req, res) {
+    try {
+        var fullName=req.body.fullName.toUpperCase();
+        var bills = await Bill.find({});
+        for (i = 0; i < bills.length; i++) {
+            var billsCustomer=bills[i].customer.fullName.toUpperCase();
+            var check=0;
+            if (billsCustomer.indexOf(fullName) != -1) {
+                check=1;
+            }
+            else if (fullName.indexOf(billsCustomer) != -1) {
+                check=1;
+            }
+            if(check==0)
+            {
+                bills.splice(i, 1);
+                i--;
+            }
+
+        }
+        res.send(bills);
+    } catch (error) {
+        res.send({
+            message: error.message || "Some error occurred while retrieving bills."
+        });
+    }
+};
