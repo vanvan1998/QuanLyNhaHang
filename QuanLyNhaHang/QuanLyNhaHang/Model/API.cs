@@ -733,5 +733,23 @@ namespace QuanLyNhaHang.Model
             }
         }
         #endregion
+
+        #region Fee API
+        public static string GetFee(string type)
+        {
+            string url = SERVER + "/servicefees/" + type;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        #endregion
     }
 }

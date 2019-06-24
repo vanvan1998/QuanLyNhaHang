@@ -425,11 +425,17 @@
 
                 <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Tổng tiền " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
-                    <TextBlock Grid.Column="1" Margin="10 0 10 0" x:Name="Total" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right" ></TextBlock>
+                    <StackPanel Orientation="Horizontal" Grid.Column="0"  HorizontalAlignment="Left">
+                        <Label Grid.Column="0" Content="Tổng tiền: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock x:Name="Total" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1"  HorizontalAlignment="Left">
+                        <Label Grid.Column="0" Content="Phí phục vụ: " FontSize="15" FontWeight="Bold" VerticalAlignment="Center"></Label>
+                        <TextBlock x:Name="Fee" Text="" FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Background="White" Foreground="#FF2195F2"></TextBlock>
+                    </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="6">

@@ -16,26 +16,11 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Height="50" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <DatePicker Margin="0 0 50 0"
-                Width="100" Height="40"
-                materialDesign:HintAssist.Hint="Pick Date"
-                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                <DatePicker
-                Width="100" Height="40"
-                materialDesign:HintAssist.Hint="Pick Date"
-                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-                <Button BorderBrush="#ffffff" Click="Button_Click" Margin="50 0 100 0"
-                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                    Width="100"
-                    Background="MidnightBlue">
-                    Thống kê
-                </Button>
-
                 <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Tuần</TextBlock>
                     <ToggleButton Click="ToggleButton_Click" x:Name="Week"
                         Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
-                        IsChecked="False" />
+                        IsChecked="True" />
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
@@ -59,6 +44,12 @@
                         IsChecked="False" />
                 </StackPanel>
 
+                <Button BorderBrush="#ffffff" Click="Button_Click" Margin="50 0 100 0"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Width="100"
+                    Background="MidnightBlue">
+                    Thống kê
+                </Button>
             </StackPanel>
             <Grid Grid.Row="1" x:Name="GridMain"></Grid>
 
