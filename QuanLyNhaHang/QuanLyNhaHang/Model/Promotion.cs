@@ -12,5 +12,6 @@ namespace QuanLyNhaHang.Model
         public string type { get; set; }
         public int value { get; set; }
         public string rule { get; set; }
+        public bool active { get; set; }
     }
 }

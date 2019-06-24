@@ -592,9 +592,12 @@ namespace QuanLyNhaHang.UsingTables
             {
                 if (DiscountCodeTextBox.Text == item.code)
                 {
-                    promotion = item;
-                    exist = true;
-                    break;
+                    if (item.active == true)
+                    {
+                        promotion = item;
+                        exist = true;
+                        break;
+                    } 
                 }
             }
             if (exist)
@@ -602,6 +605,10 @@ namespace QuanLyNhaHang.UsingTables
                 if (promotion.type == "percent")
                 {
                     Total.Text = (tableSelected.total * (100 - promotion.value) / 100).ToString();
+                }
+                else
+                {
+                    Total.Text = (tableSelected.total - promotion.value).ToString();
                 }
             }
             else

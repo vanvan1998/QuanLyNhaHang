@@ -163,25 +163,6 @@ namespace QuanLyNhaHang.EmptyTables
 
         private void Book(object sender, RoutedEventArgs e)
         {
-
-            if (NumberTable.Text == "")
-            {
-                MessageBox.Show("Vui lòng chọn bàn trước!");
-                return;
-            }
-
-            if (CustomerNameTextBox.Text == "")
-            {
-                MessageBox.Show("Chưa nhập tên khách hàng!");
-                return;
-            }
-
-            if (CustomerPhone.Text == "")
-            {
-                MessageBox.Show("Chưa nhập số điện thoại khách hàng!");
-                return;
-            }
-
             Model.Table tableBook = new Model.Table();
             tableBook.type = "standard";
             tableBook.number = NumberTable.Text;
@@ -218,6 +199,8 @@ namespace QuanLyNhaHang.EmptyTables
             EmptyStandard8PersonTables.Clear();
             EmptyStandard4PersonTables.Clear();
             LoadData();
+
+            ResetLayout();
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
@@ -269,6 +252,11 @@ namespace QuanLyNhaHang.EmptyTables
             {
                 BtnBook.IsEnabled = false;
             }
+        }
+
+        private void ResetLayout()
+        {
+            // resetlayout
         }
     }
 }
