@@ -585,6 +585,10 @@ namespace QuanLyNhaHang.UsingTables
             CustomerName.Text = tableSelected.customer.fullName;
             CustomerPhone.Text = tableSelected.customer.phone;
             NoteTextBlock.Text = tableSelected.note;
+            string result = API.GetFee("VIP");
+            dynamic stuffFee = JsonConvert.DeserializeObject(result);
+            int fee = stuffFee.fee;
+            Fee.Text = (fee * tableSelected.numberOfSeat).ToString();
 
             await Task.Run(() =>
             {
