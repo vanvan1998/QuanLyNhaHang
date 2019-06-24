@@ -85,6 +85,9 @@
       <DependentUpon>SearchUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Setting\PriceListUserControl.xaml.cs" />
+    <Compile Include="Setting\PromotionUserControl.xaml.cs">
+      <DependentUpon>PromotionUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Setting\SettingEmployeeUserControl.xaml.cs" />
     <Compile Include="Setting\SettingTableUserControl.xaml.cs" />
     <Compile Include="Setting\SettingUserControl.xaml.cs" />
@@ -144,6 +147,10 @@
     <Page Include="Setting\PriceListUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Setting\PromotionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Setting\SettingEmployeeUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

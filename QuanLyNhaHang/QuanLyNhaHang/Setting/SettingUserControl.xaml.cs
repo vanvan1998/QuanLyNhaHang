@@ -54,6 +54,9 @@ namespace QuanLyNhaHang.Setting
                 case 2:
                     GridMain.Children.Add(new PriceListUserControl());
                     break;
+                case 3:
+                    GridMain.Children.Add(new PromotionUserControl());
+                    break;
             }
         }
     }
