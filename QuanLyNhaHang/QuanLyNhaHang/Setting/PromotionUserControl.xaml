@@ -24,7 +24,7 @@
                 <TextBlock FontSize="30" HorizontalAlignment="Center" FontWeight="Bold" Foreground="MidnightBlue">Thông tin khuyến mãi</TextBlock>
                 <TextBox x:Name="id" Width="0" Height="0"></TextBox>
                 <TextBlock Margin="0,50,0,0" Foreground="MidnightBlue">Mã khuyến mãi:</TextBlock>
-                <TextBox x:Name="NamePromotion" IsEnabled="False" Width="300" Margin="50,5,20,20"></TextBox>
+                <TextBox x:Name="NamePromotion" Width="300" Margin="50,5,20,20"></TextBox>
                 <TextBlock Margin="0,0,0,0" Foreground="MidnightBlue">Loại khuyến mãi:</TextBlock>
                 <ComboBox x:Name="TypePromotion" Width="300" Margin="50,5,20,20">
                     <ComboBoxItem>%</ComboBoxItem>

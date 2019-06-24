@@ -44,6 +44,7 @@ exports.update = async (req, res) => {
             active = true;
         }
         await Promotion.findByIdAndUpdate(req.params.promotion_id, {
+            code: req.body.code,
             type: req.body.type,
             value: req.body.value,
             active: active,
