@@ -79,7 +79,7 @@
                     </Grid>
                 </materialDesign:ColorZone>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ListView x:Name="ListViewTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewTable_MouseUp">
+                    <ListView Height="530" Width="400" Margin="0,13,0,0" x:Name="ListViewTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewTable_MouseUp">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="1" Rows="100"></UniformGrid>
