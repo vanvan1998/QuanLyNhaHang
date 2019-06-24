@@ -49,6 +49,12 @@ namespace QuanLyNhaHang.EmptyTables
             {
                 string result = API.GetAllTableWithStatusAndType("empty", "standard");
                 stuff = JsonConvert.DeserializeObject(result);
+
+                if (result == "")
+                {
+                    return;
+                }
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -186,6 +192,12 @@ namespace QuanLyNhaHang.EmptyTables
 
             string result = API.BookTable(tableBook, employeeName);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "Table update successfully!")
             {
                 MessageBox.Show("Đặt bàn thành công!!!");

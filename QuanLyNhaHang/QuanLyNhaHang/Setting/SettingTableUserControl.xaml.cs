@@ -41,6 +41,11 @@ namespace QuanLyNhaHang.Setting
                 string result = API.GetAllTable();
                 stuff = JsonConvert.DeserializeObject(result);
 
+                if (result == "")
+                {
+                    return;
+                }
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -63,7 +68,7 @@ namespace QuanLyNhaHang.Setting
             {
                 Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() =>
-                {
+                {                
                     for (int i = 0; i < Tables.Count; i++)
                     {
                         if (Tables[i].type == "standard")
@@ -83,8 +88,6 @@ namespace QuanLyNhaHang.Setting
         {
             this.Width = Application.Current.MainWindow.ActualWidth - 70;
             this.Height = Application.Current.MainWindow.ActualHeight - 40;
-
-
         }
 
         private void ListViewTable_MouseUp(object sender, MouseButtonEventArgs e)
@@ -223,6 +226,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.CreateTable(tableNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "create successful")
             {
                 MessageBox.Show("Tạo bàn thành công!!!");
@@ -246,6 +255,12 @@ namespace QuanLyNhaHang.Setting
             }
             string result = API.DeleteTable(ID.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "Table deleted successfully!")
             {
                 MessageBox.Show("Xóa bàn thành công!!!");
@@ -318,6 +333,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.UpdateTable(tableNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "Table update successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin bàn thành công!!!");

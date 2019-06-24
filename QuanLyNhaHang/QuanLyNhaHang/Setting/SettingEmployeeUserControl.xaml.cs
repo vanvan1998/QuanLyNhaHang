@@ -43,6 +43,11 @@ namespace QuanLyNhaHang.Setting
                 string result = API.GetAllEmployee();
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
+                if (result == "")
+                {
+                    return;
+                }
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -215,6 +220,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.CreateEmployee(employeeNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "create successful")
             {
                 MessageBox.Show("Tạo nhân viên thành công!!!");
@@ -237,6 +248,12 @@ namespace QuanLyNhaHang.Setting
             }
             string result = API.DeleteEmployee(id.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "Employee deleted successfully!")
             {
                 MessageBox.Show("Xóa nhân viên thành công!!!");
@@ -287,7 +304,10 @@ namespace QuanLyNhaHang.Setting
             if (Password.Password == "")
             {
                 result = API.UpdateEmployee(employeeNew);
-
+                if (result == "")
+                {
+                    return;
+                }
             }
             else
             {
@@ -297,6 +317,10 @@ namespace QuanLyNhaHang.Setting
 
                 }
                 result = API.UpdatePassword(employeeNew);
+                if (result == "")
+                {
+                    return;
+                }
             }
             dynamic stuff = JsonConvert.DeserializeObject(result);
             if (stuff.message == "Employee updated successfully!")
@@ -316,9 +340,15 @@ namespace QuanLyNhaHang.Setting
         {
             string result = API.GetAllEmployee();
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             Employees.Clear();
             ListViewEmployee.ItemsSource = Employees;
-            
+
 
             Boolean search = false;
             string Query = TbSearch.Text.ToUpper();

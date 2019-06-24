@@ -123,6 +123,11 @@ namespace QuanLyNhaHang
             string result = API.GetAllFood();
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
+            if (result == "")
+            {
+                return;
+            }
+
             await Task.Run(() =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -326,6 +331,11 @@ namespace QuanLyNhaHang
                 string result = API.GetFoodInBillByBill(bill.billNumber.ToString());
                 dynamic stuffFoodInBill = JsonConvert.DeserializeObject(result);
 
+                if (result == "")
+                {
+                    return;
+                }
+
                 this.Dispatcher.Invoke(() =>
                 {
                     Orders.Clear();
@@ -349,6 +359,11 @@ namespace QuanLyNhaHang
         {
             string result = API.GetAllTable();
             stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
 
             Tables.Clear();
             ListViewTable.ItemsSource = Tables;
@@ -385,6 +400,11 @@ namespace QuanLyNhaHang
             string result = API.GetAllTableWithCustomer(TbSearchTable.Text);
             stuff = JsonConvert.DeserializeObject(result);
 
+            if (result == "")
+            {
+                return;
+            }
+
             Tables.Clear();
             ListViewTable.ItemsSource = Tables;
             await Load();
@@ -403,6 +423,12 @@ namespace QuanLyNhaHang
         {
             string result = API.GetAllFood();
             stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             Foods.Clear();
             ListViewFood.ItemsSource = Foods;
 
@@ -442,6 +468,11 @@ namespace QuanLyNhaHang
             string result = API.FindOneBill(TbSearchTable.Text);
             dynamic stuffbill = JsonConvert.DeserializeObject(result);
 
+            if (result == "")
+            {
+                return;
+            }
+
             try
             {
                 Bills.Add(new Model.Bill()
@@ -467,6 +498,11 @@ namespace QuanLyNhaHang
         {
             string result = API.GetAllBillWithCustomer(TbSearchTable.Text);
             dynamic stuffBill = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
 
             Bills.Clear();
             ListViewBill.ItemsSource = Bills;

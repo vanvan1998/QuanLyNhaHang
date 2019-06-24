@@ -37,12 +37,15 @@ namespace QuanLyNhaHang.Setting
 
         private async void Load()
         {
-
-
             await Task.Run(() =>
             {
                 string result = API.GetAllFood();
                 dynamic stuff = JsonConvert.DeserializeObject(result);
+
+                if (result == "")
+                {
+                    return;
+                }
 
                 this.Dispatcher.Invoke(() =>
                 {
@@ -167,6 +170,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.CreateFood(foodNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "create successful")
             {
                 MessageBox.Show("Tạo món ăn thành công!!!");
@@ -183,13 +192,15 @@ namespace QuanLyNhaHang.Setting
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (id.Text == "")
-            {
-                MessageBox.Show("Vui lòng chọn món ăn trước khi xóa!!!");
-                return;
-            }
+            
             string result = API.DeleteFood(id.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "Food deleted successfully!")
             {
                 MessageBox.Show("Xóa món ăn thành công!!!");
@@ -241,6 +252,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.UpdateFood(id.Text, foodNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "Food updated successfully!")
             {
                 MessageBox.Show("Cập nhật thông tin món ăn thành công!!!");
@@ -259,6 +276,12 @@ namespace QuanLyNhaHang.Setting
         {
             string result = API.GetAllFood();
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             Foods.Clear();
             ListViewFood.ItemsSource = Foods;
             

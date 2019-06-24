@@ -19,7 +19,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -35,7 +35,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -57,7 +57,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -79,7 +79,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -101,7 +101,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -115,7 +115,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -133,7 +133,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -148,7 +148,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -163,7 +163,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -178,7 +178,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -193,7 +193,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -208,7 +208,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -229,7 +229,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -250,7 +250,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -279,7 +279,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -294,7 +294,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -391,7 +391,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -411,7 +411,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -431,7 +431,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -445,7 +445,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -463,7 +463,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -485,7 +485,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -507,7 +507,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -529,7 +529,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -545,7 +545,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -559,7 +559,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -574,7 +574,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -592,7 +592,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
             
@@ -611,7 +611,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
             
@@ -627,7 +627,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -642,7 +642,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -659,7 +659,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -674,7 +674,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -694,7 +694,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -714,7 +714,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -728,7 +728,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }
@@ -745,7 +745,7 @@ namespace QuanLyNhaHang.Model
             }
             catch
             {
-                MessageBox.Show("Không thể kết nối đến server");
+                MessageBox.Show("Kết nối không ổn định. Xin thử lại.");
                 return "";
             }
         }

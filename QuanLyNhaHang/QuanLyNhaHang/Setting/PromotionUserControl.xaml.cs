@@ -44,6 +44,11 @@ namespace QuanLyNhaHang.Setting
                 string result = API.GetAllPromotion();
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
+                if (result == "")
+                {
+                    return;
+                }
+
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
@@ -169,6 +174,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.CreatePromotion(promotionNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "successful")
             {
                 MessageBox.Show("Tạo mã thành công!!!");
@@ -185,13 +196,14 @@ namespace QuanLyNhaHang.Setting
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (id.Text == "")
-            {
-                MessageBox.Show("Vui lòng chọn mã trước khi xóa!!!");
-                return;
-            }
             string result = API.DeletePromotion(id.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "successful")
             {
                 MessageBox.Show("Xóa mã khuyến mãi thành công!!!");
@@ -246,6 +258,12 @@ namespace QuanLyNhaHang.Setting
 
             string result = API.UpdatePromotion(id.Text, promotionNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             if (stuff.message == "successful")
             {
                 MessageBox.Show("Cập nhật thông tin mã khuyến mãi thành công!!!");
@@ -264,6 +282,12 @@ namespace QuanLyNhaHang.Setting
         {
             string result = API.GetAllPromotion();
             dynamic stuff = JsonConvert.DeserializeObject(result);
+
+            if (result == "")
+            {
+                return;
+            }
+
             Promotions.Clear();
             ListViewPromotion.ItemsSource = Promotions;
             
