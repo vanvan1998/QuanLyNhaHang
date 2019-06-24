@@ -39,10 +39,14 @@ exports.find_all = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
+        var active = false;
+        if (req.body.active == "True") {
+            active = true;
+        }
         await Promotion.findByIdAndUpdate(req.params.promotion_id, {
             type: req.body.type,
             value: req.body.value,
-            active: req.body.active,
+            active: active,
             rule: req.body.rule
         }, { new: true });
         res.send({ message: "successful" });

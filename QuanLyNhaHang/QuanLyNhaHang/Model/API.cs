@@ -415,7 +415,7 @@ namespace QuanLyNhaHang.Model
                 return "";
             }
         }
-        //todo server
+        
         public static string UpdateFood(string ID, Food foodNew)
         {
             string url = SERVER + "/foods/" + ID;
@@ -656,6 +656,75 @@ namespace QuanLyNhaHang.Model
             try
             {
                 return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string GetAllPromotion()
+        {
+            string url = SERVER + "/promotions";
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string CreatePromotion(Promotion PromotionNew)
+        {
+            string url = SERVER + "/promotions";
+            string json = "{\"code\": \""
+                + PromotionNew.code + "\", \"type\": \""
+                + PromotionNew.type + "\", \"value\": \""
+                + PromotionNew.value + "\", \"rule\": \""
+                + PromotionNew.rule + "\", \"active\": \""
+                + PromotionNew.active + "\"}";
+            try
+            {
+                return POST(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+        
+        public static string UpdatePromotion(string ID, Promotion PromotionNew)
+        {
+            string url = SERVER + "/promotions/update/" + ID;
+            string json = "{\"code\": \""
+               + PromotionNew.code + "\", \"type\": \""
+               + PromotionNew.type + "\", \"value\": \""
+               + PromotionNew.value + "\", \"rule\": \""
+               + PromotionNew.rule + "\", \"active\": \""
+               + PromotionNew.active + "\"}";
+            try
+            {
+                return PUT(url, json);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
+
+        public static string DeletePromotion(string ID)
+        {
+            string url = SERVER + "/promotions/delete/" + ID;
+            try
+            {
+                return DELETE(url);
             }
             catch
             {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhaHang.Model
 {
-    class Promotion
+    public class Promotion
     {
+        public string id { get; set; }
         public string code { get; set; }
         public string type { get; set; }
         public int value { get; set; }

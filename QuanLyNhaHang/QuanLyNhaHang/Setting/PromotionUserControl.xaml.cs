@@ -24,13 +24,13 @@ namespace QuanLyNhaHang.Setting
     /// </summary>
     public partial class PromotionUserControl : UserControl
     {
-        ObservableCollection<Model.Food> Foods = new ObservableCollection<Model.Food>();
+        ObservableCollection<Model.Promotion> Promotions = new ObservableCollection<Model.Promotion>();
 
         public PromotionUserControl()
         {
             InitializeComponent();
 
-            ListViewFood.ItemsSource = Foods;
+            ListViewPromotion.ItemsSource = Promotions;
 
             Load();
         }
@@ -41,21 +41,21 @@ namespace QuanLyNhaHang.Setting
 
             await Task.Run(() =>
             {
-                string result = API.GetAllFood();
+                string result = API.GetAllPromotion();
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
                 {
                     foreach (var item in stuff)
                     {
-                        Foods.Add(new Model.Food()
+                        Promotions.Add(new Model.Promotion()
                         {
-                            id = item._id,
-                            name = item.name,
+                            id=item._id,
+                            code = item.code,
                             type = item.type,
-                            ingredients = item.ingredients,
-                            note = item.note,
-                            price = item.price
+                            value = item.value,
+                            active = item.active,
+                            rule = item.rule
                         });
                     };
                 });
@@ -68,7 +68,7 @@ namespace QuanLyNhaHang.Setting
             this.Height = Application.Current.MainWindow.ActualHeight - 50;
 
         }
-        private void ListViewFood_MouseUp(object sender, MouseButtonEventArgs e)
+        private void ListViewPromotion_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (((ListView)sender).SelectedIndex == -1)
             {
@@ -77,18 +77,16 @@ namespace QuanLyNhaHang.Setting
 
             if (((ListView)sender).ItemContainerGenerator.ContainerFromIndex(((ListView)sender).SelectedIndex) is ListViewItem lvi)
             {
-
-
                 var bc = new BrushConverter();
 
-                for (int j = 0; j < Foods.Count; j++)
+                for (int j = 0; j < Promotions.Count; j++)
                 {
-                    ListViewItem lvi1 = ListViewFood.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
+                    ListViewItem lvi1 = ListViewPromotion.ItemContainerGenerator.ContainerFromIndex(j) as ListViewItem;
                     var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
                     var dt1 = cp1.ContentTemplate as DataTemplate;
                     var rt1 = (Rectangle)dt1.FindName("BackGround", cp1);
-                    var tb1 = (TextBlock)dt1.FindName("NameFood", cp1);
+                    var tb1 = (TextBlock)dt1.FindName("NamePromotion", cp1);
                     rt1.Fill = Brushes.White;
                 }
 
@@ -96,37 +94,38 @@ namespace QuanLyNhaHang.Setting
 
                 var dt = cp.ContentTemplate as DataTemplate;
                 var rt = (Rectangle)dt.FindName("BackGround", cp);
-                var tb = (TextBlock)dt.FindName("NameFood", cp);
-                Model.Food foodSelected = new Model.Food();
+                var tb = (TextBlock)dt.FindName("NamePromotion", cp);
+                Model.Promotion promotionSelected = new Model.Promotion();
 
-                foreach (var item in Foods)
+                foreach (var item in Promotions)
                 {
-                    if (item.name == tb.Text)
+                    if (item.code == tb.Text)
                     {
-                        foodSelected = item;
+                        promotionSelected = item;
                         break;
                     }
                 };
 
-                NameFood.Text = foodSelected.name;
-                Price.Text = foodSelected.price;
-                Ingredients.Text = foodSelected.ingredients;
-                Note.Text = foodSelected.note;
-
-                if (foodSelected.type == "appetizer")
+                NamePromotion.Text = promotionSelected.code;
+                valuePromotion.Text = promotionSelected.value.ToString();
+                if(promotionSelected.type=="percent")
                 {
-                    TypeFood.SelectedIndex = 0;
-                }
-                else if (foodSelected.type == "dish")
-                {
-                    TypeFood.SelectedIndex = 1;
+                    TypePromotion.SelectedIndex = 0;
                 }
                 else
                 {
-                    TypeFood.SelectedIndex = 2;
+                    TypePromotion.SelectedIndex = 1;
                 }
-
-                id.Text = foodSelected.id;
+                rulePromotion.Text = promotionSelected.rule;
+                if (promotionSelected.active)
+                {
+                    ActivePromotion.SelectedIndex = 0;
+                }
+                else
+                {
+                    ActivePromotion.SelectedIndex = 1;
+                }
+                id.Text = promotionSelected.id;
 
                 btnUpdate.IsEnabled = true;
                 btnDelete.IsEnabled = true;
@@ -137,46 +136,49 @@ namespace QuanLyNhaHang.Setting
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Model.Food foodNew = new Model.Food();
-            foodNew.name = NameFood.Text;
-            foodNew.price = Price.Text;
-            foodNew.ingredients = Ingredients.Text;
-            foodNew.note = Note.Text;
-
-            if (TypeFood.SelectedIndex == 0)
+            Model.Promotion promotionNew = new Model.Promotion();
+            promotionNew.code = NamePromotion.Text;
+            promotionNew.value =int.Parse( valuePromotion.Text);
+            promotionNew.rule = rulePromotion.Text;
+            if(ActivePromotion.SelectedIndex==0)
             {
-                foodNew.type = "appetizer";
-            }
-            else if (TypeFood.SelectedIndex == 1)
-            {
-                foodNew.type = "dish";
+                promotionNew.active = true;
             }
             else
             {
-                foodNew.type = "dessert";
+                promotionNew.active = false;
             }
 
-            foreach (var item in Foods)
+            if (TypePromotion.SelectedIndex == 0)
             {
-                if (item.name == NameFood.Text)
+                promotionNew.type = "percent";
+            }
+            else
+            {
+                promotionNew.type = "value";
+            }
+
+            foreach (var item in Promotions)
+            {
+                if (item.code == NamePromotion.Text)
                 {
-                    MessageBox.Show("Tên món ăn đã có!!!\n Bạn vui lòng chọn tên khác!");
+                    MessageBox.Show("Mã khuyến mãi đã có!!!\n Bạn vui lòng chọn mã khác!");
                     return;
                 }
             };
 
-            string result = API.CreateFood(foodNew);
+            string result = API.CreatePromotion(promotionNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            if (stuff.message == "create successful")
+            if (stuff.message == "successful")
             {
-                MessageBox.Show("Tạo món ăn thành công!!!");
-                Foods.Clear();
+                MessageBox.Show("Tạo mã thành công!!!");
+                Promotions.Clear();
                 Load();
                 LoadEmpty();
             }
             else
             {
-                MessageBox.Show("Có lỗi sảy ra trong quá trình tạo món ăn, vui lòng thử lại!!!");
+                MessageBox.Show("Có lỗi sảy ra trong quá trình tạo mã, vui lòng thử lại!!!");
             }
 
         }
@@ -185,15 +187,15 @@ namespace QuanLyNhaHang.Setting
         {
             if (id.Text == "")
             {
-                MessageBox.Show("Vui lòng chọn món ăn trước khi xóa!!!");
+                MessageBox.Show("Vui lòng chọn mã trước khi xóa!!!");
                 return;
             }
-            string result = API.DeleteFood(id.Text);
+            string result = API.DeletePromotion(id.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            if (stuff.message == "Food deleted successfully!")
+            if (stuff.message == "successful")
             {
-                MessageBox.Show("Xóa món ăn thành công!!!");
-                Foods.Clear();
+                MessageBox.Show("Xóa mã khuyến mãi thành công!!!");
+                Promotions.Clear();
                 Load();
                 LoadEmpty();
             }
@@ -206,45 +208,48 @@ namespace QuanLyNhaHang.Setting
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
         {
 
-            Model.Food foodNew = new Model.Food();
+            Model.Promotion promotionNew = new Model.Promotion();
             if (id.Text == "")
             {
-                MessageBox.Show("Vui lòng chọn món ăn trước khi cập nhật!!!");
+                MessageBox.Show("Vui lòng chọn mã trước khi cập nhật!!!");
                 return;
             }
-            foodNew.id = id.Text;
-            foodNew.name = NameFood.Text;
-            foodNew.price = Price.Text;
-            foodNew.ingredients = Ingredients.Text;
-            foodNew.note = Note.Text;
-
-            if (TypeFood.SelectedIndex == 0)
+            promotionNew.id = id.Text;
+            promotionNew.code = NamePromotion.Text;
+            promotionNew.value = int.Parse(valuePromotion.Text);
+            promotionNew.rule = rulePromotion.Text;
+            if (ActivePromotion.SelectedIndex == 0)
             {
-                foodNew.type = "appetizer";
-            }
-            else if (TypeFood.SelectedIndex == 1)
-            {
-                foodNew.type = "dish";
+                promotionNew.active = true;
             }
             else
             {
-                foodNew.type = "dessert";
+                promotionNew.active = false;
             }
-            foreach (var item in Foods)
+
+            if (TypePromotion.SelectedIndex == 0)
             {
-                if (item.name == NameFood.Text && item.id != id.Text)
+                promotionNew.type = "percent";
+            }
+            else
+            {
+                promotionNew.type = "value";
+            }
+            foreach (var item in Promotions)
+            {
+                if (item.code == NamePromotion.Text && item.id != id.Text)
                 {
-                    MessageBox.Show("Tên món ăn đã có!!!\n Bạn vui lòng chọn tên khác!");
+                    MessageBox.Show("Mã khuyến mãi đã có!!!\n Bạn vui lòng chọn mã khác!");
                     return;
                 }
             };
 
-            string result = API.UpdateFood(id.Text, foodNew);
+            string result = API.UpdatePromotion(id.Text, promotionNew);
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            if (stuff.message == "Food updated successfully!")
+            if (stuff.message == "successful")
             {
-                MessageBox.Show("Cập nhật thông tin món ăn thành công!!!");
-                Foods.Clear();
+                MessageBox.Show("Cập nhật thông tin mã khuyến mãi thành công!!!");
+                Promotions.Clear();
                 Load();
                 LoadEmpty();
             }
@@ -257,33 +262,33 @@ namespace QuanLyNhaHang.Setting
 
         private void ButtonSearch_Click(object sender, RoutedEventArgs e)
         {
-            string result = API.GetAllFood();
+            string result = API.GetAllPromotion();
             dynamic stuff = JsonConvert.DeserializeObject(result);
-            Foods.Clear();
-            ListViewFood.ItemsSource = Foods;
+            Promotions.Clear();
+            ListViewPromotion.ItemsSource = Promotions;
 
             if (TbSearch.Text == "")
             {
-                MessageBox.Show("Vui lòng nhập tên món ăn!!!");
+                MessageBox.Show("Vui lòng nhập mã khuyến mãi!!!");
                 return;
             }
 
             Boolean search = false;
-            string foodQuery = TbSearch.Text.ToUpper();
+            string promotionQuery = TbSearch.Text.ToUpper();
             foreach (var item in stuff)
             {
-                string foodInList = item.name.ToString().ToUpper();
-                if (foodInList.IndexOf(foodQuery) != -1 || foodQuery.IndexOf(foodInList) != -1)
+                string promotionInList = item.code.ToString().ToUpper();
+                if (promotionInList.IndexOf(promotionQuery) != -1 || promotionQuery.IndexOf(promotionInList) != -1)
                 {
                     search = true;
-                    Foods.Add(new Model.Food()
+                    Promotions.Add(new Model.Promotion()
                     {
                         id = item._id,
-                        name = item.name,
-                        price = item.price,
+                        code = item.code,
                         type = item.type,
-                        ingredients = item.ingredients,
-                        note = item.note
+                        value = item.value,
+                        active = item.active,
+                        rule=item.rule
                     });
                 }
             };
@@ -297,11 +302,11 @@ namespace QuanLyNhaHang.Setting
 
         private void LoadEmpty()
         {
-            NameFood.Text = "";
-            Price.Text = "";
-            Ingredients.Text = "";
-            Note.Text = "";
-            TypeFood.SelectedIndex = -1;
+            NamePromotion.Text = "";
+            valuePromotion.Text = "";
+            TypePromotion.SelectedIndex=-1;
+            rulePromotion.Text = "";
+            ActivePromotion.SelectedIndex = -1;
 
             id.Text = "";
             btnUpdate.IsEnabled = false;
