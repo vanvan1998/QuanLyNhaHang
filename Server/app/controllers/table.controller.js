@@ -77,7 +77,6 @@ exports.findAllWithCustomerName = async function (req, res) {
                 tables.splice(i, 1);
                 i--;
             }
-
         }
         res.send(tables);
     } catch (error) {

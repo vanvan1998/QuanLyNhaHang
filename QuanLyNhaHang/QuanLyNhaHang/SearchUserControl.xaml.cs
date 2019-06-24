@@ -70,27 +70,21 @@ namespace QuanLyNhaHang
 
             await Task.Run(() =>
             {
+                Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() =>
                 {
-                    while (true)
+                    for (int i = 0; i < Tables.Count; i++)
                     {
-                        if (ListViewTable.IsLoaded == true)
+                        if (Tables[i].type == "standard")
                         {
-                            for (int i = 0; i < Tables.Count; i++)
-                            {
-                                if (Tables[i].type == "standard")
-                                {
-                                    ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+                            ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                            var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
-                                    var dt1 = cp1.ContentTemplate as DataTemplate;
-                                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                                    rt1.Background = Brushes.Blue;
-                                }
-                            };
-                            break;
+                            var dt1 = cp1.ContentTemplate as DataTemplate;
+                            var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                            rt1.Background = Brushes.Blue;
                         }
-                    }
+                    };
                 });
             });
         }
