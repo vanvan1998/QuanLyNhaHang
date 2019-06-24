@@ -1,19 +1,12 @@
 const Bill = require('../models/bill.model.js');
 const Food = require('../models/food.model.js');
 const Table = require('../models/table.model.js');
-const Employee = require('../models/employee.model.js');
 const mongoose = require('mongoose');
 
 // Create and Save a new Bill
 exports.create = async function (req, res) {
-    // Validate request
-    if (!req.body.employeeID) {
-        return res.send({
-            message: "Bill's employeeID can not be empty"
-        });
-    }
-
     // Create a Bill
+    console.log(req.body);
     var total = 0;
     if (req.body.type == "standard") {
         total = parseInt(req.body.numberOfSeat) * 10000;
@@ -23,7 +16,7 @@ exports.create = async function (req, res) {
     }
     var count = await Bill.countDocuments({});
     const bill = new Bill({
-        employeeID: req.body.employeeID,
+        employeeName: req.body.employeeName,
         tableNumber: req.body.number,
         billNumber: count + 1,
         status: "unpaid",
@@ -64,11 +57,13 @@ exports.findAll = (req, res) => {
 exports.findOne = async (req, res) => {
     var listFood = [];
     var bill = await Bill.findOne({ "tableNumber": parseInt(req.params.tableNumber), "status": "unpaid" });
-    for (var foodItem of bill.menu) {
-        var food = await Food.findById(foodItem.id);
-        listFood.push({ name: food.name, price: food.price, amount: foodItem.amount });
+    if (bill) {
+        for (var foodItem of bill.menu) {
+            var food = await Food.findById(foodItem.id);
+            listFood.push({ name: food.name, price: food.price, amount: foodItem.amount });
+        }
+        res.send(listFood);
     }
-    res.send(listFood);
 };
 
 // Update a bill identified by the billId in the request
@@ -81,9 +76,9 @@ exports.update = (req, res) => {
     }
 
     // Validate request
-    if (!req.body.employeeID) {
+    if (!req.body.employeeName) {
         return res.send({
-            message: "Bill's employeeID can not be empty"
+            message: "Bill's employeeName can not be empty"
         });
     }
 
@@ -97,14 +92,12 @@ exports.update = (req, res) => {
     // Find bill and update it with the request body
     Bill.findByIdAndUpdate(req.params.billId, {
         tableID: req.body.tableID,
-        employeeID: req.body.employeeID,
-        customerID: req.body.customerID,
+        employeeName: req.body.employeeName,
         billNumber: req.body.billNumber,
         status: req.body.status,
         promotion: req.body.promotion,
         total: req.body.total,
         menu: req.body.menu,
-        time: req.body.time
     }, { new: true })
         .then(bill => {
             if (!bill) {
@@ -190,6 +183,7 @@ exports.addFoodInBill = async function (req, res) {
 
 exports.increaseAmountFood = async function (req, res) {
     // Find bill and update it with the request body
+
     Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), status: "unpaid" })
         .then(bill => {
             if (!bill) {
@@ -197,7 +191,7 @@ exports.increaseAmountFood = async function (req, res) {
             }
             else {
                 Bill.updateOne({ _id: bill._id, "menu.id": new mongoose.Types.ObjectId(req.body.foodId) }, {
-                    total: parseInt(req.body.price) + bill.total,
+                    total: bill.total + parseInt(req.body.price),
                     $inc: { "menu.$.amount": 1 }
                 }).then(bill => {
                     if (!bill) {
@@ -276,43 +270,26 @@ exports.getTotalBill = function (req, res) {
 };
 
 exports.pay = function (req, res) {
-    Bill.findOne({ "tableNumber": parseInt(req.body.tableNumber), "status": "unpaid" }).then(bill => {
-        if (!bill) {
-            return res.send({
-                message: "Bill not found with " + req.body.tableNumber
-            });
-        }
-
-        Bill.findByIdAndUpdate(bill._id, {
-            status: "paid", promotion: req.body.promotion
-        }, { new: true })
-            .then(bill => {
-                if (!bill) {
-                    return res.status(404).send({
-                        message: "Bill of table not found with id " + req.body.tableNumber
-                    });
-                }
-                res.send({ message: "successfull" });
-            }).catch(err => {
-                if (err.kind === 'ObjectId') {
-                    return res.status(404).send({
-                        message: "Bill not found with id " + req.body.tableNumber
-                    });
-                }
-                return res.send({
-                    message: "Error updating bill with id " + req.body.tableNumber
+    Bill.updateOne({ tableNumber: parseInt(req.body.tableNumber), "status": "unpaid" }, {
+        status: "paid", promotion: req.body.promotion
+    }, { new: true })
+        .then(bill => {
+            if (!bill) {
+                return res.status(404).send({
+                    message: "Bill of table not found with id " + req.body.tableNumber
                 });
-            });
-    }).catch(err => {
-        if (err.kind === 'ObjectId' || err.name === 'NotFound') {
+            }
+            res.send({ message: "successfull" });
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Bill not found with id " + req.body.tableNumber
+                });
+            }
             return res.send({
-                message: "Bill not found with id " + req.body.tableNumber
+                message: "Error updating bill with id " + req.body.tableNumber
             });
-        }
-        return res.send({
-            message: "Could not update bill with id " + req.body.tableNumber
         });
-    });
 
     Table.findOne({ "number": parseInt(req.body.tableNumber) }).then(table => {
         if (!table) {
@@ -366,8 +343,8 @@ exports.filter = function (req, res) {
 
 exports.findOneBill = async function (req, res) {
     try {
-        var bill =await Bill.findOne({ "billNumber": parseInt( req.params.billNumber) });
-        res.send( bill);
+        var bill = await Bill.findOne({ "billNumber": parseInt(req.params.billNumber) });
+        res.send(bill);
     } catch (error) {
         res.send({
             message: error.message || "Some error occurred while retrieving tables."
@@ -377,19 +354,18 @@ exports.findOneBill = async function (req, res) {
 
 exports.findAllWithCustomerName = async function (req, res) {
     try {
-        var fullName=req.body.fullName.toUpperCase();
+        var fullName = req.body.fullName.toUpperCase();
         var bills = await Bill.find({});
         for (i = 0; i < bills.length; i++) {
-            var billsCustomer=bills[i].customer.fullName.toUpperCase();
-            var check=0;
+            var billsCustomer = bills[i].customer.fullName.toUpperCase();
+            var check = 0;
             if (billsCustomer.indexOf(fullName) != -1) {
-                check=1;
+                check = 1;
             }
             else if (fullName.indexOf(billsCustomer) != -1) {
-                check=1;
+                check = 1;
             }
-            if(check==0)
-            {
+            if (check == 0) {
                 bills.splice(i, 1);
                 i--;
             }

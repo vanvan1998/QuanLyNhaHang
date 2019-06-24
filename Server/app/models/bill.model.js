@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const BillSchema = mongoose.Schema({
-    employeeID: mongoose.SchemaTypes.ObjectId,
+    employeeName: String,
     tableNumber: Number,
     billNumber: Number,   
     status: String,
