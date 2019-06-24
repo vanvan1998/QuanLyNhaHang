@@ -283,8 +283,6 @@ exports.pay = function (req, res) {
             });
         }
 
-        Pro
-
         Bill.findByIdAndUpdate(bill._id, {
             status: "paid", promotion: req.body.promotion
         }, { new: true })

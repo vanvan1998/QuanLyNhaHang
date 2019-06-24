@@ -11,8 +11,7 @@ const BillSchema = mongoose.Schema({
         fullName : String,
         phone:  String
     },
-    menu: Array,
-    time : String
+    menu: Array
 }, {
     timestamps: true
 });
