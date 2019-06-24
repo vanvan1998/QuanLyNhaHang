@@ -350,7 +350,7 @@ namespace QuanLyNhaHang.UsingTables
 
         private void Pay(object sender, RoutedEventArgs e)
         {
-            string result = API.Pay(NumberTable.Text, DiscountCodeTextBox.Text);
+            string result = API.Pay(NumberTable.Text, DiscountCodeTextBox.Text, Total.Text);
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             if (stuff.message != "successfull")

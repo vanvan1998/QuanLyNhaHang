@@ -271,7 +271,7 @@ exports.getTotalBill = function (req, res) {
 
 exports.pay = function (req, res) {
     Bill.updateOne({ tableNumber: parseInt(req.body.tableNumber), "status": "unpaid" }, {
-        status: "paid", promotion: req.body.promotion
+        status: "paid", promotion: req.body.promotion, total : parseInt(req.body.total)
     }, { new: true })
         .then(bill => {
             if (!bill) {
