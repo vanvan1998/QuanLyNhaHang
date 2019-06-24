@@ -66,6 +66,18 @@ exports.findOne = async (req, res) => {
     }
 };
 
+exports.findFoodInBill = async (req, res) => {
+    var listFood = [];
+    var bill = await Bill.findOne({ "billNumber": parseInt(req.params.billNumber)});
+    if (bill) {
+        for (var foodItem of bill.menu) {
+            var food = await Food.findById(foodItem.id);
+            listFood.push({ name: food.name, price: food.price, amount: foodItem.amount });
+        }
+        res.send(listFood);
+    }
+};
+
 // Update a bill identified by the billId in the request
 exports.update = (req, res) => {
     //Validate request

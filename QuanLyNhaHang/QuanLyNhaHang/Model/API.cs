@@ -534,6 +534,21 @@ namespace QuanLyNhaHang.Model
             }
         }
 
+        
+            public static string GetFoodInBillByBill(string number)
+        {
+            string url = SERVER + "/bills/foodInbill/" + number;
+
+            try
+            {
+                return GET(url);
+            }
+            catch
+            {
+                MessageBox.Show("Không thể kết nối đến server");
+                return "";
+            }
+        }
         public static string GetFoodInBill(string number)
         {
             string url = SERVER + "/bills/" + number;

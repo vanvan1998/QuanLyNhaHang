@@ -12,6 +12,8 @@ module.exports = (app) => {
 
     app.get('/api/bills/bill/:billNumber', bill.findOneBill);
 
+    app.get('/api/bills/foodInbill/:billNumber', bill.findFoodInBill);
+
     // addFoodInBill a Bill with billId
     app.put('/api/bills/addFoodInBill', bill.addFoodInBill);
 

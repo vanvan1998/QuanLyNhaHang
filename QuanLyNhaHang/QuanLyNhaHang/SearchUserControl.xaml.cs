@@ -28,13 +28,16 @@ namespace QuanLyNhaHang
     {
         ObservableCollection<Model.Table> Tables = new ObservableCollection<Model.Table>();
         ObservableCollection<Model.Food> Foods = new ObservableCollection<Model.Food>();
-        ObservableCollection<Model.Bill> Bills= new ObservableCollection<Model.Bill>();
+        ObservableCollection<Model.Bill> Bills = new ObservableCollection<Model.Bill>();
+        ObservableCollection<Order> Orders = new ObservableCollection<Order>();
+
 
         dynamic stuff;
 
         public SearchUserControl()
         {
             InitializeComponent();
+            lvListBill.ItemsSource = Orders;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -96,14 +99,14 @@ namespace QuanLyNhaHang
                     {
                         Bills.Add(new Model.Bill()
                         {
-                            employeeName=item.employeeName,
+                            employeeName = item.employeeName,
                             billNumber = item.billNumber,
                             tableNumber = item.tableNumber,
                             total = item.total,
                             promotion = item.promotion,
                             customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone }
                         });
-                       
+
                     };
                 });
             });
@@ -142,60 +145,6 @@ namespace QuanLyNhaHang
             Bill.IsChecked = false;
             Food.IsChecked = false;
             ((ToggleButton)sender).IsChecked = true;
-        }
-
-        private void SearchTable_Click()
-        {
-            string result = API.GetAllTable();
-            stuff = JsonConvert.DeserializeObject(result);
-
-            Tables.Clear();
-            ListViewTable.ItemsSource = Tables;
-
-            if (TbSearchTable.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập số bàn!!!");
-                HiddenScreen();
-                return;
-            }
-
-            Boolean search = false;
-            foreach (var item in stuff)
-            {
-                if (item.number == TbSearchTable.Text)
-                {
-                    search = true;
-                    Tables.Add(new Model.Table()
-                    {
-                        id = item._id,
-                        number = item.number,
-                        type = item.type,
-                        numberOfSeat = item.numberOfSeat,
-                        status = item.status,
-                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
-                        note = item.note
-                    });
-                }
-            };
-            if (search == false)
-            {
-                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
-                HiddenScreen();
-                return;
-            }
-            HiddenScreen();
-            GridTable.Visibility = Visibility.Visible;
-
-
-            NumberTable.Text = "";
-            TypeTable.Text = "";
-            NumberOfSeat.Text = "";
-            CustomerName.Text = "";
-            Phone.Text = "";
-            Note.Text = "";
-            Status.Text = "";
-
-
         }
 
         private void ListViewFood_MouseUp(object sender, MouseButtonEventArgs e)
@@ -353,25 +302,80 @@ namespace QuanLyNhaHang
                 };
 
                 NumberBill.Text = billSelected.billNumber.ToString();
-                NumberTableBill.Text =billSelected.tableNumber.ToString();
+                NumberTableBill.Text = billSelected.tableNumber.ToString();
                 TotalBill.Text = billSelected.total.ToString();
                 PromotionBill.Text = billSelected.promotion;
                 EmployeeBill.Text = billSelected.employeeName;
                 CustomerBill.Text = billSelected.customer.fullName;
+                LoadOrderFood(billSelected);
 
-                //todo list food
                 rt.Fill = (Brush)bc.ConvertFrom("#FF0BD9EE");
             }
         }
 
-        private async void SearchTableCustomer_Click()
+        private async void LoadOrderFood(Bill bill)
         {
-            if (TbSearchTable.Text == "")
+            await Task.Run(() =>
             {
-                MessageBox.Show("Vui lòng nhập tên khách hàng!!!");
+                string result = API.GetFoodInBillByBill(bill.billNumber.ToString());
+                dynamic stuffFoodInBill = JsonConvert.DeserializeObject(result);
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Orders.Clear();
+                    foreach (var item in stuffFoodInBill)
+                    {
+                        if (item.amount > 0)
+                        {
+                            Orders.Add(new Order()
+                            {
+                                name = item.name,
+                                price = item.price,
+                                amount = item.amount
+                            });
+                        }
+                    };
+                });
+            });
+        }
+
+        private void SearchTable_Click()
+        {
+            string result = API.GetAllTable();
+            stuff = JsonConvert.DeserializeObject(result);
+
+            Tables.Clear();
+            ListViewTable.ItemsSource = Tables;
+            
+            Boolean search = false;
+            foreach (var item in stuff)
+            {
+                if (item.number == TbSearchTable.Text)
+                {
+                    search = true;
+                    Tables.Add(new Model.Table()
+                    {
+                        id = item._id,
+                        number = item.number,
+                        type = item.type,
+                        numberOfSeat = item.numberOfSeat,
+                        status = item.status,
+                        customer = new Customer() { fullName = item.customer.fullName, phone = item.customer.phone },
+                        note = item.note
+                    });
+                }
+            };
+            if (search == false)
+            {
+                MessageBox.Show("Số bàn bạn nhập không tồn tại!!!");
                 HiddenScreen();
                 return;
             }
+            ResetLayoutTables();
+        }
+
+        private async void SearchTableCustomer_Click()
+        {
             string result = API.GetAllTableWithCustomer(TbSearchTable.Text);
             stuff = JsonConvert.DeserializeObject(result);
 
@@ -385,17 +389,7 @@ namespace QuanLyNhaHang
 
                 return;
             }
-            HiddenScreen();
-            GridTable.Visibility = Visibility.Visible;
-
-            NumberTable.Text = "";
-
-            NumberOfSeat.Text = "";
-            CustomerName.Text = "";
-            Phone.Text = "";
-            Note.Text = "";
-            Status.Text = "";
-            TypeTable.Text = "";
+            ResetLayoutTables();
 
         }
 
@@ -405,15 +399,7 @@ namespace QuanLyNhaHang
             stuff = JsonConvert.DeserializeObject(result);
             Foods.Clear();
             ListViewFood.ItemsSource = Foods;
-
-            if (TbSearchTable.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập tên món ăn!!!");
-                HiddenScreen();
-
-                return;
-            }
-
+            
             Boolean search = false;
             string foodQuery = TbSearchTable.Text.ToUpper();
             foreach (var item in stuff)
@@ -439,42 +425,27 @@ namespace QuanLyNhaHang
 
                 return;
             }
-            NameFood.Text = "";
-            PriceFood.Text = "";
-            Ingredients.Text = "";
-            NoteFood.Text = "";
-            TypeFood.Text = "";
-            HiddenScreen();
-            GridFood.Visibility = Visibility.Visible;
-
-
+            ResetLayoutFood();
         }
 
         private void SearchBill_Click()
         {
             Bills.Clear();
             ListViewBill.ItemsSource = Bills;
-
-            if (TbSearchTable.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập số hóa đơn!!!");
-                HiddenScreen();
-                return;
-            }
-
+            
             string result = API.FindOneBill(TbSearchTable.Text);
             dynamic stuffbill = JsonConvert.DeserializeObject(result);
 
             try
             {
-                Bills.Add( new Model.Bill()
+                Bills.Add(new Model.Bill()
                 {
-                    billNumber = stuffbill.bill.billNumber,
-                    tableNumber = stuffbill.bill.tableNumber,
-                    total = stuffbill.bill.total,
-                    promotion = stuffbill.bill.promotion,
-                    employeeName= stuffbill.bill.employeeName,
-                    customer = new Customer() { fullName = stuffbill.bill.customer.fullName, phone = stuffbill.bill.customer.phone }
+                    billNumber = stuffbill.billNumber,
+                    tableNumber = stuffbill.tableNumber,
+                    total = stuffbill.total,
+                    promotion = stuffbill.promotion,
+                    employeeName = stuffbill.employeeName,
+                    customer = new Customer() { fullName = stuffbill.customer.fullName, phone = stuffbill.customer.phone }
                 });
             }
             catch
@@ -483,47 +454,26 @@ namespace QuanLyNhaHang
                 HiddenScreen();
                 return;
             }
-            HiddenScreen();
-            GridBill.Visibility = Visibility.Visible;
-
-            NumberBill.Text ="";
-            NumberTableBill.Text = "";
-            EmployeeBill.Text = "";
-            TotalBill.Text = "";
-            PromotionBill.Text = "";
+            ResetLayoutBill();
         }
 
         private async void SearchBillCustomer_Click()
         {
-            if (TbSearchTable.Text == "")
-            {
-                MessageBox.Show("Vui lòng nhập tên khách hàng!!!");
-                HiddenScreen();
-                return;
-            }
             string result = API.GetAllBillWithCustomer(TbSearchTable.Text);
             dynamic stuffBill = JsonConvert.DeserializeObject(result);
 
             Bills.Clear();
             ListViewBill.ItemsSource = Bills;
             await LoadBill(stuffBill);
-            if (Tables.Count == 0)
+            if (Bills.Count == 0)
             {
                 MessageBox.Show("Không tìm thấy hóa đơn theo yêu cầu của bạn!!!");
                 HiddenScreen();
 
                 return;
             }
-            HiddenScreen();
-            GridBill.Visibility = Visibility.Visible;
-
-            NumberBill.Text = "";
-            NumberTableBill.Text = "";
-            EmployeeBill.Text = "";
-            TotalBill.Text = "";
-            PromotionBill.Text = "";
+            ResetLayoutBill();
         }
-
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -565,6 +515,55 @@ namespace QuanLyNhaHang
             GridFood.Visibility = Visibility.Hidden;
             GridBill.Visibility = Visibility.Hidden;
 
+        }
+
+        private void ResetLayoutBill()
+        {
+            HiddenScreen();
+            GridBill.Visibility = Visibility.Visible;
+            NumberBill.Text = "";
+            NumberTableBill.Text = "";
+            EmployeeBill.Text = "";
+            TotalBill.Text = "";
+            PromotionBill.Text = "";
+            CustomerBill.Text = "";
+            Orders.Clear();
+        }
+
+        private void ResetLayoutFood()
+        {
+            NameFood.Text = "";
+            PriceFood.Text = "";
+            Ingredients.Text = "";
+            NoteFood.Text = "";
+            TypeFood.Text = "";
+            HiddenScreen();
+            GridFood.Visibility = Visibility.Visible;
+        }
+
+        private void ResetLayoutTables()
+        {
+            HiddenScreen();
+            GridTable.Visibility = Visibility.Visible;
+            NumberTable.Text = "";
+            NumberOfSeat.Text = "";
+            CustomerName.Text = "";
+            Phone.Text = "";
+            Note.Text = "";
+            Status.Text = "";
+            TypeTable.Text = "";
+        }
+
+        private void TbSearchTable_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(TbSearchTable.Text.Length>0)
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
         }
     }
 }

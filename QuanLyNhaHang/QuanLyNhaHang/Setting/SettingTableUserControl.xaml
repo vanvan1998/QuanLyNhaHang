@@ -78,7 +78,7 @@
                         </Button>
                     </Grid>
                 </materialDesign:ColorZone>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ListView x:Name="ListViewTable" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MouseUp="ListViewTable_MouseUp">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
