@@ -1,20 +1,26 @@
 const Bill = require('../models/bill.model.js');
 const Food = require('../models/food.model.js');
 const Table = require('../models/table.model.js');
+const ServiceFee = require('../models/servicefee.model.js');
 const mongoose = require('mongoose');
 
 // Create and Save a new Bill
 exports.create = async function (req, res) {
-    // Create a Bill
-    console.log(req.body);
+
+    var standardFee = await ServiceFee.findOne({ type: "standard" });
+    var VIPFee = await ServiceFee.findOne({ type: "VIP" });
     var total = 0;
+
+    // Create a Bill
     if (req.body.type == "standard") {
-        total = parseInt(req.body.numberOfSeat) * 10000;
+        total = parseInt(req.body.numberOfSeat) * parseInt(standardFee.fee);
     }
     else {
-        total = parseInt(req.body.numberOfSeat) * 30000;
+        total = parseInt(req.body.numberOfSeat) * parseInt(VIPFee.fee);
     }
+
     var count = await Bill.countDocuments({});
+
     const bill = new Bill({
         employeeName: req.body.employeeName,
         tableNumber: req.body.number,
@@ -68,7 +74,7 @@ exports.findOne = async (req, res) => {
 
 exports.findFoodInBill = async (req, res) => {
     var listFood = [];
-    var bill = await Bill.findOne({ "billNumber": parseInt(req.params.billNumber)});
+    var bill = await Bill.findOne({ "billNumber": parseInt(req.params.billNumber) });
     if (bill) {
         for (var foodItem of bill.menu) {
             var food = await Food.findById(foodItem.id);
@@ -283,7 +289,7 @@ exports.getTotalBill = function (req, res) {
 
 exports.pay = function (req, res) {
     Bill.updateOne({ tableNumber: parseInt(req.body.tableNumber), "status": "unpaid" }, {
-        status: "paid", promotion: req.body.promotion, total : parseInt(req.body.total)
+        status: "paid", promotion: req.body.promotion, total: parseInt(req.body.total)
     }, { new: true })
         .then(bill => {
             if (!bill) {
