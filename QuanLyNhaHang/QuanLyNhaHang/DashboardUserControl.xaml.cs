@@ -90,16 +90,33 @@ namespace QuanLyNhaHang
         {
             await Task.Run(() =>
             {
-                DateTime today = DateTime.Today;
-                string startTime = today.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
-                string result3 = API.Filter(startTime.Substring(0, 10), startTime.Substring(0, 10));
-                dynamic stuff3 = JsonConvert.DeserializeObject(result3);
-
+               
                 string result1 = API.CountTableUsing();
                 dynamic stuff1 = JsonConvert.DeserializeObject(result1);
 
+                if (result1 == "")
+                {
+                    return;
+                }
+
                 string result2 = API.CountTableEmpty();
                 dynamic stuff2 = JsonConvert.DeserializeObject(result2);
+
+                if (result1 == "")
+                {
+                    return;
+                }
+
+                DateTime today = DateTime.Today;
+                string startTime = today.ToString("o", CultureInfo.CreateSpecificCulture("en-US"));
+
+                string result3 = API.Filter(startTime.Substring(0, 10), startTime.Substring(0, 10));
+                dynamic stuff3 = JsonConvert.DeserializeObject(result3);
+
+                if (result1 == "")
+                {
+                    return;
+                }
 
                 this.Dispatcher.Invoke(() =>
                 {

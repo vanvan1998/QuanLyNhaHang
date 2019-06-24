@@ -69,6 +69,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetAllTableWithStatusAndType("booked", "standard");
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
                 this.Dispatcher.Invoke(() =>
                 {
@@ -125,6 +129,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetFoodInBill(tableSelected.number);
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
@@ -151,6 +159,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetPromotions();
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
@@ -176,6 +188,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetAllFood();
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
@@ -339,6 +355,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.GetTotalInBill(tableSelected.number);
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
                 this.Dispatcher.Invoke(() =>
                 {
@@ -351,6 +371,10 @@ namespace QuanLyNhaHang.UsingTables
         private void Pay(object sender, RoutedEventArgs e)
         {
             string result = API.Pay(NumberTable.Text, DiscountCodeTextBox.Text, Total.Text);
+            if (result == "")
+            {
+                return;
+            }
             dynamic stuff = JsonConvert.DeserializeObject(result);
 
             if (stuff.message != "successfull")
@@ -523,6 +547,10 @@ namespace QuanLyNhaHang.UsingTables
                 }
 
                 string result = API.AddFoodInBill(tableSelected.number, foodSelected);
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuffAddFood = JsonConvert.DeserializeObject(result);
 
                 if (stuffAddFood.message != "successfull")
@@ -642,6 +670,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.IncreaseAmountFood(tableSelected.number, foodSelected);
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>
@@ -684,6 +716,10 @@ namespace QuanLyNhaHang.UsingTables
             await Task.Run(() =>
             {
                 string result = API.DecreaseAmountFood(tableSelected.number, foodSelected);
+                if (result == "")
+                {
+                    return;
+                }
                 dynamic stuff = JsonConvert.DeserializeObject(result);
 
                 this.Dispatcher.Invoke(() =>

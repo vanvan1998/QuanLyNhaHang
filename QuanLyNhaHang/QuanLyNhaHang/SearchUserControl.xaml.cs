@@ -70,21 +70,27 @@ namespace QuanLyNhaHang
 
             await Task.Run(() =>
             {
-                Thread.Sleep(1000);
                 this.Dispatcher.Invoke(() =>
                 {
-                    for (int i = 0; i < Tables.Count; i++)
+                    while (true)
                     {
-                        if (Tables[i].type == "standard")
+                        if (ListViewTable.IsLoaded == true)
                         {
-                            ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
-                            var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
+                            for (int i = 0; i < Tables.Count; i++)
+                            {
+                                if (Tables[i].type == "standard")
+                                {
+                                    ListViewItem lvi1 = ListViewTable.ItemContainerGenerator.ContainerFromIndex(i) as ListViewItem;
+                                    var cp1 = VisualTreeHelperExtensions.FindVisualChild<ContentPresenter>(lvi1);
 
-                            var dt1 = cp1.ContentTemplate as DataTemplate;
-                            var rt1 = (Grid)dt1.FindName("TicketType", cp1);
-                            rt1.Background = Brushes.Blue;
+                                    var dt1 = cp1.ContentTemplate as DataTemplate;
+                                    var rt1 = (Grid)dt1.FindName("TicketType", cp1);
+                                    rt1.Background = Brushes.Blue;
+                                }
+                            };
+                            break;
                         }
-                    };
+                    }
                 });
             });
         }
@@ -346,7 +352,7 @@ namespace QuanLyNhaHang
 
             Tables.Clear();
             ListViewTable.ItemsSource = Tables;
-            
+
             Boolean search = false;
             foreach (var item in stuff)
             {
@@ -399,7 +405,7 @@ namespace QuanLyNhaHang
             stuff = JsonConvert.DeserializeObject(result);
             Foods.Clear();
             ListViewFood.ItemsSource = Foods;
-            
+
             Boolean search = false;
             string foodQuery = TbSearchTable.Text.ToUpper();
             foreach (var item in stuff)
@@ -432,7 +438,7 @@ namespace QuanLyNhaHang
         {
             Bills.Clear();
             ListViewBill.ItemsSource = Bills;
-            
+
             string result = API.FindOneBill(TbSearchTable.Text);
             dynamic stuffbill = JsonConvert.DeserializeObject(result);
 
@@ -556,7 +562,7 @@ namespace QuanLyNhaHang
 
         private void TbSearchTable_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(TbSearchTable.Text.Length>0)
+            if (TbSearchTable.Text.Length > 0)
             {
                 btnSearch.IsEnabled = true;
             }
